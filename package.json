@@ -1,0 +1,27 @@
+{
+  "name": "esno",
+  "version": "1.0.0",
+  "description": "A simple listing of my weekly down",
+  "private": true,
+  "main": "app.js",
+  "scripts": {
+    "postinstall": "./node_modules/bower/bin/bower install",
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "battlenet-api": "^0.11.0",
+    "blizzard.js": "^1.6.0",
+    "bower": "~1.7.7",
+    "debug": "~2.2.0",
+    "express": "~4.13.1",
+    "jade": "~1.11.0",
+    "moment": "~2.11.2",
+    "mongoose": "~4.4.4",
+    "request-promise": "^4.1.1",
+    "serve-favicon": "~2.3.0",
+    "tumblr.js": "^1.1.1"
+  },
+  "engines": {
+    "node": "4.4.2"
+  }
+}

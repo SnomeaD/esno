@@ -1,0 +1,18 @@
+div.col-md-12
+    div(ng-show="!toon && !error").row
+        div.fashion-entry Loading ...
+    div(ng-show="error") {{error}}
+    div(ng-show="toon").row
+        div.fashion-entry
+            div.back-img
+                img(ng-src="{{toon.render}}" height="550" width="740").back-img
+            div(class="{{toon.class | class}}-text").fashion-avatar
+                img(ng-src="{{toon.thumbnail}}" height="64" width="64").img-circle.img-avatar.fashion-img-avatar
+            div(class="{{toon.class | class}}-text").fashion-info
+                div.fashion-name {{toon.name}}
+                div.fashion-detail {{toon.realm}}
+                div.fashion-detail {{toon.guild}}
+                div.fashion-detail {{toon.transmogItems.length}} items transmogrified
+    div(ng-show="toon").row
+        div.fashion-detail
+        p(ng-repeat="item in toon.transmogItems") {{item.slot}} - {{item.name}}

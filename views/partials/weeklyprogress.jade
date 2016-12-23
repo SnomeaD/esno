@@ -1,0 +1,11 @@
+h2 Weekly Progress
+
+i(data-ng-hide="toonsData || error").fa.fa-spinner.fa-spin
+div.alert.alert-info(data-ng-show="error")
+    span {{error}}
+div.container-fluid
+    div.row(data-ng-show="toonsData")
+        bosses-list(progress="toonsData[0].progress")
+        toon-view-progress(ng-repeat="toon in toonsData | orderBy:'-averageItemLevel' | startFrom:(currentPage-1)*pageSize | limitTo:pageSize" toon="toon")
+    div.row.text-center
+        uib-pagination(total-items="toonsData.length" ng-model="currentPage" items-per-page="pageSize")

@@ -1,0 +1,16 @@
+h2 Check toon
+div.alert.alert-info(data-ng-show="error")
+    span {{error}}
+form(name="toonForm")
+    div.row
+        div.col-sm-5
+            div.input-group
+                span.input-group-addon server
+                input.form-control(type="text" id="server" required ng-model="toon.server")
+        div.col-sm-5
+            div.input-group
+                span.input-group-addon toon name
+                input.form-control(type="text" id="name" required ng-model="toon.name")
+        div.col-sm-2
+            button(class="btn btn-default" ng-click="checkToon(toon)") check!
+

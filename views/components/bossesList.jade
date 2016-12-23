@@ -1,0 +1,6 @@
+div.col-sm-3
+    div(style="height:181px")
+    div.text-right.bosses-list
+        div(ng-repeat="(name, bossesStatistics) in $ctrl.progress.mythicDungeon") {{name}}
+        div(ng-repeat="(name, bossesStatistics) in $ctrl.progress.emeraldNightmare") {{name}}
+        div(ng-repeat="(name, bossesStatistics) in $ctrl.progress.nighthold") {{name}}

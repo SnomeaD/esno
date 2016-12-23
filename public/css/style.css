@@ -1,0 +1,208 @@
+body {
+  padding-top: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.img-avatar{
+  border:1px solid;
+  box-shadow:4px 4px 5px;
+}
+table.with-scroll{
+  background-color: #FFF;
+}
+table.with-scroll>tbody>tr>th
+{
+    background-color: #FFF;
+    position: absolute;
+    display: inline-block;
+    width: 216px;
+    white-space: nowrap;
+    border-top:0px solid black !important;
+}
+table.with-scroll> tbody > tr > td:nth-child(2)
+{
+    padding-left:216px !important;
+}
+table.with-scroll>tbody>tr.separator>td{
+    border-top:1px solid #333;
+    border-bottom:1px solid #333;
+    background-color: #aaa;
+}
+table.with-scroll>tbody>tr.separator>th{
+    border-top:1x solid #333;
+    border-bottom:1px solid #333;
+    background-color: #aaa;
+}
+
+/*
+ * WoW class color
+ */
+.death-knight{
+  background-color:#C41F3B;
+}
+.demon-hunter{
+  background-color:#A330C9;
+}
+.druid{
+  background-color:#FF7D0A;
+}
+.hunter{
+  background-color:#ABD473;
+}
+.mage{
+  background-color:#69CCF0;
+}
+.monk{
+  background-color:#00FF96;
+}
+.paladin{
+  background-color:#F58CBA;
+}
+.priest{
+  background-color:#EEEEEE;
+}
+.rogue{
+  background-color:#FFF569;
+}
+.shaman{
+  background-color:#0070DE;
+}
+.warlock{
+  background-color:#9482C9;
+}
+.warrior{
+  background-color:#C79C6E;
+}
+/*
+ * WoW class color
+ */
+.death-knight-text{
+    color:#C41F3B;
+    border-color:#C41F3B;
+}
+.demon-hunter-text{
+    color:#A330C9;
+    border-color:#A330C9;
+}
+.druid-text{
+    color:#FF7D0A;
+    border-color:#FF7D0A;
+}
+.hunter-text{
+    color:#ABD473;
+    border-color:#ABD473;
+}
+.mage-text{
+    color:#69CCF0;
+    border-color:#69CCF0;
+}
+.monk-text{
+    color:#00FF96;
+    border-color:#00FF96;
+}
+.paladin-text{
+    color:#F58CBA;
+    border-color:#F58CBA;
+}
+.priest-text{
+    color:#EEEEEE;
+    border-color:#EEEEEE;
+}
+.rogue-text{
+    color:#FFF569;
+    border-color:#FFF569;
+}
+.shaman-text{
+    color:#0070DE;
+    border-color:#0070DE;
+}
+.warlock-text{
+    color:#9482C9;
+    border-color:#9482C9;
+}
+.warrior-text{
+    color:#C79C6E;
+    border-color:#C79C6E;
+}
+/*
+ * WoW quality color
+ */
+.common{
+  color:#ffffff;
+}
+.uncommon{
+  color:#1eff00;
+}
+.rare{
+  color:#70B8FF;
+}
+.epic{
+  color:#a335ee;
+}
+.legendary{
+  color:#ff8000;
+}
+/*
+ * WoW boss status
+ */
+.boss-status{
+  -moz-border-radius:2px;
+  border-radius:2px;
+  padding:0px 1px 0px 1px;
+  border: 1px solid #aaaaaa;
+  margin:0px 0px 0px 2px;
+}
+.alive{
+  background-color:#CCCCCC;
+  color:#333;
+}
+.lfr{
+  background-color:#1eff00;
+}
+.nm{
+  background-color:#70B8FF;
+}
+.hm{
+  background-color:#a335ee;
+}
+.mm{
+  background-color:#ff8000;
+}
+
+.bosses-list>div{
+  border-bottom: 1px solid #aaa;
+  padding:2px 0px 2px 0px;
+}
+.bosses-difficulty>div{
+    padding:2px 0px 3px 0px;
+}
+.back-img{
+    display: block;
+    float: left;
+    z-index: -3;
+    position: absolute;
+}
+.fashion-entry{
+    height:570px;
+    margin:10px 10px;
+}
+.fashion-info {
+    float:left;
+    padding: 10px 10px;
+}
+.fashion-name {
+    font-size: large;
+    font-weight: bold;
+}
+.fashion-detail{
+    font-size:small;
+    font-style: italic;
+}
+.fashion-avatar{
+    padding: 10px 10px;
+    float:left;
+}
