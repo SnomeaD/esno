@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 const rp = require('request-promise');
-const config = require('../config/config.json');
+const config = require('../config/config.js');
 const blizzard = require('blizzard.js').initialize({ apikey: config.bnet.apikey });
 const tumblr = require('tumblr.js');
 
