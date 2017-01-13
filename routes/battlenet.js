@@ -5,7 +5,7 @@ const request = require("request");
 const router = express.Router();
 module.exports = router;
 
-const config = require('../../config/config.js');
+const config = require('../config/config.js');
 /* GET users listing. */
 router.get('/character/:server/:name', function(req, res, next) {
     const bnet = require('battlenet-api')();

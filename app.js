@@ -2,8 +2,7 @@ const express = require('express');
 const favicon = require('serve-favicon');
 const config = require('./config/config.js');
 const routes = require('./routes');
-const battlenetCore = require('./routes/battlenet/core.js');
-const battlenetFashion = require('./routes/battlenet/fashion.js');
+const battlenet = require('./routes/battlenet.js');
 
 const app = express();
 
@@ -16,8 +15,7 @@ app.use(favicon(__dirname+'/public/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
 
 
-app.use('/bnet', battlenetCore);
-app.use('/fashion', battlenetFashion.fashion);
+app.use('/bnet', battlenet);
 
 
 // serve index and view partials
