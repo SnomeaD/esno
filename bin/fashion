@@ -211,7 +211,7 @@ getToonFashion().then(result => {
     console.log(result);
     let items = '';
     result.transmogItems.forEach(function (item) {
-        items += '<span class="slot">' + item.slot + ': </span><span class="'+item.quality.cssName+' '+item.transmog+'"><a href="http://www.wowhead.com/item=' + item.itemId + '">' + item.name + '</a></span><br />';
+        items += '<span class="slot">' + item.slot + ': </span><span class="'+item.quality.cssName+' transmog_'+item.transmog+'"><a href="http://www.wowhead.com/item=' + item.itemId + '">' + item.name + '</a></span><br />';
     });
 
     const blogId = 'transmogwow.tumblr.com';
