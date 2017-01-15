@@ -32,7 +32,17 @@ const getToonFashion = function(resolve, reject){
         {"name":"Druid", "cssClass":"druid"},
         {"name":"Demon Hunter", "cssClass":"demon-hunter"}
     ];
-
+    const qualityData = [
+        {'name':'Poor','cssName':'poor'},
+        {'name':'Common','cssName':'common'},
+        {'name':'Uncommon','cssName':'uncommon'},
+        {'name':'Rare','cssName':'rare'},
+        {'name':'Epic','cssName':'epic'},
+        {'name':'Legendary','cssName':'legendary'},
+        {'name':'Artifact','cssName':'artifact'},
+        {'name':'Heirloom','cssName':'heirloom'},
+        {'name':'Wow token','cssName':'wow_token'}
+    ];
     const racesData = [
         {"id": 1,"mask": 1,"side": "Alliance","name": "Human"},
         {"id": 2,"mask": 2,"side": "Horde","name": "Orc"},
@@ -68,17 +78,24 @@ const getToonFashion = function(resolve, reject){
         }
         return count;
     }
-    function getTransmogItem(items){
-        let transmogItems = [];
+    function listItems(items){
+        let listItems = [];
         for (let itemSlot in items){
             if(items[itemSlot].hasOwnProperty('appearance') && items[itemSlot].appearance.hasOwnProperty('itemId')){
-                transmogItems.push({
+                listItems.push({
                     slot: itemSlot,
-                    itemId: items[itemSlot].appearance.itemId
+                    itemId: items[itemSlot].appearance.itemId,
+                    transmog: true,
+                });
+            }else if(items[itemSlot].hasOwnProperty('id')){
+                listItems.push({
+                    slot: itemSlot,
+                    itemId: items[itemSlot].id,
+                    transmog: false,
                 });
             }
         }
-        return transmogItems;
+        return listItems;
     }
     function validateTransmog(toon){
         const transmogItem = getTransmogCount(toon.items);
@@ -122,13 +139,13 @@ const getToonFashion = function(resolve, reject){
                                     return {
                                         'status': 'ok',
                                         'name': fashion.data.name,
-                                        'class': classesData[fashion.data.class-1].name,
+                                        'class': classesData[fashion.data.class-1],
                                         'realm': fashion.data.realm,
                                         'region': constRegion,
                                         'race': getRaceData(fashion.data.race).name,
                                         'side': getRaceData(fashion.data.race).side,
                                         'guild': fashion.data.guild.name,
-                                        'transmogItems': getTransmogItem(fashion.data.items),
+                                        'transmogItems': listItems(fashion.data.items),
                                         'thumbnail': 'https://render-api-'+ constRegion + '.worldofwarcraft.com/static-render/'+ constRegion + '/' + fashion.data.thumbnail,
                                         'render': 'http://render-'+ constRegion + '.worldofwarcraft.com/character/' + fashion.data.thumbnail.substring(0, (fashion.data.thumbnail.length - 11)) + '-profilemain.jpg',
                                         'link': 'http://'+ constRegion + '.battle.net/wow/en/character/' + fashion.data.realm + '/' + fashion.data.name + '/advanced',
@@ -168,9 +185,12 @@ const getToonFashion = function(resolve, reject){
                 })
                 .then(toonData => {
                     return Promise.all(toonData.transmogItems.map(function(item){
+                        console.log('Item: ');
+                        console.log(item);
                         return blizzard.wow.item({ id: item.itemId, origin: 'eu', locale:'en_GB' }).then(itemData => {
-                            const itemName = itemData.data.name;
-                            item.name = itemName;
+                            item.name = itemData.data.name;
+                            item.quality = qualityData[itemData.data.quality];
+                            item.icon = itemData.data.icon;
                             return item;
                         });
                     })).then(transmogItems => {
@@ -191,7 +211,7 @@ getToonFashion().then(result => {
     console.log(result);
     let items = '';
     result.transmogItems.forEach(function (item) {
-        items += '<span style="text-transform: capitalize;"><b>' + item.slot + ': </b></span><a href="http://www.wowhead.com/item=' + item.itemId + '">' + item.name + '</a><br />';
+        items += '<span class="slot">' + item.slot + ': </span><span class="'+item.quality.cssName+' '+item.transmog+'"><a href="http://www.wowhead.com/item=' + item.itemId + '">' + item.name + '</a></span><br />';
     });
 
     const blogId = 'transmogwow.tumblr.com';
@@ -199,8 +219,8 @@ getToonFashion().then(result => {
     const options = {
         type: 'photo',
         source: result.render,
-        tags: result.race + ',' + result.class + ',' + result.side + ',WoW,Transmogrification',
-        caption: '<a href="'+result.link+'">'+result.name + ' - ' + result.realm + ' ('+ result.region + ')</a><br />' + items,
+        tags: result.race + ',' + result.class.name + ',' + result.side + ',WoW,Transmogrification',
+        caption: '<a class="'+result.class.cssClass+'" href="'+result.link+'">'+result.name + ' - ' + result.realm + ' ('+ result.region + ')</a><br />' + items,
         link: result.link,
     };
 
