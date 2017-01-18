@@ -19,18 +19,18 @@ const getToonFashion = function(resolve, reject){
     const constRealm = realmListData[constRegion][Math.floor(Math.random() * (realmListData[constRegion].length - 1)) + 1];
     console.log(constRegion + '-' + constRealm);
     const classesData = [
-        {"name":"Warrior", "cssClass":"warrior"},
-        {"name":"Paladin", "cssClass":"paladin"},
-        {"name":"Hunter", "cssClass":"hunter"},
-        {"name":"Rogue", "cssClass":"rogue"},
-        {"name":"Priest", "cssClass":"priest"},
-        {"name":"Death Knight", "cssClass":"death-knight"},
-        {"name":"Shaman", "cssClass":"shaman"},
-        {"name":"Mage", "cssClass":"mage"},
-        {"name":"Warlock", "cssClass":"warlock"},
-        {"name":"Monk", "cssClass":"monk"},
-        {"name":"Druid", "cssClass":"druid"},
-        {"name":"Demon Hunter", "cssClass":"demon-hunter"}
+        {"name":"Warrior", "cssClass":"warrior", "armor":"Plate"},
+        {"name":"Paladin", "cssClass":"paladin", "armor":"Plate"},
+        {"name":"Hunter", "cssClass":"hunter", "armor":"Mail"},
+        {"name":"Rogue", "cssClass":"rogue", "armor":"Leather"},
+        {"name":"Priest", "cssClass":"priest", "armor":"Cloth"},
+        {"name":"Death Knight", "cssClass":"death-knight", "armor":"Plate"},
+        {"name":"Shaman", "cssClass":"shaman", "armor":"Mail"},
+        {"name":"Mage", "cssClass":"mage", "armor":"Cloth"},
+        {"name":"Warlock", "cssClass":"warlock", "armor":"Cloth"},
+        {"name":"Monk", "cssClass":"monk", "armor":"Leather"},
+        {"name":"Druid", "cssClass":"druid", "armor":"Leather"},
+        {"name":"Demon Hunter", "cssClass":"demon-hunter", "armor":"Leather"}
     ];
     const qualityData = [
         {'name':'Poor','cssName':'poor'},
@@ -219,7 +219,7 @@ getToonFashion().then(result => {
     const options = {
         type: 'photo',
         source: result.render,
-        tags: result.race + ',' + result.class.name + ',' + result.side + ',WoW,Transmogrification',
+        tags: result.race + ',' + result.class.name + ',' + result.class.armor + ',' + result.side + ',WoW,Transmogrification',
         caption: '<a class="'+result.class.cssClass+'" href="'+result.link+'">'+result.name + ' - ' + result.realm + ' ('+ result.region + ')</a><br />' + items,
         link: result.link,
     };
