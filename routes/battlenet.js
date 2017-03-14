@@ -231,6 +231,8 @@ router.get('/progress/:server/:name', function(req, res, next) {
 });
 /* GET realm listing. */
 router.get('/realm', function(req, res, next) {
+    const blizzard = require('blizzard.js').initialize({ apikey: config.bnet.apikey });
+
     var origins= ['us','eu'];
     var slugRealm = {};
 

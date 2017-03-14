@@ -31,18 +31,18 @@ checkToonControllers.controller('checkToonController', ['$scope', '$routeParams'
 checkToonControllers.controller('checkToonsController', ['$scope', '$http','battleNetService',
   function($scope,$http,battleNetService) {
     var toons = [
-        {'server':'sargeras','name':'Snomead'},
-        {'server':'sargeras','name':'Snominette'},
-        {'server':'sargeras', name:'Sno'},
-        {'server':'sargeras', name:'Snômead'},
-        {'server':'sargeras', name:'Snomeadine'},
-        {'server':'nerzhul', name:'Snomead'},
-        {'server':'sargeras', name:'Snoméàd'},
-        {'server':'sargeras', name:'Dromead'},
-        {'server':'sargeras', name:'Snomeadée'},
-        {'server':'sargeras', name:'Snømead'},
-        {'server':'sargeras', name:'Snomeadille'},
-        {'server':'sargeras', name:'Snommead'}
+        {server:'sargeras', name:'Snomead'},
+        {server:'sargeras', name:'Snominette'},
+        {server:'sargeras', name:'Sno'},
+        {server:'sargeras', name:'Snômead'},
+        {server:'sargeras', name:'Snomeadine'},
+        {server:'nerzhul', name:'Snomead'},
+        {server:'sargeras', name:'Snoméàd'},
+        {server:'sargeras', name:'Dromead'},
+        {server:'sargeras', name:'Snomeadée'},
+        {server:'sargeras', name:'Snømead'},
+        {server:'sargeras', name:'Snomeadille'},
+        {server:'sargeras', name:'Snommead'}
     ];
     $scope.toonsData = [];
     $scope.currentPage = 1;
