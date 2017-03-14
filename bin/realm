@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+'use strict';
+const config = require('../config/config.js');
+const blizzard = require('blizzard.js').initialize({ apikey: config.bnet.apikey });
+
+const origins= ['us','eu'];
+const locales= [
+    'ko_KR'
+    //'en_GB',
+    //'de_DE',
+    //'es_ES',
+    // 'fr_FR',
+    // 'it_IT',
+    // 'pl_PL',
+    // 'pt_BR',
+    // 'ru_RU'
+    ];
+const origin = 'kr';
+let slugRealm = {};
+
+
+    return blizzard.wow.realms({ origin: origin, locale:'en_GB'}).then(function (response) {
+        const realms = response.data.realms;
+        realms.forEach(function(realm){
+            if(locales.indexOf(realm.locale) != -1){
+                if(!slugRealm.hasOwnProperty(origin)){
+                    slugRealm[origin]=[];
+                }
+                console.log(realm.slug);
+                 slugRealm[origin].push({
+                    'name': realm.name,
+                    'enSlug': realm.slug,
+                    'locale': realm.locale
+                });
+            }
+        });
+        return slugRealm;
+    }).catch(console.log.bind(console)).then(function(slugRealm){
+        return Promise.all(slugRealm[origin].map(function(theRealm, thisArg) {
+            if (theRealm.hasOwnProperty("enSlug") && theRealm.hasOwnProperty("locale")) {
+                //console.log('get the local slug for' + theRealm.locale + ': '+theRealm.enSlug);
+                return blizzard.wow.realms({
+                    realms: theRealm.enSlug,
+                    origin: origin,
+                    locale: theRealm.locale
+                }).then(function (response) {
+                    let slugEnLocal = {};
+                    const enSlug = theRealm.enSlug;
+                    const localSlug = response.data.realms[0].slug;
+                    if (enSlug === localSlug) {
+                        return undefined;
+                    }
+                    slugEnLocal[enSlug] = localSlug;
+                    return slugEnLocal;
+                });
+            }else{
+                return true;
+            }
+        }));
+    }).catch(console.log.bind(console)).then(response => {
+        response.forEach(function(element) {
+            if(element) {console.log(element);}
+        });}
+    ).catch(console.log.bind(console));
