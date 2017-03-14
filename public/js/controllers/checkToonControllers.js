@@ -40,7 +40,7 @@ checkToonControllers.controller('checkToonsController', ['$scope', '$http','batt
         {'server':'sargeras', name:'Snoméàd'},
         {'server':'sargeras', name:'Dromead'},
         {'server':'sargeras', name:'Snomeadée'},
-        {'server':'sargeras', name:'Snomaed'},
+        {'server':'sargeras', name:'Snømead'},
         {'server':'sargeras', name:'Snomeadille'},
         {'server':'sargeras', name:'Snommead'}
     ];
