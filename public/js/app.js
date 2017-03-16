@@ -6,7 +6,7 @@ var esnoApp = angular.module('esnoApp', [
   'indexControllers',
   'checkToonControllers',
   'weeklyProgressControllers',
-  'transmogfashionControllers',
+  'progressControllers',
   'headerControllers',
   'battleNetServices',
   'components',
@@ -34,9 +34,9 @@ esnoApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
         templateUrl: 'partials/weeklyprogress',
         controller: 'weeklyProgressController'
     }).
-    when('/transmogfashion', {
-        templateUrl: 'partials/transmogfashion',
-        controller: 'transmogfashionController'
+    when('/progress', {
+        templateUrl: 'partials/progress',
+        controller: 'progressController'
     }).
     otherwise({
         redirectTo: '/'

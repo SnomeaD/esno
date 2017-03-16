@@ -8,6 +8,13 @@ angular.module('components', [])
       bindings: {
           toon: '<'
       }
+}).component('summaryStatusDetail', {
+      templateUrl: 'components/summaryStatusDetail.jade',
+      bindings: {
+          raid: '=',
+          difficulty: '=',
+          progress: '='
+      }
 }).component('bossesList', {
       templateUrl: 'components/bossesList.jade',
       bindings: {

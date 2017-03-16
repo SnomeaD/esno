@@ -1,0 +1,317 @@
+@death-knight:#C41F3B;
+@demon-hunter:#A330C9;
+@druid:#FF7D0A;
+@hunter:#ABD473;
+@mage:#69CCF0;
+@monk:#00FF96;
+@paladin:#F58CBA;
+@priest:#EEEEEE;
+@rogue:#FFF569;
+@shaman:#0070DE;
+@warlock:#9482C9;
+@warrior:#C79C6E;
+body {
+  padding-top: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.img-avatar{
+  border:1px solid;
+  box-shadow:4px 4px 5px;
+  vertical-align: top;
+}
+table.with-scroll{
+  background-color: #FFF;
+}
+table.with-scroll>tbody>tr>th
+{
+    background-color: #FFF;
+    position: absolute;
+    display: inline-block;
+    width: 216px;
+    white-space: nowrap;
+    border-top:0 solid black !important;
+}
+table.with-scroll> tbody > tr > td:nth-child(2)
+{
+    padding-left:216px !important;
+}
+table.with-scroll>tbody>tr.separator>td{
+    border-top:1px solid #333;
+    border-bottom:1px solid #333;
+    background-color: #aaa;
+}
+table.with-scroll>tbody>tr.separator>th{
+    border-top:1px solid #333;
+    border-bottom:1px solid #333;
+    background-color: #aaa;
+}
+
+.bossName{
+    writing-mode:vertical-rl;
+}
+/*
+ * WoW class color
+ */
+.death-knight{
+  background-color:@death-knight;
+}
+.demon-hunter{
+  background-color:@demon-hunter;
+}
+.druid{
+  background-color:@druid;
+}
+.hunter{
+  background-color:@hunter;
+}
+.mage{
+  background-color:@mage;
+}
+.monk{
+  background-color:@monk;
+}
+.paladin{
+  background-color:@paladin;
+}
+.priest{
+  background-color:@priest;
+}
+.rogue{
+  background-color:@rogue;
+}
+.shaman{
+  background-color:@shaman;
+}
+.warlock{
+  background-color:@warlock;
+}
+.warrior{
+  background-color:@warrior;
+}
+.death-knight-lite{
+  background-color:lighten(@death-knight,25%);
+}
+.demon-hunter-lite{
+  background-color:lighten(@demon-hunter,25%);
+}
+.druid-lite{
+  background-color:lighten(@druid,25%);
+}
+.hunter-lite{
+  background-color:lighten(@hunter,25%);
+}
+.mage-lite{
+  background-color:lighten(@mage,25%);
+}
+.monk-lite{
+  background-color:lighten(@monk,25%);
+}
+.paladin-lite{
+  background-color:lighten(@paladin,20%);
+}
+.priest-lite{
+  background-color:lighten(@priest,25%);
+}
+.rogue-lite{
+  background-color:lighten(@rogue,25%);
+}
+.shaman-lite{
+  background-color:lighten(@shaman,25%);
+}
+.warlock-lite{
+  background-color:lighten(@warlock,25%);
+}
+.warrior-lite{
+  background-color:lighten(@warrior,25%);
+}
+/*
+ * WoW class color
+ */
+.death-knight-text{
+    color:@death-knight;
+    border-color:@death-knight;
+}
+.demon-hunter-text{
+    color:@demon-hunter;
+    border-color:@demon-hunter;
+}
+.druid-text{
+    color:@druid;
+    border-color:@druid;
+}
+.hunter-text{
+    color:@hunter;
+    border-color:@hunter;
+}
+.mage-text{
+    color:@mage;
+    border-color:@mage;
+}
+.monk-text{
+    color:@monk;
+    border-color:@monk;
+}
+.paladin-text{
+    color:@paladin;
+    border-color:@paladin;
+}
+.priest-text{
+    color:@priest;
+    border-color:@priest;
+}
+.rogue-text{
+    color:@rogue;
+    border-color:@rogue;
+}
+.shaman-text{
+    color:@shaman;
+    border-color:@shaman;
+}
+.warlock-text{
+    color:@warlock;
+    border-color:@warlock;
+}
+.warrior-text{
+    color:@warrior;
+    border-color:@warrior;
+}
+/*
+ * WoW quality color
+ */
+.common{
+  color:#ffffff;
+}
+.uncommon{
+  color:#1eff00;
+}
+.rare{
+  color:#70B8FF;
+}
+.epic{
+  color:#a335ee;
+}
+.legendary{
+  color:#ff8000;
+}
+/*
+ * WoW boss status
+ */
+.boss-status{
+  -moz-border-radius:2px;
+  border-radius:2px;
+  padding:0 1px 0 1px;
+  border: 1px solid #aaaaaa;
+  margin:0 0 0 2px;
+}
+.alive{
+  background-color:#CCCCCC;
+  color:#333;
+}
+.lfr{
+  background-color:#1eff00;
+}
+.nm{
+  background-color:#70B8FF;
+}
+.hm{
+  background-color:#a335ee;
+}
+.mm{
+  background-color:#ff8000;
+}
+.summary-raid td.status div.status-completed{
+    background-color: #5cc301;
+}
+.summary-raid td.status div.status-in-progress{
+    background-color: #fcff00;
+}
+.summary-raid td.status div.status-incomplete{
+}
+.summary-raid td.status{
+    cursor: help;
+    height: 20px;
+    font-size: 10px;
+    line-height: 20px;
+    text-align: center;
+}
+.summary-raid table{
+    border-collapse: collapse;
+}
+.summary-raid td{
+    padding: 0;
+    margin: 0;
+}
+.summary-raid td.summary-toon div.toon-info{
+  display:inline-block;
+  padding-left:10px;
+
+}
+.summary-raid td.summary-toon{
+    padding: 3px;
+}
+.summary-raid tr.icons .icon{
+    width: 61px;
+    height: 60px;
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    text-shadow: 1px 1px 1px black;
+    font-family: "Arial Black", Arial, sans-serif;
+    font-weight: 900;
+    font-size: 11px;
+    line-height: 98px;
+    color: white;
+    border:1px solid black;
+    background: url("../img/raid-icons.jpg") no-repeat;
+}
+.summary-raid tr.icons .en .icon{
+    background-position: -2196px 0;
+}
+.summary-raid tr.icons .tov .icon{
+    background-position: -2318px 0;
+}
+.summary-raid tr.icons .nh .icon{
+    background-position: -2257px 0;
+}
+.summary-raid td.spacer div{
+    width: 26px !important;
+}
+
+.bosses-list>div{
+  border-bottom: 1px solid #aaa;
+  padding:2px 0 2px 0;
+}
+.bosses-difficulty>div{
+    padding:2px 0 3px 0;
+}
+.back-img{
+    display: block;
+    float: left;
+    z-index: -3;
+    position: absolute;
+}
+.fashion-entry{
+    height:570px;
+    margin:10px 10px;
+}
+.fashion-info {
+    float:left;
+    padding: 10px 10px;
+}
+.fashion-name {
+    font-size: large;
+    font-weight: bold;
+}
+.fashion-detail{
+    font-size:small;
+    font-style: italic;
+}
+.fashion-avatar{
+    padding: 10px 10px;
+    float:left;
+}

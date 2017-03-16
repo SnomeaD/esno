@@ -127,7 +127,7 @@ router.get('/progress/:server/:name', function(req, res, next) {
         return difficulty;
     }
     function getName(name){
-        var regex = /([A-z ']*)((?: victories \()|(?: kills \()|(?: redemptions \()|(?: destructions \())/g;
+        var regex = /([A-z ']*)((?: victories \()|(?: kills \()|(?: redemptions \()|(?: destructions \()|(?: defeats \())/g;
         var result = regex.exec(name);
         return (result && result[1]?result[1]:name);
     }
@@ -147,6 +147,7 @@ router.get('/progress/:server/:name', function(req, res, next) {
             };
         }
     }
+
     function findById(id){
         return function findId(array){
             return array.id===id;
@@ -200,19 +201,32 @@ router.get('/progress/:server/:name', function(req, res, next) {
                         nighthold[getName(boss.name)]=[bossStatistics];
                     }
                 }
+            }var trialOfValor = {};
+            for(var i=11407; i<=11418;i++){
+                var boss = bossData.find(findById(i));
+                if(boss){
+                    var bossStatistics = enhanceBossData(boss);
+                    if(trialOfValor[getName(boss.name)]){
+                        trialOfValor[getName(boss.name)].push(bossStatistics);
+                    }else{
+                        trialOfValor[getName(boss.name)]=[bossStatistics];
+                    }
+                }
             }
 
             res.jsonp({
                 'status':'ok',
                 'name' : statisticsData.name,
                 'realm' : statisticsData.realm,
-                'thumbnail' : 'https://render-api-eu.worldofwarcraft.com/static-render/eu/' + statisticsData.thumbnail,
+                'staticThumbnail' : 'https://render-api-eu.worldofwarcraft.com/static-render/eu/' + statisticsData.thumbnail,
+                'thumbnail' : 'http://render-eu.worldofwarcraft.com/character/' + statisticsData.thumbnail,
                 'class': statisticsData.class,
                 'averageItemLevel': statisticsData.items.averageItemLevel,
                 'averageItemLevelEquipped': statisticsData.items.averageItemLevelEquipped,
                 'progress' : {
                     'mythicDungeon' : mythicDungeon,
                     'emeraldNightmare' : emeraldNightmare,
+                    'trialOfValor' : trialOfValor,
                     'nighthold' : nighthold
                 }
             });

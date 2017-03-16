@@ -1,0 +1,85 @@
+h2 Weekly Progress
+
+i(data-ng-hide="toonsData || error").fa.fa-spinner.fa-spin
+div.alert.alert-info(data-ng-show="error")
+    span {{error}}
+div.container-fluid
+    div.row(data-ng-show="toonsData")
+        table.summary-raid
+            tbody
+                tr.icons
+                    td.summary
+                        div
+                    td.spacer
+                        div
+                    td.en
+                        div.icon EN
+                    td.spacer
+                        div
+                    td.tov
+                        div.icon ToV
+                    td.spacer
+                        div
+                    td.nh
+                        div.icon NH
+                tr(ng-repeat-start="toon in toonsData | orderBy:'-averageItemLevel'" class="{{toon.class | class}}-lite")
+                    td(rowspan=4 class="{{toon.class | class}}").summary-toon
+                        img(ng-src="{{toon.thumbnail}}" height="64px" width="64px").img-circle.img-avatar
+                        div.toon-info
+                            div
+                                h5 {{toon.name}}
+                            div
+                                h6 {{toon.realm}}
+                            div
+                                h6 {{toon.averageItemLevelEquipped}}/{{toon.averageItemLevel}}
+                    td.spacer
+                        div
+                    td.status
+                        summary-status-detail(progress="toon.progress" raid="'emeraldNightmare'" difficulty="'lfr'")
+                    td.spacer
+                        div
+                    td.status
+                        summary-status-detail(progress="toon.progress" raid="'trialOfValor'" difficulty="'lfr'")
+                    td.spacer
+                        div
+                    td.status
+                        summary-status-detail(progress="toon.progress" raid="'nighthold'" difficulty="'lfr'")
+                tr(class="{{toon.class | class}}-lite")
+                    td.spacer
+                        div
+                    td.status
+                        summary-status-detail(progress="toon.progress" raid="'emeraldNightmare'" difficulty="'nm'")
+                    td.spacer
+                        div
+                    td.status
+                        summary-status-detail(progress="toon.progress" raid="'trialOfValor'" difficulty="'nm'")
+                    td.spacer
+                        div
+                    td.status
+                        summary-status-detail(progress="toon.progress" raid="'nighthold'" difficulty="'nm'")
+                tr(class="{{toon.class | class}}-lite")
+                    td.spacer
+                        div
+                    td.status
+                        summary-status-detail(progress="toon.progress" raid="'emeraldNightmare'" difficulty="'hm'")
+                    td.spacer
+                        div
+                    td.status
+                        summary-status-detail(progress="toon.progress" raid="'trialOfValor'" difficulty="'hm'")
+                    td.spacer
+                        div
+                    td.status
+                        summary-status-detail(progress="toon.progress" raid="'nighthold'" difficulty="'hm'")
+                tr(class="{{toon.class | class}}-lite" ng-repeat-end)
+                    td.spacer
+                        div
+                    td.status
+                        summary-status-detail(progress="toon.progress" raid="'emeraldNightmare'" difficulty="'mm'")
+                    td.spacer
+                        div
+                    td.status
+                        summary-status-detail(progress="toon.progress" raid="'trialOfValor'" difficulty="'mm'")
+                    td.spacer
+                        div
+                    td.status
+                        summary-status-detail(progress="toon.progress" raid="'nighthold'" difficulty="'mm'")
