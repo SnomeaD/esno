@@ -1,1 +1,5 @@
-div(class="{{$ctrl.progress.summary[$ctrl.raid][$ctrl.difficulty].status}}") {{$ctrl.progress.summary[$ctrl.raid][$ctrl.difficulty].kill}}/{{$ctrl.progress.summary[$ctrl.raid].numberOfBosses}}
+div(class="{{$ctrl.progress.summary[$ctrl.raid][$ctrl.difficulty].status}}").raidtooltip {{$ctrl.progress.summary[$ctrl.raid][$ctrl.difficulty].kill}}/{{$ctrl.progress.summary[$ctrl.raid].numberOfBosses}}
+    span.raidtooltiptext
+        div(ng-repeat="(name, bossStatistics) in $ctrl.progress[$ctrl.raid]")
+            div(ng-repeat="difficultyDetail in bossStatistics")
+                span(ng-if="difficultyDetail.difficulty == $ctrl.difficulty" data-ng-class="{'bossKilled':difficultyDetail.quantity}" class="{{difficultyDetail.down?$ctrl.difficulty:''}}") {{difficultyDetail.quantity}}x {{name}}

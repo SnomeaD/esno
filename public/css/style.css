@@ -34,9 +34,6 @@ table.with-scroll > tbody > tr.separator > th {
   border-bottom: 1px solid #333;
   background-color: #aaa;
 }
-.bossName {
-  writing-mode: vertical-rl;
-}
 /*
  * WoW class color
  */
@@ -191,21 +188,39 @@ table.with-scroll > tbody > tr.separator > th {
   border: 1px solid #aaaaaa;
   margin: 0 0 0 2px;
 }
+.bossAlive {
+  color: #777777;
+}
+.bossKilled {
+  color: #ffffff;
+}
 .alive {
   background-color: #CCCCCC;
   color: #333;
 }
-.lfr {
-  background-color: #1eff00;
+.boss-status.lfr {
+  background-color: #ffffff;
 }
-.nm {
+.boss-status.nm {
   background-color: #70B8FF;
 }
-.hm {
+.boss-status.hm {
   background-color: #a335ee;
 }
-.mm {
+.boss-status.mm {
   background-color: #ff8000;
+}
+.summary-raid .lfr {
+  color: #ffffff;
+}
+.summary-raid .nm {
+  color: #70B8FF;
+}
+.summary-raid .hm {
+  color: #a335ee;
+}
+.summary-raid .mm {
+  color: #ff8000;
 }
 .summary-raid td.status div.status-completed {
   background-color: #5cc301;
@@ -274,23 +289,27 @@ table.with-scroll > tbody > tr.separator > th {
   z-index: -3;
   position: absolute;
 }
-.fashion-entry {
-  height: 570px;
-  margin: 10px 10px;
+.raidtooltip {
+  position: relative;
+  display: inline-block;
 }
-.fashion-info {
-  float: left;
-  padding: 10px 10px;
+.raidtooltip .raidtooltiptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #CCCCCC;
+  text-align: left;
+  border: 1px solid #CCCCCC;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: -40px;
+  left: 90px;
+  margin-left: -60px;
+  opacity: 0;
 }
-.fashion-name {
-  font-size: large;
-  font-weight: bold;
-}
-.fashion-detail {
-  font-size: small;
-  font-style: italic;
-}
-.fashion-avatar {
-  padding: 10px 10px;
-  float: left;
+.raidtooltip:hover .raidtooltiptext {
+  visibility: visible;
+  opacity: 1;
 }

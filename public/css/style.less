@@ -10,6 +10,11 @@
 @shaman:#0070DE;
 @warlock:#9482C9;
 @warrior:#C79C6E;
+@common: #ffffff;
+@uncommon: #1eff00;
+@rare: #70B8FF;
+@epic: #a335ee;
+@legendary: #ff8000;
 body {
   padding-top: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -51,9 +56,6 @@ table.with-scroll>tbody>tr.separator>th{
     background-color: #aaa;
 }
 
-.bossName{
-    writing-mode:vertical-rl;
-}
 /*
  * WoW class color
  */
@@ -184,19 +186,19 @@ table.with-scroll>tbody>tr.separator>th{
  * WoW quality color
  */
 .common{
-  color:#ffffff;
+  color:@common;
 }
 .uncommon{
-  color:#1eff00;
+  color:@uncommon;
 }
 .rare{
-  color:#70B8FF;
+  color:@rare;
 }
 .epic{
-  color:#a335ee;
+  color:@epic;
 }
 .legendary{
-  color:#ff8000;
+  color: @legendary;
 }
 /*
  * WoW boss status
@@ -208,21 +210,40 @@ table.with-scroll>tbody>tr.separator>th{
   border: 1px solid #aaaaaa;
   margin:0 0 0 2px;
 }
+
+.bossAlive{
+  color: #777777;
+}
+.bossKilled{
+  color: @common;
+}
 .alive{
   background-color:#CCCCCC;
   color:#333;
 }
-.lfr{
-  background-color:#1eff00;
+.boss-status.lfr{
+  background-color:@common;
 }
-.nm{
-  background-color:#70B8FF;
+.boss-status.nm{
+  background-color:@rare;
 }
-.hm{
-  background-color:#a335ee;
+.boss-status.hm{
+  background-color:@epic;
 }
-.mm{
-  background-color:#ff8000;
+.boss-status.mm{
+  background-color:@legendary;
+}
+.summary-raid .lfr{
+  color:@common;
+}
+.summary-raid .nm{
+  color:@rare;
+}
+.summary-raid .hm{
+  color:@epic;
+}
+.summary-raid .mm{
+  color:@legendary;
 }
 .summary-raid td.status div.status-completed{
     background-color: #5cc301;
@@ -295,23 +316,27 @@ table.with-scroll>tbody>tr.separator>th{
     z-index: -3;
     position: absolute;
 }
-.fashion-entry{
-    height:570px;
-    margin:10px 10px;
+.raidtooltip {
+  position: relative;
+  display: inline-block;
 }
-.fashion-info {
-    float:left;
-    padding: 10px 10px;
+.raidtooltip .raidtooltiptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #CCCCCC;
+  text-align: left;
+  border:1px solid #CCCCCC;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: -40px;
+  left: 90px;
+  margin-left: -60px;
+  opacity: 0;
 }
-.fashion-name {
-    font-size: large;
-    font-weight: bold;
-}
-.fashion-detail{
-    font-size:small;
-    font-style: italic;
-}
-.fashion-avatar{
-    padding: 10px 10px;
-    float:left;
+.raidtooltip:hover .raidtooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
