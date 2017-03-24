@@ -28,10 +28,9 @@ div.container-fluid
                         div.toon-info
                             div
                                 h5 {{toon.name}}
-                            div
-                                h6 {{toon.realm}}
-                            div
-                                h6 {{toon.averageItemLevelEquipped}}/{{toon.averageItemLevel}}
+                            div {{toon.realm}}
+                            div {{toon.averageItemLevelEquipped}}/{{toon.averageItemLevel}}
+                            div Mythic: {{toon.info.mythicTotal}}
                     td.spacer
                         div
                     td.status

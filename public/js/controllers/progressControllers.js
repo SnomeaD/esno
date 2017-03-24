@@ -48,13 +48,23 @@ progressControllers.controller('progressController', ['$scope', '$http','battleN
             response.mm.status =  defineStatus(response.mm.kill,response.numberOfBosses);
             return response;
         }
+        function getMythicTotal(dungeons){
+            let total = 0;
+            for (let dungeon in dungeons){
+                dungeons[dungeon].forEach(function(detail){
+                    console.log(detail);
+                    total += parseInt(detail.quantity);
+                });
+            }
+            return total;
+        }
         const toons = [
             {server:'sargeras', name:'Snomead'},
             {server:'sargeras', name:'Snominette'},
             {server:'sargeras', name:'Sno'},
             {server:'sargeras', name:'Snômead'},
             {server:'sargeras', name:'Snomeadine'},
-            {server:'nerzhul', name:'Snomead'},
+            {server:'nerzhul',  name:'Snomead'},
             {server:'sargeras', name:'Snoméàd'},
             {server:'sargeras', name:'Dromead'},
             {server:'sargeras', name:'Snomeadée'},
@@ -76,6 +86,8 @@ progressControllers.controller('progressController', ['$scope', '$http','battleN
                         data.progress.summary.emeraldNightmare = getSummary(data.progress.emeraldNightmare);
                         data.progress.summary.trialOfValor = getSummary(data.progress.trialOfValor);
                         data.progress.summary.nighthold = getSummary(data.progress.nighthold);
+                        data.info = {};
+                        data.info.mythicTotal = getMythicTotal(data.progress.mythicDungeon);
                         $scope.toonsData.push(data);
                     } else {
                         $scope.error = data.reason;
