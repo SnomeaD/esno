@@ -15,6 +15,20 @@ battleNetServices.factory('battleNetService', function ($http, $q) {
                         return $q.reject(response.data);
                     });
             },
+            getHistory: function(server,toonname){
+                return $http.get('/bnet/history/'+server+'/'+toonname)
+                    .then(function(response) {
+                        if (typeof response.data === 'object') {
+                            return response.data;
+                        } else {
+                            // invalid response
+                            return $q.reject(response.data);
+                        }
+                    }, function(response) {
+                        // something went wrong
+                        return $q.reject(response.data);
+                    });
+            },
             getFashion: function(){
                 return $http.get('/bnet/transmogfashion')
                     .then(function(response) {

@@ -243,64 +243,22 @@ router.get('/progress/:server/:name', function(req, res, next) {
         }
     });
 });
-/* GET realm listing. */
-router.get('/realm', function(req, res, next) {
+
+/* GET users listing. */
+router.get('/history/:server/:name', function(req, res, next) {
+    const region = 'eu';
     const blizzard = require('blizzard.js').initialize({ apikey: config.bnet.apikey });
-
-    var origins= ['us','eu'];
-    var slugRealm = {};
-
-    // blizzard.wow.realms({ origin: 'eu' }).then(function (response) {
-    //     res.jsonp(response.data);
-    // }).catch(console.log.bind(console));
-    blizzard.wow.realms({ origin: 'eu' }).then(function (response) {
-        var realms = response.data.realms;
-        var origin= 'eu';
-        realms.forEach(function(realm){
-            if(!slugRealm[origin]){
-                slugRealm[origin]={};
-                slugRealm[origin][realm.locale] = {};
-            }
-            slugRealm[origin][realm.locale] = {};
-            slugRealm[origin][realm.locale][realm.slug] = {
-                'name': realm.name,
-                'enSlug': realm.slug,
-                'locale': realm.locale
-            };
-
-        });
-        return slugRealm;
-    }).then(function(slugRealm){
-        return Promise.all(slugRealm['eu']['fr_FR'].map(function(realmName){
-            if(slugRealm[region][locale].hasOwnProperty(realmName)){
-                return blizzard.wow.realms({ realms: slugRealm[region][locale][realmName].name, origin: region, locale:slugRealm[region][locale][realmName].locale}).then(function(response){
-                    var realm = response.data.realms[0];
-                    console.log(realm.slug);
-                    slugRealm[region][locale][realmName].localeSlug = realm.slug;
-                    return slugRealm;
-                });
-            }
-        }));
-
-        // for(var region in slugRealm){
-        //     if(slugRealm.hasOwnProperty(region)){
-        //         for(var locale in slugRealm[region]){
-        //             if(slugRealm[region].hasOwnProperty(locale)){
-        //                 for(var realmName in slugRealm[region][locale]){
-        //                     if(slugRealm[region][locale].hasOwnProperty(realmName)){
-        //                         return blizzard.wow.realms({ realms: slugRealm[region][locale][realmName].name, origin: region, locale:slugRealm[region][locale][realmName].locale}).then(function(response){
-        //                             var realm = response.data.realms[0];
-        //                             console.log(realm.slug);
-        //                             slugRealm[region][locale][realmName].localeSlug = realm.slug;
-        //                             return slugRealm;
-        //                         });
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-    }).then(function(response){res.jsonp(response)}).catch(console.log.bind(console));
+    blizzard.wow.character('achievements', { realm: req.params.server, name: req.params.name, origin: region })
+        .then(result => { 
+            res.jsonp({
+                'status':'ok',
+                'name' : result.data.name,
+                'realm' : result.data.realm,
+                'class': result.data.class,
+                'achievements': result.data.achievements
+            });
+        })
+        .catch(console.log.bind(console));
 });
 
 module.exports = router;

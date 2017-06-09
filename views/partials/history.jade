@@ -1,0 +1,11 @@
+h2 Toons history
+
+i(data-ng-hide="toonsData || error").fa.fa-spinner.fa-spin
+div.alert.alert-info(data-ng-show="error")
+    span {{error}}
+div.container-fluid
+    div.row(data-ng-show="toonsData")
+        div(ng-repeat="toon in toonsData | orderBy:'-averageItemLevel'" class="{{toon.class | class}}-lite")
+            div {{toon}}
+    div.row
+        canvas(class="chart chart-line" chart-data="data" chart-options="options")

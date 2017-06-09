@@ -74,8 +74,6 @@ progressControllers.controller('progressController', ['$scope', '$http','battleN
             {server:'sargeras', name:'Snomeadh'}
         ];
         $scope.toonsData = [];
-        $scope.currentPage = 1;
-        $scope.pageSize = 4;
         toons.forEach( function (toon){
             battleNetService.getProgress(toon.server,toon.name)
             // then() called when son gets back
