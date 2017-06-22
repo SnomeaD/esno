@@ -5,18 +5,65 @@
 const progressControllers = angular.module('progressControllers', []);
 progressControllers.controller('progressController', ['$scope', '$http','battleNetService',
     function($scope,$http,battleNetService) {
-        function defineStatus(kill,total){
-            if(kill === total){
-                return "status-completed";
-            }else if(kill === 0){
-                return "status-incomplete";
-            }else{
-                return "status-in-progress";
-            }
+        if (!Array.prototype.find) {
+            Object.defineProperty(Array.prototype, 'find', {
+                enumerable: false,
+                configurable: true,
+                writable: true,
+                value: function(predicate) {
+                    if (this == null) {
+                        throw new TypeError('Array.prototype.find called on null or undefined');
+                    }
+                    if (typeof predicate !== 'function') {
+                        throw new TypeError('predicate must be a function');
+                    }
+                    var list = Object(this);
+                    var length = list.length >>> 0;
+                    var thisArg = arguments[1];
+                    var value;
+                    for (var i = 0; i < length; i++) {
+                        if (i in list) {
+                            value = list[i];
+                            if (predicate.call(thisArg, value, i, list)) {
+                                return value;
+                            }
+                        }
+                    }
+                    return undefined;
+                }
+            });
         }
-        function getSummary(bossesData){
+        if (!Array.prototype.includes) {
+            Array.prototype.includes = function(searchElement /*, fromIndex*/ ) {
+                'use strict';
+                var O = Object(this);
+                var len = parseInt(O.length) || 0;
+                if (len === 0) {
+                    return false;
+                }
+                var n = parseInt(arguments[1]) || 0;
+                var k;
+                if (n >= 0) {
+                    k = n;
+                } else {
+                    k = len + n;
+                    if (k < 0) {k = 0;}
+                }
+                var currentElement;
+                while (k < len) {
+                    currentElement = O[k];
+                    if (searchElement === currentElement ||
+                        (searchElement !== searchElement && currentElement !== currentElement)) { // NaN !== NaN
+                        return true;
+                    }
+                    k++;
+                }
+                return false;
+            };
+        }
+        function getSummary(raidData){
             let response = {
-                'numberOfBosses': 0,
+                'numberOfBosses': raidData.bosses.length,
                 'lfr': {
                     'kill':0,
                 },
@@ -30,16 +77,18 @@ progressControllers.controller('progressController', ['$scope', '$http','battleN
                     'kill':0,
                 }
             };
-            for(let boss in bossesData) {
-                if(bossesData.hasOwnProperty(boss)){
-                    response['numberOfBosses'] += 1;
-                    for(let detail in bossesData[boss]) {
-                        if(bossesData[boss].hasOwnProperty(detail)) {
-                            if(bossesData[boss][detail].down){
-                                response[bossesData[boss][detail].difficulty].kill += 1;
-                            }
-                        }
-                    }
+            for(let bossId in raidData.bosses) {
+                if(isDeadThisWeek(raidData.bosses[bossId].lfrTimestamp)){
+                    response.lfr.kill += 1;
+                }
+                if(isDeadThisWeek(raidData.bosses[bossId].normalTimestamp)){
+                    response.nm.kill += 1;
+                }
+                if(isDeadThisWeek(raidData.bosses[bossId].heroicTimestamp)){
+                    response.hm.kill += 1;
+                }
+                if(isDeadThisWeek(raidData.bosses[bossId].mythicTimestamp)){
+                    response.mm.kill += 1;
                 }
             }
             response.lfr.status =  defineStatus(response.lfr.kill,response.numberOfBosses);
@@ -48,30 +97,48 @@ progressControllers.controller('progressController', ['$scope', '$http','battleN
             response.mm.status =  defineStatus(response.mm.kill,response.numberOfBosses);
             return response;
         }
-        function getMythicTotal(dungeons){
-            let total = 0;
-            for (let dungeon in dungeons){
-                dungeons[dungeon].forEach(function(detail){
-                    console.log(detail);
-                    total += parseInt(detail.quantity);
-                });
+        function isDeadThisWeek(timestamp){
+            // If we are Wednesday or past, don't take last wednesday but this Wednesday
+            if(3 <= moment().day()){
+                if(moment(timestamp).isAfter(moment().day(3).hour(9).minute(0).second(0))){
+                    return true
+                }
+                return false;
+            }else{
+                if(moment(timestamp).isAfter(moment().day(-4).hour(9).minute(0).second(0))){
+                    return true;
+                }
             }
-            return total;
+            return false;
+        }
+        function findById(id){
+            return function findId(array){
+                return array.id===id;
+            }
+        }
+        function defineStatus(kill,total){
+            if(kill === total){
+                return "status-completed";
+            }else if(kill === 0){
+                return "status-incomplete";
+            }else{
+                return "status-in-progress";
+            }
         }
         const toons = [
-            {server:'sargeras', name:'Snomead'},
-            {server:'sargeras', name:'Snominette'},
-            {server:'sargeras', name:'Sno'},
-            {server:'sargeras', name:'Snômead'},
-            {server:'sargeras', name:'Snomeadine'},
-            {server:'nerzhul',  name:'Snomead'},
-            {server:'sargeras', name:'Snoméàd'},
-            {server:'sargeras', name:'Dromead'},
-            {server:'sargeras', name:'Snomeadée'},
-            {server:'sargeras', name:'Snømead'},
-            {server:'sargeras', name:'Snomeadille'},
-            {server:'sargeras', name:'Snommead'},
-            {server:'sargeras', name:'Snomeadh'}
+            // {server:'sargeras', name:'Snomead'},
+            // {server:'sargeras', name:'Snominette'},
+            // {server:'sargeras', name:'Sno'},
+            // {server:'sargeras', name:'Snômead'},
+            // {server:'sargeras', name:'Snomeadine'},
+            // {server:'nerzhul',  name:'Snomead'},
+            // {server:'sargeras', name:'Snoméàd'},
+            // {server:'sargeras', name:'Dromead'},
+            // {server:'sargeras', name:'Snomeadée'},
+            // {server:'sargeras', name:'Snømead'},
+            // {server:'sargeras', name:'Snomeadille'},
+            // {server:'sargeras', name:'Snommead'},
+            {server:'sargeras', name:'Snomead'}
         ];
         $scope.toonsData = [];
         toons.forEach( function (toon){
@@ -79,17 +146,23 @@ progressControllers.controller('progressController', ['$scope', '$http','battleN
             // then() called when son gets back
                 .then(function(data) {
                     // promise fulfilled
-                    if ('ok' === data.status) {
-                        data.progress.summary = {};
-                        data.progress.summary.emeraldNightmare = getSummary(data.progress.emeraldNightmare);
-                        data.progress.summary.trialOfValor = getSummary(data.progress.trialOfValor);
-                        data.progress.summary.nighthold = getSummary(data.progress.nighthold);
-                        data.info = {};
-                        data.info.mythicTotal = getMythicTotal(data.progress.mythicDungeon);
-                        $scope.toonsData.push(data);
-                    } else {
-                        $scope.error = data.reason;
+                    let toon = {
+                        'name' : data.name,
+                        'realm' : data.realm,
+                        'staticThumbnail' : 'https://render-api-eu.worldofwarcraft.com/static-render/eu/' + data.thumbnail,
+                        'thumbnail' : 'http://render-eu.worldofwarcraft.com/character/' + data.thumbnail,
+                        'class': data.class,
+                        'averageItemLevel': data.items.averageItemLevel,
+                        'averageItemLevelEquipped': data.items.averageItemLevelEquipped,
                     }
+                    toon.progress = [];
+                    let raids = [8026,8440,8025,8524];
+                    for(let i =0; i< raids.length;i++){
+                        let raid = data.progression.raids.find(findById(raids[i]));
+                        raid.summary = getSummary(data.progression.raids.find(findById(raids[i])));
+                        toon.progress.push(raid);
+                    }
+                    $scope.toonsData.push(toon);
                 }, function(error) {
                     // promise rejected, could log the error with: console.log('error', error);
                     $scope.error = error;

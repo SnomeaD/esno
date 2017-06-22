@@ -13,16 +13,20 @@ div.container-fluid
                     td.spacer
                         div
                     td.en
-                        div.icon EN
+                        div.icon Emerald Nightmare
                     td.spacer
                         div
                     td.tov
-                        div.icon ToV
+                        div.icon Trial of Valor
                     td.spacer
                         div
                     td.nh
-                        div.icon NH
-                tr(ng-repeat-start="toon in toonsData | orderBy:'-averageItemLevel'" class="{{toon.class | class}}-lite")
+                        div.icon Nigthold
+                    td.spacer
+                        div
+                    td.tos
+                        div.icon Tomb of Sargeras
+                tr(ng-repeat="toon in toonsData | orderBy:'-averageItemLevel'" class="{{toon.class | class}}-lite")
                     td(rowspan=4 class="{{toon.class | class}}").summary-toon
                         img(ng-src="{{toon.thumbnail}}" height="64px" width="64px").img-circle.img-avatar
                         div.toon-info
@@ -30,55 +34,12 @@ div.container-fluid
                                 h5 {{toon.name}}
                             div {{toon.realm}}
                             div {{toon.averageItemLevelEquipped}}/{{toon.averageItemLevel}}
-                            div Mythic: {{toon.info.mythicTotal}}
-                    td.spacer
+                    td.spacer(ng-repeat-end)
                         div
-                    td.status
-                        summary-status-detail(progress="toon.progress" raid="'emeraldNightmare'" difficulty="'lfr'")
-                    td.spacer
+                    td(ng-repeat-start="raid in toon.progress")
+                        summary-status-detail(raid="raid" difficulty="'lfr'")
+                        summary-status-detail(raid="raid" difficulty="'nm'")
+                        summary-status-detail(raid="raid" difficulty="'hm'")
+                        summary-status-detail(raid="raid" difficulty="'mm'")
+                    td.spacer(ng-repeat-end)
                         div
-                    td.status
-                        summary-status-detail(progress="toon.progress" raid="'trialOfValor'" difficulty="'lfr'")
-                    td.spacer
-                        div
-                    td.status
-                        summary-status-detail(progress="toon.progress" raid="'nighthold'" difficulty="'lfr'")
-                tr(class="{{toon.class | class}}-lite")
-                    td.spacer
-                        div
-                    td.status
-                        summary-status-detail(progress="toon.progress" raid="'emeraldNightmare'" difficulty="'nm'")
-                    td.spacer
-                        div
-                    td.status
-                        summary-status-detail(progress="toon.progress" raid="'trialOfValor'" difficulty="'nm'")
-                    td.spacer
-                        div
-                    td.status
-                        summary-status-detail(progress="toon.progress" raid="'nighthold'" difficulty="'nm'")
-                tr(class="{{toon.class | class}}-lite")
-                    td.spacer
-                        div
-                    td.status
-                        summary-status-detail(progress="toon.progress" raid="'emeraldNightmare'" difficulty="'hm'")
-                    td.spacer
-                        div
-                    td.status
-                        summary-status-detail(progress="toon.progress" raid="'trialOfValor'" difficulty="'hm'")
-                    td.spacer
-                        div
-                    td.status
-                        summary-status-detail(progress="toon.progress" raid="'nighthold'" difficulty="'hm'")
-                tr(class="{{toon.class | class}}-lite" ng-repeat-end)
-                    td.spacer
-                        div
-                    td.status
-                        summary-status-detail(progress="toon.progress" raid="'emeraldNightmare'" difficulty="'mm'")
-                    td.spacer
-                        div
-                    td.status
-                        summary-status-detail(progress="toon.progress" raid="'trialOfValor'" difficulty="'mm'")
-                    td.spacer
-                        div
-                    td.status
-                        summary-status-detail(progress="toon.progress" raid="'nighthold'" difficulty="'mm'")

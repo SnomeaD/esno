@@ -1,11 +1,15 @@
 'use strict';
-
+const path = require('path');
 const express = require('express');
 const request = require("request");
+const getProgressController = require(path.resolve('controllers','getProgress'));
 const router = express.Router();
+const config = require('../config/config.js');
+
 module.exports = router;
 
-const config = require('../config/config.js');
+/* GET users listing. */
+router.get('/progress/:server/:name', getProgressController);
 /* GET users listing. */
 router.get('/character/:server/:name', function(req, res, next) {
     const bnet = require('battlenet-api')();
@@ -26,7 +30,7 @@ router.get('/character/:server/:name', function(req, res, next) {
 });
 
 /* GET users listing. */
-router.get('/progress/:server/:name', function(req, res, next) {
+router.get('/progress_old/:server/:name', function(req, res, next) {
     var moment = require('moment');
     var bnet = require('battlenet-api')();
 
@@ -201,7 +205,8 @@ router.get('/progress/:server/:name', function(req, res, next) {
                         nighthold[getName(boss.name)]=[bossStatistics];
                     }
                 }
-            }var trialOfValor = {};
+            }
+            var trialOfValor = {};
             for(var i=11407; i<=11418;i++){
                 var boss = bossData.find(findById(i));
                 if(boss){
@@ -242,23 +247,6 @@ router.get('/progress/:server/:name', function(req, res, next) {
             }
         }
     });
-});
-
-/* GET users listing. */
-router.get('/history/:server/:name', function(req, res, next) {
-    const region = 'eu';
-    const blizzard = require('blizzard.js').initialize({ apikey: config.bnet.apikey });
-    blizzard.wow.character('achievements', { realm: req.params.server, name: req.params.name, origin: region })
-        .then(result => { 
-            res.jsonp({
-                'status':'ok',
-                'name' : result.data.name,
-                'realm' : result.data.realm,
-                'class': result.data.class,
-                'achievements': result.data.achievements
-            });
-        })
-        .catch(console.log.bind(console));
 });
 
 module.exports = router;

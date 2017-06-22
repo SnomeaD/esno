@@ -276,28 +276,32 @@ table.with-scroll>tbody>tr.separator>th{
     padding: 3px;
 }
 .summary-raid tr.icons .icon{
-    width: 61px;
+    width: 120px;
     height: 60px;
-    display: block;
-    overflow: hidden;
+    display: table-cell;
     text-align: center;
+    vertical-align: bottom;
+    overflow: hidden;
     text-shadow: 1px 1px 1px black;
     font-family: "Arial Black", Arial, sans-serif;
     font-weight: 900;
     font-size: 11px;
-    line-height: 98px;
     color: white;
     border:1px solid black;
-    background: url("../img/raid-icons.jpg") no-repeat;
+    background-repeat: no-repeat;
+    background-size: 120px 60px;
 }
-.summary-raid tr.icons .en .icon{
-    background-position: -2196px 0;
+.summary-raid tr.icons .en .icon {
+  background-image:url("https://blzmedia-a.akamaihd.net/wow/zones/the-emerald-nightmare-small.jpg")
 }
-.summary-raid tr.icons .tov .icon{
-    background-position: -2318px 0;
+.summary-raid tr.icons .tov .icon {
+  background-image:url("https://blzmedia-a.akamaihd.net/wow/zones/trial-of-valor-small.jpg");
 }
-.summary-raid tr.icons .nh .icon{
-    background-position: -2257px 0;
+.summary-raid tr.icons .nh .icon {
+  background-image:url("https://blzmedia-a.akamaihd.net/wow/zones/the-nighthold-small.jpg");
+}
+.summary-raid tr.icons .tos .icon {
+  background-image: url("https://blzmedia-a.akamaihd.net/wow/zones/tomb-of-sargeras-small.jpg");
 }
 .summary-raid td.spacer div{
     width: 26px !important;
