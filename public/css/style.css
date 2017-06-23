@@ -201,32 +201,40 @@ table.with-scroll > tbody > tr.separator > th {
 .boss-status.lfr {
   background-color: #ffffff;
 }
-.boss-status.nm {
+.boss-status.nm,
+.boss-status.normal {
   background-color: #70B8FF;
 }
-.boss-status.hm {
+.boss-status.hm,
+.boss-status.heroic {
   background-color: #a335ee;
 }
-.boss-status.mm {
+.boss-status.mm,
+.boss-status.mythic {
   background-color: #ff8000;
 }
 .summary-raid .lfr {
   color: #1eff00;
 }
-.summary-raid .nm {
+.summary-raid .nm,
+.summary-raid .normal {
   color: #70B8FF;
 }
-.summary-raid .hm {
+.summary-raid .hm,
+.summary-raid .heroic {
   color: #a335ee;
 }
-.summary-raid .mm {
+.summary-raid .mm,
+.summary-raid .mythic {
   color: #ff8000;
 }
 .summary-raid td.status div.status-completed {
   background-color: #5cc301;
+  border: 1px solid #2c5e00;
 }
 .summary-raid td.status div.status-in-progress {
   background-color: #fcff00;
+  border: 1px solid #979900;
 }
 .summary-raid td.status {
   cursor: help;
@@ -234,6 +242,10 @@ table.with-scroll > tbody > tr.separator > th {
   font-size: 10px;
   line-height: 20px;
   text-align: center;
+}
+.summary-raid td.status div {
+  width: 100%;
+  padding: 0px 3px;
 }
 .summary-raid table {
   border-collapse: collapse;

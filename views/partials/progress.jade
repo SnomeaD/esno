@@ -27,19 +27,21 @@ div.container-fluid
                     td.tos
                         div.icon Tomb of Sargeras
                 tr(ng-repeat="toon in toonsData | orderBy:'-averageItemLevel'" class="{{toon.class | class}}-lite")
-                    td(rowspan=4 class="{{toon.class | class}}").summary-toon
+                    td(class="{{toon.class | class}}").summary-toon
                         img(ng-src="{{toon.thumbnail}}" height="64px" width="64px").img-circle.img-avatar
                         div.toon-info
                             div
                                 h5 {{toon.name}}
                             div {{toon.realm}}
                             div {{toon.averageItemLevelEquipped}}/{{toon.averageItemLevel}}
-                    td.spacer(ng-repeat-end)
+                    td.spacer(ng-repeat-start="raid in toon.progress")
                         div
-                    td(ng-repeat-start="raid in toon.progress")
-                        summary-status-detail(raid="raid" difficulty="'lfr'")
-                        summary-status-detail(raid="raid" difficulty="'nm'")
-                        summary-status-detail(raid="raid" difficulty="'hm'")
-                        summary-status-detail(raid="raid" difficulty="'mm'")
-                    td.spacer(ng-repeat-end)
-                        div
+                    td(ng-repeat-end class="{{toon.class | class}}-lite").status
+                        div.status
+                            summary-status-detail(raid="raid" difficulty="'lfr'")
+                        div.status
+                            summary-status-detail(raid="raid" difficulty="'normal'")
+                        div.status
+                            summary-status-detail(raid="raid" difficulty="'heroic'")
+                        div.status
+                            summary-status-detail(raid="raid" difficulty="'mythic'")

@@ -67,13 +67,13 @@ progressControllers.controller('progressController', ['$scope', '$http','battleN
                 'lfr': {
                     'kill':0,
                 },
-                'nm': {
+                'normal': {
                     'kill':0,
                 },
-                'hm': {
+                'heroic': {
                     'kill':0,
                 },
-                'mm': {
+                'mythic': {
                     'kill':0,
                 }
             };
@@ -82,19 +82,19 @@ progressControllers.controller('progressController', ['$scope', '$http','battleN
                     response.lfr.kill += 1;
                 }
                 if(isDeadThisWeek(raidData.bosses[bossId].normalTimestamp)){
-                    response.nm.kill += 1;
+                    response.normal.kill += 1;
                 }
                 if(isDeadThisWeek(raidData.bosses[bossId].heroicTimestamp)){
-                    response.hm.kill += 1;
+                    response.heroic.kill += 1;
                 }
                 if(isDeadThisWeek(raidData.bosses[bossId].mythicTimestamp)){
-                    response.mm.kill += 1;
+                    response.mythic.kill += 1;
                 }
             }
             response.lfr.status =  defineStatus(response.lfr.kill,response.numberOfBosses);
-            response.nm.status =  defineStatus(response.nm.kill,response.numberOfBosses);
-            response.hm.status =  defineStatus(response.hm.kill,response.numberOfBosses);
-            response.mm.status =  defineStatus(response.mm.kill,response.numberOfBosses);
+            response.normal.status =  defineStatus(response.normal.kill,response.numberOfBosses);
+            response.heroic.status =  defineStatus(response.heroic.kill,response.numberOfBosses);
+            response.mythic.status =  defineStatus(response.mythic.kill,response.numberOfBosses);
             return response;
         }
         function isDeadThisWeek(timestamp){
@@ -126,19 +126,19 @@ progressControllers.controller('progressController', ['$scope', '$http','battleN
             }
         }
         const toons = [
-            // {server:'sargeras', name:'Snomead'},
-            // {server:'sargeras', name:'Snominette'},
-            // {server:'sargeras', name:'Sno'},
-            // {server:'sargeras', name:'Snômead'},
-            // {server:'sargeras', name:'Snomeadine'},
-            // {server:'nerzhul',  name:'Snomead'},
-            // {server:'sargeras', name:'Snoméàd'},
-            // {server:'sargeras', name:'Dromead'},
-            // {server:'sargeras', name:'Snomeadée'},
-            // {server:'sargeras', name:'Snømead'},
-            // {server:'sargeras', name:'Snomeadille'},
-            // {server:'sargeras', name:'Snommead'},
-            {server:'sargeras', name:'Snomead'}
+            {server:'sargeras', name:'Snomead'},
+            {server:'sargeras', name:'Snominette'},
+            {server:'sargeras', name:'Sno'},
+            {server:'sargeras', name:'Snômead'},
+            {server:'sargeras', name:'Snomeadine'},
+            {server:'nerzhul',  name:'Snomead'},
+            {server:'sargeras', name:'Snoméàd'},
+            {server:'sargeras', name:'Dromead'},
+            {server:'sargeras', name:'Snomeadée'},
+            {server:'sargeras', name:'Snømead'},
+            {server:'sargeras', name:'Snomeadille'},
+            {server:'sargeras', name:'Snommead'},
+            {server:'sargeras', name:'Snomeadh'}
         ];
         $scope.toonsData = [];
         toons.forEach( function (toon){
