@@ -4076,7 +4076,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
             var modalClosedDeferred = $q.defer();
             var modalRenderDeferred = $q.defer();
 
-            //prepare an instance of a modal to be injected into battlenet and returned to a caller
+            //prepare an instance of a modal to be injected into controllers and returned to a caller
             var modalInstance = {
               result: modalResultDeferred.promise,
               opened: modalOpenedDeferred.promise,
@@ -4129,7 +4129,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
 
                 var ctrlInstance, ctrlInstantiate, ctrlLocals = {};
 
-                //battlenet
+                //controllers
                 if (modalOptions.controller) {
                   ctrlLocals.$scope = modalScope;
                   ctrlLocals.$scope.$resolve = {};
