@@ -11,7 +11,7 @@ progressControllers.controller('progressController', ['$scope', '$http','battleN
                 configurable: true,
                 writable: true,
                 value: function(predicate) {
-                    if (this == null) {
+                    if (this === null) {
                         throw new TypeError('Array.prototype.find called on null or undefined');
                     }
                     if (typeof predicate !== 'function') {
@@ -80,21 +80,26 @@ progressControllers.controller('progressController', ['$scope', '$http','battleN
             for(let bossId in raidData.bosses) {
                 if(isDeadThisWeek(raidData.bosses[bossId].lfrTimestamp)){
                     response.lfr.kill += 1;
+                    raidData.bosses[bossId].lfrDeadThisWeek = true;
                 }
                 if(isDeadThisWeek(raidData.bosses[bossId].normalTimestamp)){
                     response.normal.kill += 1;
+                    raidData.bosses[bossId].normalDeadThisWeek = true;
                 }
                 if(isDeadThisWeek(raidData.bosses[bossId].heroicTimestamp)){
                     response.heroic.kill += 1;
+                    raidData.bosses[bossId].heroicDeadThisWeek = true;
                 }
                 if(isDeadThisWeek(raidData.bosses[bossId].mythicTimestamp)){
                     response.mythic.kill += 1;
+                    raidData.bosses[bossId].mythicDeadThisWeek = true;
                 }
             }
             response.lfr.status =  defineStatus(response.lfr.kill,response.numberOfBosses);
             response.normal.status =  defineStatus(response.normal.kill,response.numberOfBosses);
             response.heroic.status =  defineStatus(response.heroic.kill,response.numberOfBosses);
             response.mythic.status =  defineStatus(response.mythic.kill,response.numberOfBosses);
+            console.log(response);
             return response;
         }
         function isDeadThisWeek(timestamp){

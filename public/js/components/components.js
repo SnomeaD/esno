@@ -14,9 +14,4 @@ angular.module('components', [])
           raid: '=',
           difficulty: '=',
       }
-}).component('bossesList', {
-      templateUrl: 'components/bossesList.jade',
-      bindings: {
-          progress: '<'
-      }
 });

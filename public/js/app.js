@@ -5,7 +5,6 @@ var esnoApp = angular.module('esnoApp', [
   'ui.bootstrap',
   'indexControllers',
   'checkToonControllers',
-  'weeklyProgressControllers',
   'historyControllers',
   'progressControllers',
   'headerControllers',
@@ -30,10 +29,6 @@ esnoApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
     when('/checktoons', {
         templateUrl: 'partials/weeklyprogress',
         controller: 'checkToonsController'
-    }).
-    when('/weeklyprogress', {
-        templateUrl: 'partials/weeklyprogress',
-        controller: 'weeklyProgressController'
     }).
     when('/history', {
         templateUrl: 'partials/history',
