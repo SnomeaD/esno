@@ -1,3 +1,5 @@
+'use strict';
+
 const config = require('../config/config.js');
 const blizzard = require('blizzard.js').initialize({ apikey: config.bnet.apikey });
 

@@ -2,8 +2,8 @@
 
 /* Controllers */
 
-const progressControllers = angular.module('progressControllers', []);
-progressControllers.controller('progressController', ['$scope', '$http','battleNetService',
+const guildControllers = angular.module('guildControllers', []);
+guildControllers.controller('guildController', ['$scope', '$http','battleNetService',
     function($scope,$http,battleNetService) {
         if (!Array.prototype.find) {
             Object.defineProperty(Array.prototype, 'find', {
@@ -34,36 +34,24 @@ progressControllers.controller('progressController', ['$scope', '$http','battleN
             });
         }
 
+
         battleNetService.getGuildToons(guild.server,guild.guildName)
             // then() called when son gets back
             .then(function(data) {
                 // promise fulfilled
                 data.members.forEach( function (member){
                 if(member.rank <= 3 || member.rank === 8) {
-                    let toon = {
-                        'name': member.character.name,
-                        'realm': member.character.realm,
-                        'staticThumbnail': 'https://render-api-eu.worldofwarcraft.com/static-render/eu/' + member.character.thumbnail,
-                        'thumbnail': 'http://render-eu.worldofwarcraft.com/character/' + member.character.thumbnail,
-                        'class': member.character.class,
-                        'spec': member.character.spec.name,
-                        'specIcon': member.character.spec.icon,
-                        'role': member.character.spec.role,
-                    };
                     battleNetService.getToon(member.character.realm, member.character.name)
                         .then(toonInfo => {
-                            toon.averageItemLevel = toonInfo.items.averageItemLevel;
-                            toon.averageItemLevelEquipped = toonInfo.items.averageItemLevelEquipped;
-
-                            return true;
+                            $scope.toonsData.push(toonInfo);
                         }).catch(error => {
                             console.log(error);
                             res.status(error.response.status).jsonp({status: error.response.status , message: error.response.statusText});
                     });
-                    $scope.toonsData.push(toon);
                 }
             }, function(error) {
                 // promise rejected, could log the error with: console.log('error', error);
                 $scope.error = error;
             });
+        });
     }]);

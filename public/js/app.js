@@ -4,8 +4,7 @@ var esnoApp = angular.module('esnoApp', [
   'ngRoute',
   'ui.bootstrap',
   'indexControllers',
-  'checkToonControllers',
-  'historyControllers',
+  'toonControllers',
   'progressControllers',
   'headerControllers',
   'battleNetServices',
@@ -18,23 +17,15 @@ esnoApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
         templateUrl: 'partials/index',
         controller: 'indexController'
     }).
-    when('/checktoonform', {
-        templateUrl: 'partials/checktoonform',
-        controller: 'checkToonFormController'
-    }).
-    when('/checktoon/:server/:toonname', {
-        templateUrl: 'partials/checktoon',
-        controller: 'checkToonController'
-    }).
-    when('/checktoons', {
-        templateUrl: 'partials/weeklyprogress',
-        controller: 'checkToonsController'
-    }).
-    when('/history', {
-        templateUrl: 'partials/history',
-        controller: 'historyController'
+    when('/toon/:realm/:toonName', {
+        templateUrl: 'partials/toon',
+        controller: 'toonController'
     }).
     when('/progress', {
+        templateUrl: 'partials/progress',
+        controller: 'progressController'
+    }).
+    when('/guild', {
         templateUrl: 'partials/progress',
         controller: 'progressController'
     }).
