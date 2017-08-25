@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-var indexControllers = angular.module('indexControllers', []);
+let indexControllers = angular.module('indexControllers', []);
 
 indexControllers.controller('indexController', ['$scope', '$http',
   function($scope,$http) {

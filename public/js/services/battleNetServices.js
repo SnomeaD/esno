@@ -15,22 +15,22 @@ battleNetServices.factory('battleNetService', function ($http, $q) {
                         return $q.reject(response.data);
                     });
             },
-            getHistory: function(server,toonname){
-                return $http.get('/bnet/history/'+server+'/'+toonname)
+            getGuildToons: function(server,guildName){
+                return $http.get('/bnet/guild/'+server+'/'+guildName)
                     .then(function(response) {
                         if (typeof response.data === 'object') {
                             return response.data;
                         } else {
                             // invalid response
-                            return $q.reject(response.data);
+                            return $q.reject(response);
                         }
                     }, function(response) {
                         // something went wrong
-                        return $q.reject(response.data);
+                        return $q.reject(response);
                     });
             },
-            getFashion: function(){
-                return $http.get('/bnet/transmogfashion')
+            getToon: function(server,toonname){
+                return $http.get('/bnet/toon/'+server+'/'+toonname)
                     .then(function(response) {
                         if (typeof response.data === 'object') {
                             return response.data;

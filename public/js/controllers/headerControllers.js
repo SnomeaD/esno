@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-var headerControllers = angular.module('headerControllers', []);
+let headerControllers = angular.module('headerControllers', []);
 
 headerControllers.controller('headerNavController', ['$scope', '$route',
     function($scope, $route) 
