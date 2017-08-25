@@ -7,6 +7,7 @@ var esnoApp = angular.module('esnoApp', [
   'toonControllers',
   'progressControllers',
   'headerControllers',
+  'guildControllers',
   'battleNetServices',
   'components',
   'filters'
@@ -26,8 +27,8 @@ esnoApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
         controller: 'progressController'
     }).
     when('/guild', {
-        templateUrl: 'partials/progress',
-        controller: 'progressController'
+        templateUrl: 'partials/guild',
+        controller: 'guildController'
     }).
     otherwise({
         redirectTo: '/'

@@ -1,14 +1,3 @@
-h2 Toon
-
-i(data-ng-hide="toon || error").fa.fa-spinner.fa-spin
-div.alert.alert-info(data-ng-show="error")
-    span {{error}}
-div.container-fluid
-    div.row(data-ng-show="toon")
-        div(class="{{toon.class | class}}").summary-toon
-            img(ng-src="{{toon.thumbnail}}" height="64px" width="64px").img-circle.img-avatar
-            div.toon-info
-                div
-                    h5 {{toon.name}}
-                div {{toon.realm}}
-                div {{toon.averageItemLevelEquipped}}/{{toon.averageItemLevel}}
+div.row
+    div.col-md-12 &nbsp;
+row-toon(toon="toon")

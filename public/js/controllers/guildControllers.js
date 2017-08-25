@@ -35,9 +35,10 @@ guildControllers.controller('guildController', ['$scope', '$http','battleNetServ
         }
 
 
-        battleNetService.getGuildToons(guild.server,guild.guildName)
+        battleNetService.getGuildToons('sargeras','Les Sapins de la Horde')
             // then() called when son gets back
             .then(function(data) {
+                $scope.toonsData = [];
                 // promise fulfilled
                 data.members.forEach( function (member){
                 if(member.rank <= 3 || member.rank === 8) {
@@ -46,7 +47,6 @@ guildControllers.controller('guildController', ['$scope', '$http','battleNetServ
                             $scope.toonsData.push(toonInfo);
                         }).catch(error => {
                             console.log(error);
-                            res.status(error.response.status).jsonp({status: error.response.status , message: error.response.statusText});
                     });
                 }
             }, function(error) {
