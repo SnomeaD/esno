@@ -1,0 +1,12 @@
+div.row(class="{{$ctrl.toon.class | class}}-lite").toon-row
+    div.col-md-2(class="{{$ctrl.toon.class | class}}").summary-toon
+        img(ng-src="{{$ctrl.toon.thumbnail}}" height="32px" width="32px").img-circle.img-avatar
+        span {{$ctrl.toon.name}}
+    div.col-md-1
+        span {{$ctrl.toon.averageItemLevelEquipped}}
+    div.col-md-1
+        span {{$ctrl.toon.averageItemLevel}}
+    div.col-md-1
+        span {{$ctrl.toon.artifactTrait}}
+    div.col-md-1
+        i(data-ng-if="$ctrl.toon['challengingLook']").fa.fa-check

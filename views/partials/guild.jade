@@ -1,0 +1,8 @@
+h2 Weekly Progress
+
+i(data-ng-hide="toonsData || error").fa.fa-spinner.fa-spin
+div.alert.alert-info(data-ng-show="error")
+    span {{error}}
+
+div(ng-repeat="toon in toonsData | orderBy:'-averageItemLevel'" class="{{toon.class | class}}-lite")
+    row-toon(toon="toon")
