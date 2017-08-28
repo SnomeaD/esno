@@ -1,8 +1,65 @@
-h2 Weekly Progress
+h2 Les Sapins de la Horde
 
 i(data-ng-hide="toonsData || error").fa.fa-spinner.fa-spin
 div.alert.alert-info(data-ng-show="error")
     span {{error}}
-
-div(ng-repeat="toon in toonsData | orderBy:'-averageItemLevel'" class="{{toon.class | class}}-lite")
-    row-toon(toon="toon")
+div.container-fluid
+    div.row(data-ng-show="toonsData")
+        table.summary-raid
+            tbody
+                tr.icons
+                    td.name
+                        div
+                    td.spacer
+                        div
+                    td.spec
+                        div
+                    td.spacer
+                        div
+                    td.ilvle
+                        div equi
+                    td.spacer
+                        div
+                    td.ilvl
+                        div max
+                    td.spacer
+                        div
+                    td.audit
+                        div traits
+                    td.spacer
+                        div
+                    td.audit
+                        div audit
+                    td.spacer
+                        div
+                    td.challenge
+                        div challenge
+                tr(ng-repeat="toon in toonsData | orderBy:'-averageItemLevel'" class="{{toon.class | class}}-lite")
+                    td(class="{{toon.class | class}}").summary-toon {{toon.name}}
+                    td.spacer
+                        div
+                    td
+                        img(ng-src="{{toon.iconPath + toon.spec.icon + '.jpg'}}" height="20" width="20")
+                    td.spacer
+                        div
+                    td {{toon.averageItemLevelEquipped}}
+                    td.spacer
+                        div
+                    td {{toon.averageItemLevel}}
+                    td.spacer
+                        div
+                    td {{toon.artifactTrait}}
+                    td.spacer
+                        div
+                    td
+                        div.raidtooltip
+                            i(data-ng-if="toon['audit'].problems.length").fa.fa-times
+                            i(data-ng-if="!toon['audit'].problems.length").fa.fa-check
+                            span(data-ng-show="toon['audit'].problems.length").raidtooltiptext
+                                div(ng-repeat="problem in toon.audit.problems")
+                                    img(ng-src="{{toon.iconPath + problem.icon + '.jpg'}}" height="20" width="20")
+                                    span {{problem.slot}}: {{problem.message}}
+                    td.spacer
+                        div
+                    td
+                        i(data-ng-if="toon['challengingLook']").fa.fa-check

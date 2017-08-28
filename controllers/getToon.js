@@ -40,18 +40,89 @@ module.exports = function(req, res, next) {
     function hasChallengingLoot(achievements){
         return achievements.find(findValue(11611));
     }
-    function getAudit(){
-        return true;
+    function getAudit(items){
+        const LEGENDARY_ILVL = 970;
+        const SOCKETED = 1808;
+        let legendary = 0;
+
+        const gemLow = [130215, 130216, 130217, 130218];
+        const gemHigh = [130219, 130220, 130221, 130222, 130246, 130247, 130248];
+        const enchantLow = [5423, 5424, 5425, 5426, //ringEnchantLow
+            5431, 5432, 5433]; //backEnchantLow
+        const enchantHigh = [5891, 5437, 5438, 5889, 5439, 5890, //neckEnchantHigh
+            5427, 5428, 5429, 5430, //ringEnchantHigh
+            5434, 5435, 5436]; //backEnchantHigh
+        let audit = {problems:[]};
+        for(let key in items){
+            if(items[key].hasOwnProperty('name')){
+                //Check legendary items
+                if(items[key].hasOwnProperty('quality') && items[key].quality === 5){
+                    legendary+=1;
+                    if(items[key].itemLevel < LEGENDARY_ILVL){
+                        audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'Legendary not upgraded', 'type': 'danger'});
+                    }
+                }
+                //Check socket
+                if(items[key].hasOwnProperty('bonusLists') && items[key].bonusLists.find(findValue(SOCKETED))){
+                    if(items[key].hasOwnProperty('tooltipParams') && items[key].tooltipParams.hasOwnProperty('gem0')){
+                        if(gemLow.indexOf(items[key].tooltipParams.gem0)>= 0){
+                            audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'Low gem', 'type': 'warning'});
+                        }else if(gemHigh.indexOf(items[key].tooltipParams.gem0) === -1){
+                            audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'No or unknown gem', 'type': 'danger'});
+                        }
+                    }else{
+                        audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'No gem', 'type': 'danger'});
+                    }
+                }
+
+                //Check enchant
+                const slotWithEnchant = ['neck','back','finger1','finger2'];
+                if(slotWithEnchant.indexOf(key) >= 0){
+                    if(items[key].hasOwnProperty('tooltipParams') && items[key].tooltipParams.hasOwnProperty('enchant')){
+                        if(enchantLow.indexOf(items[key].tooltipParams.enchant) >= 0){
+                            audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'Low enchant', 'type': 'warning'});
+                        }else if(!enchantHigh.indexOf(items[key].tooltipParams.enchant) === -1){
+                            audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'No or unknown enchant', 'type': 'danger'});
+                        }
+                    }else{
+                        audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'No enchant', 'type': 'danger'});
+                    }
+                }
+            }
+        }
+        if(legendary < 2){
+            audit.problems.push({'message': "Not enough legendary:"+legendary, 'type': 'danger'});
+        }
+        return audit;
+    }
+    function getSpec(talents){
+        let result = {};
+        talents.forEach(function(talent){
+            if(talent.hasOwnProperty('selected') && talent.selected){
+                result = {name: talent.spec.name,
+                        role: talent.spec.role,
+                        icon: talent.spec.icon
+                };
+            }
+        });
+        return result;
     }
     function getTraitsCount(items){
         let total = 0;
-        items.mainHand.artifactTraits.forEach(function(trait){
-            total += trait.rank;
-        });
+        if(items.hasOwnProperty('mainHand') && items.mainHand.hasOwnProperty('artifactTraits')) {
+            items.mainHand.artifactTraits.forEach(function (trait) {
+                total += trait.rank;
+            });
+        }
+        if(items.hasOwnProperty('offHand') && items.offHand.hasOwnProperty('artifactTraits')){
+            items.offHand.artifactTraits.forEach(function(trait){
+                total += trait.rank;
+            });
+        }
         total -= items.mainHand.relics.length;
         return total;
     }
-    blizzard.wow.character(['achievements', 'items'], { realm: req.params.server, name: req.params.name, origin: config.bnet.region })
+    blizzard.wow.character(['achievements', 'items','talents'], { realm: req.params.server, name: req.params.name, origin: config.bnet.region })
         .then(response => {
             let toonInfo = response.data;
             let toon = {
@@ -65,6 +136,8 @@ module.exports = function(req, res, next) {
                 'challengingLook' : hasChallengingLoot(toonInfo.achievements.achievementsCompleted),
                 'audit' : getAudit(toonInfo.items),
                 'artifactTrait' : getTraitsCount(toonInfo.items),
+                'spec': getSpec(toonInfo.talents),
+                'iconPath': 'https://render-eu.worldofwarcraft.com/icons/56/',
             };
             res.jsonp(toon);
         }).catch(error => {
