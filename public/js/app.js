@@ -1,6 +1,6 @@
 'use strict';
 /* App Module */
-var esnoApp = angular.module('esnoApp', [
+let esnoApp = angular.module('esnoApp', [
   'ngRoute',
   'ui.bootstrap',
   'indexControllers',

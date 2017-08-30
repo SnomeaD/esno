@@ -8,12 +8,12 @@ div.row(class="{{$ctrl.toon.class | class}}-lite").toon-row
     div.col-md-1
         i(data-ng-if="$ctrl.toon['challengingLook']").fa.fa-check
     div.col-md-1
-        div.raidtooltip
+        div.esno-tooltip
             i(data-ng-if="$ctrl.toon['audit'].problems.length").fa.fa-times
             i(data-ng-if="!$ctrl.toon['audit'].problems.length").fa.fa-check
-            span(data-ng-show="$ctrl.toon['audit'].problems.length").raidtooltiptext
+            span(data-ng-show="$ctrl.toon['audit'].problems.length").esno-tooltip-text.audit
                 div(ng-repeat="problem in $ctrl.toon.audit.problems")
-                    img(ng-src="{{$ctrl.toon.iconPath + problem.icon + '.jpg'}}" height="20" width="20")
+                    img(ng-src="{{$ctrl.toon.iconPath + problem.icon + '.jpg'}}" height="20" width="20").audit-icon
                     span {{problem.slot}}: {{problem.message}}
     div.col-md-1
         img(ng-src="{{$ctrl.toon.iconPath + $ctrl.toon.spec.icon + '.jpg'}}" height="20" width="20")

@@ -91,7 +91,7 @@ module.exports = function(req, res, next) {
             }
         }
         if(legendary < 2){
-            audit.problems.push({'message': "Not enough legendary:"+legendary, 'type': 'danger'});
+            audit.problems.push({'icon': 'inv_misc_necklace15',slot:'legendary', 'message': "Not enough: "+legendary, 'type': 'danger'});
         }
         return audit;
     }

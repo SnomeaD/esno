@@ -3,12 +3,7 @@
 /* Components */
 
 angular.module('components', [])
-  .component('toonViewProgress', {  
-      templateUrl: 'components/toonViewProgress.jade',
-      bindings: {
-          toon: '<'
-      }
-}).component('summaryStatusDetail', {
+.component('summaryStatusDetail', {
     templateUrl: 'components/summaryStatusDetail.jade',
     bindings: {
         raid: '=',

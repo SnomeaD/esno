@@ -35,7 +35,8 @@ div.container-fluid
                     td.challenge
                         div challenge
                 tr(ng-repeat="toon in toonsData | orderBy:'-averageItemLevel'" class="{{toon.class | class}}-lite")
-                    td(class="{{toon.class | class}}").summary-toon {{toon.name}}
+                    td(class="{{toon.class | class}}").summary-toon
+                        a(href="https://worldofwarcraft.com/en-gb/character/{{toon.realm | sanitizeRealm}}/{{toon.name}}") {{toon.name}}
                     td.spacer
                         div
                     td
@@ -52,13 +53,13 @@ div.container-fluid
                     td.spacer
                         div
                     td
-                        div.raidtooltip
+                        div.esno-tooltip
                             i(data-ng-if="toon['audit'].problems.length").fa.fa-times
                             i(data-ng-if="!toon['audit'].problems.length").fa.fa-check
-                            span(data-ng-show="toon['audit'].problems.length").raidtooltiptext
+                            span(data-ng-show="toon['audit'].problems.length").esno-tooltip-text.audit
                                 div(ng-repeat="problem in toon.audit.problems")
-                                    img(ng-src="{{toon.iconPath + problem.icon + '.jpg'}}" height="20" width="20")
-                                    span {{problem.slot}}: {{problem.message}}
+                                    img(ng-src="{{toon.iconPath + problem.icon + '.jpg'}}" height="20" width="20").audit-icon
+                                    span.audit_text {{problem.slot}}: {{problem.message}}
                     td.spacer
                         div
                     td

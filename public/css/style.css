@@ -265,6 +265,10 @@ table.with-scroll > tbody > tr.separator > th {
 .summary-raid td.summary-toon {
   padding: 3px;
 }
+.summary-raid td.summary-toon a,
+a:hover {
+  color: black;
+}
 .summary-raid tr.icons .icon {
   width: 120px;
   height: 60px;
@@ -309,11 +313,11 @@ table.with-scroll > tbody > tr.separator > th {
   z-index: -3;
   position: absolute;
 }
-.raidtooltip {
+.esno-tooltip {
   position: relative;
   display: inline-block;
 }
-.raidtooltip .raidtooltiptext {
+.esno-tooltip .esno-tooltip-text {
   visibility: hidden;
   width: 160px;
   background-color: #555;
@@ -329,9 +333,24 @@ table.with-scroll > tbody > tr.separator > th {
   margin-left: -60px;
   opacity: 0;
 }
-.raidtooltip:hover .raidtooltiptext {
+.esno-tooltip .audit {
+  width: 200px;
+  z-index: 1;
+  top: -10px;
+  left: 100px;
+  margin-left: -40px;
+  opacity: 0;
+}
+.esno-tooltip .audit .span {
+  padding: 1px 0 1px 4px;
+}
+.esno-tooltip:hover .esno-tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+.audit-icon {
+  border: 1px solid black;
+  margin-right: 4px;
 }
 .toon-row div {
   padding: 8px 4px;

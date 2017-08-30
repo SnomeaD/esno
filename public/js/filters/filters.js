@@ -29,4 +29,8 @@ angular.module('filters', []).
         start = +start; //parse to int
         return input.slice(start);
     };
-  });
+  }).filter('sanitizeRealm', function(){
+      return function(realm){
+        return realm.replace(/\s/g, '').replace(/\'/g, '');
+      }
+});
