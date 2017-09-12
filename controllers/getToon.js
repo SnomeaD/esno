@@ -47,6 +47,7 @@ module.exports = function(req, res, next) {
 
         const gemLow = [130215, 130216, 130217, 130218];
         const gemHigh = [130219, 130220, 130221, 130222, 130246, 130247, 130248];
+        const gemEpic = [247771,247772,247773,247774];
         const enchantLow = [5423, 5424, 5425, 5426, //ringEnchantLow
             5431, 5432, 5433]; //backEnchantLow
         const enchantHigh = [5891, 5437, 5438, 5889, 5439, 5890, //neckEnchantHigh
@@ -67,7 +68,7 @@ module.exports = function(req, res, next) {
                     if(items[key].hasOwnProperty('tooltipParams') && items[key].tooltipParams.hasOwnProperty('gem0')){
                         if(gemLow.indexOf(items[key].tooltipParams.gem0)>= 0){
                             audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'Low gem', 'type': 'warning'});
-                        }else if(gemHigh.indexOf(items[key].tooltipParams.gem0) === -1){
+                        }else if(gemHigh.indexOf(items[key].tooltipParams.gem0) === -1 && gemEpic.indexOf(items[key].tooltipParams.gem0) === -1){
                             audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'No or unknown gem', 'type': 'danger'});
                         }
                     }else{
