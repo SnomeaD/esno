@@ -34,7 +34,7 @@ div.container-fluid
                         div
                     td.challenge
                         div challenge
-                tr(ng-repeat="toon in toonsData | orderBy:'-averageItemLevel'" class="{{toon.class | class}}-lite")
+                tr(ng-repeat="toon in toonsData | orderBy:'-averageItemLevelEquipped'" class="{{toon.class | class}}-lite")
                     td(class="{{toon.class | class}}").summary-toon
                         a(href="https://worldofwarcraft.com/en-gb/character/{{toon.realm | sanitizeRealm}}/{{toon.name}}") {{toon.name}}
                     td.spacer
