@@ -47,7 +47,7 @@ module.exports = function(req, res, next) {
 
         const gemLow = [130215, 130216, 130217, 130218];
         const gemHigh = [130219, 130220, 130221, 130222, 130246, 130247, 130248];
-        const gemEpic = [247771,247772,247773,247774];
+        const gemEpic = [151583,151584,151585,151580];
         const enchantLow = [5423, 5424, 5425, 5426, //ringEnchantLow
             5431, 5432, 5433]; //backEnchantLow
         const enchantHigh = [5891, 5437, 5438, 5889, 5439, 5890, //neckEnchantHigh
