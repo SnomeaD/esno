@@ -30,7 +30,6 @@
     "font-awesome": "^4.7.0",
     "font-awesome-webpack": "0.0.5-beta.2",
     "grunt": "^0.4",
-    "grunt-ci-suite": "^0.1",
     "grunt-cli": "^0.1.13",
     "grunt-config-dir": "^0.3",
     "grunt-contrib-clean": "^0.5",

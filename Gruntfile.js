@@ -11,8 +11,4 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [ 'jshint', 'less', 'webpack' ]);
     grunt.registerTask('test', [ 'jshint' ]);
     grunt.registerTask('lint', [ 'jshint' ]);
-
-    // Build tasks
-    grunt.loadNpmTasks('grunt-ci-suite');
-
 };
