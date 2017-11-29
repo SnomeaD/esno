@@ -8,9 +8,8 @@ module.exports = {
     entry: [ 'bootstrap-loader', './public/index.js'],
     output: {
         filename: 'bundle.js',
-        publicPath: '/dist/',
-        chunkFilename: '[name].chunk.js',
-        path: path.resolve(__dirname, 'dist')
+        publicPath: './dist/',
+        path: path.resolve(__dirname, './dist')
     },
     module: {
         rules: [
@@ -48,10 +47,6 @@ module.exports = {
                         presets: ['env']
                     }
                 }
-            },
-            {
-                test: /\.vue$/,
-                use: ["vue-loader"]
             },
             {
                 test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,

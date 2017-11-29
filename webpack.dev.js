@@ -2,5 +2,13 @@ const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
-   devtool: 'inline-source-map'
+    module: {
+        rules: [
+            {
+                test: /\.vue$/,
+                loader: "vue-loader"
+            }
+        ]
+    },
+    devtool: 'inline-source-map'
 });

@@ -12,5 +12,5 @@ import app from './app.vue'
 
 //Main app.
 $(function() {
-    var main = new Vue(app);
+    let main = new Vue(app);
 });

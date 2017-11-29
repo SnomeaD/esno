@@ -19,7 +19,6 @@
 </template>
 <script>
 import battlenet from '../services/battlenet.js';
-
 export default {
     data () {
         return {
