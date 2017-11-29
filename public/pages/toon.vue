@@ -1,51 +1,54 @@
 <template>
-    <div>
+    <div class="post">
+        <div class="loading" v-if="loading">
+            Loading...
+        </div>
+
+        <div v-if="error" class="error">
+            {{ error }}
+        </div>
+
+        <div v-if="toon" class="content">
+            <h2>{{ toon.name }}</h2>
+            <p>{{ toon.artifactTrait }}</p>
+        </div>
+
         <h2>Toon page</h2>
-        <span>{{$route.params.name}}</span>
-        <toon-info v-bind:toon="toon"></toon-info>
+        <toon-info v-if="toon" :toon="toon"></toon-info>
     </div>
 </template>
 <script>
-    import toonInfo from '../components/toonInfo.vue';
+import battlenet from '../services/battlenet.js';
 
-    export default {
-        data () {
-            return {
-                loading: false,
-                post: null,
-                error: null,
-                toon:null
-            }
-        },
-        created () {
-            // fetch the data when the view is created and the data is
-            // already being observed
-            this.fetchData()
-        },
-        watch: {
-            // call again the method if the route changes
-            '$route': 'fetchData'
-        },
-        methods: {
-            fetchData () {
-                this.error = this.post = null;
-                this.loading = true;
-                this.toon = {name: this.$route.params.name};
-
-                // replace `getPost` with your data fetching util / API wrapper
-//                getPost(this.$route.params.name, (err, post) => {
-//                    this.loading = false;
-//                    if (err) {
-//                        this.error = err.toString()
-//                    } else {
-//                        this.post = post;
-//                        this.toon = {name: this.$route.params.name};
-//                    }
-//                })
-            }
-        },
-        components: {
-            toonInfo: toonInfo
+export default {
+    data () {
+        return {
+            loading: false,
+            error: null,
+            toon:null
+        }
+    },
+    created () {
+        // fetch the data when the view is created and the data is
+        // already being observed
+        this.fetchData()
+    },
+    watch: {
+        // call again the method if the route changes
+        '$route': 'fetchData'
+    },
+    methods: {
+        fetchData () {
+            this.error = null;
+            this.loading = true;
+            battlenet.getToon(this.$route.params.server, this.$route.params.name)
+                .then(toon => {
+                    this.loading = false;
+                    this.toon = toon;
+                }).catch(error => {
+                    this.error = error;
+            })
         }
     }
+}
 </script>

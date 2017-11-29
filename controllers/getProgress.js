@@ -8,7 +8,7 @@ module.exports = function(req, res, next) {
     .then(response => {
             res.jsonp(response.data);
     }).catch(error => {
-            console.log(error);
-            res.status(error.response.status).jsonp({status: error.response.status , message: error.response.statusText});
-        });
+        console.log(error);
+        res.status(error.response.status).jsonp({status: error.response.status , message: error.response.statusText});
+    });
 };

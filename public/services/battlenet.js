@@ -1,11 +1,33 @@
+import axios from 'axios';
 export default {
-  getToon(server,name) {
-    return axios.get('/bnet/toon/'+server+'/'+name)
-        .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+    getProgress: function(server,toonname){
+        return axios.get('/bnet/progress/'+server+'/'+toonname)
+            .then(function (response) {
+              console.log(response);
+              return response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
+    getGuildToons: function(server,guildName){
+        return axios.get('/bnet/guild/'+server+'/'+guildName)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
+    getToon: function(server,toonname){
+        return axios.get('/bnet/toon/'+server+'/'+toonname)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
