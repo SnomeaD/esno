@@ -82,7 +82,7 @@ module.exports = function(req, res, next) {
                     if(items[key].hasOwnProperty('tooltipParams') && items[key].tooltipParams.hasOwnProperty('enchant')){
                         if(enchantLow.indexOf(items[key].tooltipParams.enchant) >= 0){
                             audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'Low enchant', 'type': 'warning'});
-                        }else if(enchantHigh.indexOf(items[key].tooltipParams.enchant) !== -1){
+                        }else if(enchantHigh.indexOf(items[key].tooltipParams.enchant) === -1){
                             audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'No or unknown enchant', 'type': 'danger'});
                         }
                     }else{

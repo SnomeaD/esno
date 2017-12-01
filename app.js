@@ -7,7 +7,7 @@ const app = express();
 
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname+'/public/favicon.ico'));
-app.use(express.static(__dirname + '/dist/'));
+app.use(express.static(__dirname + '/dist'));
 
 // serve index and view partials
 app.get('*', routes);

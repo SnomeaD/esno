@@ -1,8 +1,22 @@
 export default {
-    methods: {
-        hello: function () {
-            console.log('hello from mixin!')
+    props: {
+        toon:Object
+    },
+    computed: {
+        // a computed getter
+        classStyle() {
+            // `this` points to the vm instance
+            return this.wowClassToCss(this.toon.class);
         },
+        classStyleLite () {
+            // `this` points to the vm instance
+            return this.wowClassToCss(this.toon.class)+'-lite';
+        },
+        armoryLink() {
+            return 'https://worldofwarcraft.com/en-gb/character/' + this.sanitizeRealm(this.toon.realm) + '/' + this.toon.name;
+        },
+    },
+    methods: {
         wowClassToCss: function (classNumber) {
             if (classNumber) {
                 const classesData = [
@@ -24,6 +38,9 @@ export default {
         },
         sanitizeRealm: function (realm){
             return realm.replace(/\s/g, '').replace(/\'/g, '');
-        }
+        },
+        iconLink : function(icon) {
+            return this.toon.iconPath + icon +'.jpg';
+        },
     }
 }

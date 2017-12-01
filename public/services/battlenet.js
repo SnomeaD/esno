@@ -8,6 +8,7 @@ export default {
             })
             .catch(function (error) {
                 console.log(error);
+                return error;
             });
     },
     getGuildToons: function(server,guildName){
@@ -18,6 +19,7 @@ export default {
             })
             .catch(function (error) {
                 console.log(error);
+                return error;
             });
     },
     getToon: function(server,toonname){
@@ -28,6 +30,7 @@ export default {
             })
             .catch(function (error) {
                 console.log(error);
+                return error;
             });
     }
 }

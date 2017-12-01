@@ -1,8 +1,8 @@
 <template>
-    <div id="app">
-        <header class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row">
-            <div class="container">
-                <a href="#" class="navbar-brand">Esno</a>
+    <div>
+        <header class="navbar navbar-expand navbar-dark bg-dark flex-column flex-md-row bd-navbar">
+            <a href="#" class="navbar-brand">Esno</a>
+            <div class="navbar-nav-scroll">
                 <div class="navbar-scroll ">
                     <ul class="navbar-nav flex-row">
                         <li v-for="page in pages" class="nav-item">
@@ -12,18 +12,16 @@
                         </li>
                     </ul>
                 </div>
-                <div class="no-grow collapse navbar-collapse navbar-nav ml-md-auto d-none d-md-flex">
-                    <ul class="navbar-nav flex-row">
-                        <li class="nav-item">
-                            <a class="nav-link">
-                                <i :class="['fa-search', 'fa']" tooltip-placement="bottom" tooltip="Search"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </div>
+            <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+                <li class="nav-item">
+                    <a class="nav-link">
+                        <i :class="['fa-search', 'fa']" tooltip-placement="bottom" tooltip="Search"></i>
+                    </a>
+                </li>
+            </ul>
         </header>
-        <div class="container">
+        <div class="container content">
             <!-- Content -->
             <router-view></router-view>
         </div>
@@ -40,11 +38,9 @@ import './css/style.less';
 import 'font-awesome-webpack';
 
 // Pages
-//import toonPage from './pages/toon.vue';
 import toonInfo from './components/toonInfo.vue';
 const toonPage = () => import(/* webpackChunkName: "toon" */'./pages/toon.vue');
-
-
+const progressPage = () => import(/* webpackChunkName: "progress" */'./pages/progress.vue');
 
 // List of vue addon that we use.
 Vue.use(VueRouter);
@@ -52,8 +48,8 @@ Vue.component("toon-info", toonInfo);
 //Route declaration
 const routes = [
     { path: '/toon/:realm/:toonname', name: "toon", component: toonPage },
-    { path: '/progress/',name:"progress", component: {/* todo */ } },
-    { path: '/guild/',name:"guild", component: {/* todo */ } },
+    { path: '/progress/', name:"progress", component: progressPage },
+    { path: '/guild/', name:"guild", component: {/* todo */ } }
 ];
 
 const router = new VueRouter({
@@ -75,4 +71,9 @@ export default {
     }
 };
 </script>
+<style scoped>
+.content{
+    margin-top:8px;
+}
+</style>
 
