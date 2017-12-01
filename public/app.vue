@@ -40,9 +40,9 @@ import './css/style.less';
 import 'font-awesome-webpack';
 
 // Pages
-import toonPage from './pages/toon.vue';
+//import toonPage from './pages/toon.vue';
 import toonInfo from './components/toonInfo.vue';
-//const toonPage = () => import(/* webpackChunkName: "toon" */'./pages/toon.vue');
+const toonPage = () => import(/* webpackChunkName: "toon" */'./pages/toon.vue');
 
 
 
@@ -51,7 +51,7 @@ Vue.use(VueRouter);
 Vue.component("toon-info", toonInfo);
 //Route declaration
 const routes = [
-    { path: '/toon/:server/:name', name: "toon", component: toonPage },
+    { path: '/toon/:realm/:toonname', name: "toon", component: toonPage },
     { path: '/progress/',name:"progress", component: {/* todo */ } },
     { path: '/guild/',name:"guild", component: {/* todo */ } },
 ];
@@ -67,8 +67,7 @@ export default {
         return {
             pages: [
                 {faIcon: "fa-tasks", description: "Progress", routeName: "progress"},
-                {faIcon: "fa-list", description: "Guild", routeName: "guild"},
-                {faIcon: "fa-dashboard", description: "Toon", routeName: "toon"}
+                {faIcon: "fa-list", description: "Guild", routeName: "guild"}
             ]
         }
     },

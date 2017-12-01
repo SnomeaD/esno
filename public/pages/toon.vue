@@ -1,19 +1,12 @@
 <template>
     <div class="post">
         <div class="loading" v-if="loading">
-            Loading...
+            <i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"></i>
         </div>
 
         <div v-if="error" class="error">
             {{ error }}
         </div>
-
-        <div v-if="toon" class="content">
-            <h2>{{ toon.name }}</h2>
-            <p>{{ toon.artifactTrait }}</p>
-        </div>
-
-        <h2>Toon page</h2>
         <toon-info v-if="toon" :toon="toon"></toon-info>
     </div>
 </template>
@@ -32,15 +25,11 @@ export default {
         // already being observed
         this.fetchData()
     },
-    watch: {
-        // call again the method if the route changes
-        '$route': 'fetchData'
-    },
     methods: {
         fetchData () {
             this.error = null;
             this.loading = true;
-            battlenet.getToon(this.$route.params.server, this.$route.params.name)
+            battlenet.getToon(this.$route.params.realm, this.$route.params.toonname)
                 .then(toon => {
                     this.loading = false;
                     this.toon = toon;

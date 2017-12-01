@@ -8,8 +8,7 @@ module.exports = {
     entry: [ 'bootstrap-loader', './public/index.js'],
     output: {
         filename: 'bundle.js',
-        publicPath: './dist/',
-        path: path.resolve(__dirname, './dist')
+        path: path.resolve(__dirname, 'dist')
     },
     module: {
         rules: [

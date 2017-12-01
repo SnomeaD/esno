@@ -21,6 +21,9 @@ export default {
                 ];
                 return classesData[classNumber - 1].cssClass;
             }
+        },
+        sanitizeRealm: function (realm){
+            return realm.replace(/\s/g, '').replace(/\'/g, '');
         }
     }
 }

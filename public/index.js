@@ -8,7 +8,7 @@ import $ from 'jquery';
 import Vue from 'vue';
 
 // App import
-import app from './app.vue'
+import app from './app.vue';
 
 //Main app.
 $(function() {
