@@ -6,6 +6,8 @@ import 'font-awesome-webpack';
 // Importing external lib
 import $ from 'jquery';
 import Vue from 'vue';
+import _ from 'lodash';
+
 
 // App import
 import app from './app.vue';

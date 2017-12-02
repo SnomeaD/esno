@@ -39,7 +39,7 @@
                             <div class="icon">Antorus</div>
                         </td>
                     </tr>
-                    <progress-toon-row v-for="toon in toons" :toon="toon"></progress-toon-row>
+                    <progress-toon-row v-for="toon in orderedToons" :toon="toon"></progress-toon-row>
                     </tbody>
                 </table>
             </div>
@@ -56,7 +56,13 @@ export default {
     },
     props: {
         toons:Array
+    },
+    computed: {
+        orderedToons: function () {
+            return _.orderBy(this.toons, 'averageItemLevelEquipped', 'desc')
+        }
     }
 }
+
 </script>
 

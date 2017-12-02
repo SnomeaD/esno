@@ -8,6 +8,7 @@
                         <li v-for="page in pages" class="nav-item">
                             <router-link class="nav-link" :to="{name:page.routeName}">
                                 <i :class="[page.faIcon, 'fa']" tooltip-placement="bottom" :uib-tooltip="page.description"></i>
+                                {{page.description}}
                             </router-link>
                         </li>
                     </ul>

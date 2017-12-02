@@ -3,7 +3,7 @@
         <div :class="[raidDifficulty, 'esno-tooltip']">
             {{raid.summary[difficulty].kill}}/{{raid.bosses.length}}
             <span class="esno-tooltip-text">
-                <div v-for="(boss) in raid.bosses">
+                <div v-for="boss in raid.bosses">
                     <span :class="getClasses(boss)">{{boss[difficulty+'Kills']}}x {{boss.name}}</span>
                 </div>
             </span>
