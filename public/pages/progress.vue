@@ -141,7 +141,6 @@ export default {
                             toon.progress.push(raid);
                         }
                         this.toons.push(toon);
-                        console.log(this.toons);
                         this.loading=false;
                     }).catch(error => {
                         console.log(error);

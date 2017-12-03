@@ -42,6 +42,7 @@ import 'font-awesome-webpack';
 import toonInfo from './components/toonInfo.vue';
 const toonPage = () => import(/* webpackChunkName: "toon" */'./pages/toon.vue');
 const progressPage = () => import(/* webpackChunkName: "progress" */'./pages/progress.vue');
+const guildPage = () => import(/* webpackChunkName: "guild" */'./pages/guild.vue');
 
 // List of vue addon that we use.
 Vue.use(VueRouter);
@@ -50,7 +51,7 @@ Vue.component("toon-info", toonInfo);
 const routes = [
     { path: '/toon/:realm/:toonname', name: "toon", component: toonPage },
     { path: '/progress/', name:"progress", component: progressPage },
-    { path: '/guild/', name:"guild", component: {/* todo */ } }
+    { path: '/guild/', name:"guild", component: guildPage }
 ];
 
 const router = new VueRouter({
