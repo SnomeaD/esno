@@ -7,7 +7,7 @@ DE files #
 # Bower/Node library and generated folder #
 ###########################################
 .build
-node_modules
+/node_modules
 
 # Logs and config #
 ###################
