@@ -5,7 +5,8 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "grunt webpack:prod && node ./bin/www"
+    "heroku-postbuild": "webpack -p --config ./webpack.prod.js --progress",
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "blizzard.js": "^2.0.3",
