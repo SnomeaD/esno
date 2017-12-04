@@ -18,6 +18,7 @@ dist
 *.log
 oom_1
 data/db
+npm
 
 # OS generated files #
 ######################
