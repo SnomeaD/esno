@@ -29,9 +29,6 @@ module.exports = merge(common, {
             compress: {
                 warnings: false
             }
-        }),
-        new webpack.LoaderOptionsPlugin({
-            minimize: true
         })
     ],
     resolve: {

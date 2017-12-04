@@ -4,7 +4,7 @@
         <div class="loading" v-if="loading">
             <i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"></i>
         </div>
-        <div v-if="error" class="error">{{ error }}</div>
+        <div v-if="error" class="error">{{ error.message }}</div>
         <div v-if="toons">
             <guild-toon :toons="toons"></guild-toon>
         </div>

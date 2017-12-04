@@ -39,7 +39,7 @@
                             <div class="icon">Antorus</div>
                         </td>
                     </tr>
-                    <progress-toon-row v-for="toon in orderedToons" :toon="toon"></progress-toon-row>
+                    <progress-toon-row v-for="toon in orderedToons" :toon="toon" :key="toon.averageItemLevelEquipped"></progress-toon-row>
                     </tbody>
                 </table>
             </div>

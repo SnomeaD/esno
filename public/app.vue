@@ -26,6 +26,12 @@
             <!-- Content -->
             <router-view></router-view>
         </div>
+        <div class="container">
+            <div class="footer">
+                <hr class="footer-hr" />
+                <p>&copy;&nbsp;<a href="#">SnomeaD</a> | 2016-2017</p>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -76,6 +82,9 @@ export default {
 <style scoped>
 .content{
     margin-top:8px;
+}
+.footer-hr{
+    margin: 30px 0 10px 0;
 }
 </style>
 

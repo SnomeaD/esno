@@ -44,7 +44,7 @@
                             <div>challenge</div>
                         </td>
                     </tr>
-                    <guild-toon-row v-for="toon in orderedToons" :toon="toon"></guild-toon-row>
+                    <guild-toon-row v-for="toon in orderedToons" :toon="toon" :key="toon.averageItemLevelEquipped"></guild-toon-row>
                 </tbody>
             </table>
         </div>
