@@ -41,7 +41,7 @@ module.exports = function(req, res, next) {
         return achievements.find(findValue(11611));
     }
     function getAudit(items){
-        const LEGENDARY_ILVL = 970;
+        const LEGENDARY_ILVL = 1000;
         const SOCKETED = 1808;
         let legendary = 0;
 
