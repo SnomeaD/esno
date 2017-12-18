@@ -7,8 +7,8 @@ DE files #
 # Bower/Node library and generated folder #
 ###########################################
 .build
-#node_modules
-#public/components
+node_modules
+public/components
 
 # Logs and config #
 ###################
@@ -17,6 +17,7 @@ DE files #
 *.log
 oom_1
 data/db
+npm
 
 # OS generated files #
 ######################

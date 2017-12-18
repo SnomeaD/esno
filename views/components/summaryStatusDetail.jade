@@ -1,4 +1,0 @@
-div.esno-tooltip(class="{{$ctrl.raid.summary[$ctrl.difficulty].status}}") {{$ctrl.raid.summary[$ctrl.difficulty].kill}}/{{$ctrl.raid.bosses.length}}
-    span.esno-tooltip-text
-        div(ng-repeat="(name, boss) in $ctrl.raid.bosses")
-            span(data-ng-class="{'bossKilled':boss[$ctrl.difficulty+'Kills']}" class="{{boss[$ctrl.difficulty+'Kills']?$ctrl.difficulty:''}} {{boss[$ctrl.difficulty+'DeadThisWeek']?'bossKilledThisWeek':''}} ") {{boss[$ctrl.difficulty+'Kills']}}x {{boss.name}}
