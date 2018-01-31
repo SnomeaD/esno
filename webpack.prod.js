@@ -1,23 +1,11 @@
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const common = require('./webpack.common.js');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(common, {
+    entry: [ './public/vue/index.js'],
     devtool: "#source-map",
-    module: {
-        rules: [
-            {
-                test: /\.vue$/,
-                loader: "vue-loader",
-                options: {
-                    loaders: {
-                        js: 'babel-loader'
-                    },
-                    esModule: false
-                }
-            }
-        ]
-    },
     plugins: [
         // short-circuits all Vue.js warning code
         new webpack.DefinePlugin({
@@ -29,6 +17,11 @@ module.exports = merge(common, {
             compress: {
                 warnings: false
             }
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'main.html',
+            template: 'public/index.html',
+            inject: true
         })
     ],
     resolve: {
@@ -38,4 +31,3 @@ module.exports = merge(common, {
         extensions: ['*', '.js', '.vue', '.json']
     }
 });
-

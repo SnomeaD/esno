@@ -5,11 +5,10 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    entry: [ 'bootstrap-loader', './public/index.js'],
     output: {
         filename: 'bundle.js',
-        chunkFilename: '[name].bundle.js',
-        path: path.resolve(__dirname, './dist')
+        path: path.resolve(__dirname, './dist'),
+        chunkFilename: '[name].bundle.js'
     },
     module: {
         rules: [
@@ -38,7 +37,7 @@ module.exports = {
                 test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
                 use: ["file-loader"]
             },
-            {
+             {
                 test: /\.js$/,
                 exclude: /(node_modules)/,
                 use: {
@@ -47,6 +46,25 @@ module.exports = {
                         presets: ['env']
                     }
                 }
+            },
+            {
+                test: /\.vue$/,
+                loader: "vue-loader",
+                options: {
+                    loaders: {
+                        js: 'babel-loader'
+                    },
+                    esModule: false,
+                    postcss:[
+                        require('postcss-cssnext')()
+                    ]
+                }
+            },
+            {
+                enforce: 'pre',
+                test: /\.vue$/,
+                loader: 'eslint-loader',
+                exclude: /node_modules/
             },
             {
                 test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
@@ -75,11 +93,5 @@ module.exports = {
         Tab: "exports-loader?Tab!bootstrap/js/dist/tab",
         Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",
         Util: "exports-loader?Util!bootstrap/js/dist/util",
-    })],
-    resolve: {
-        alias: {
-            'vue$': 'vue/dist/vue.esm.js'
-        },
-        extensions: ['*', '.js', '.vue', '.json']
-    }
+    })]
 };

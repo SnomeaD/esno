@@ -15,5 +15,5 @@ module.exports = router;
 
 
 router.get('*', function (req, res) {
-    res.sendFile(path.resolve('public', 'index.html'));
+    res.sendFile(path.resolve('dist', 'index.html'));
 });

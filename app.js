@@ -1,6 +1,5 @@
 const express = require('express');
 const favicon = require('serve-favicon');
-const config = require('./config/config.js');
 const routes = require('./routes');
 
 const app = express();

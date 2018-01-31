@@ -6,13 +6,11 @@ import 'font-awesome-webpack';
 // Importing external lib
 import $ from 'jquery';
 import Vue from 'vue';
-import _ from 'lodash';
-
 
 // App import
 import app from './app.vue';
 
-//Main app.
-$(function() {
-    let main = new Vue(app);
+// Main app.
+$(function () {
+    return new Vue(app);
 });

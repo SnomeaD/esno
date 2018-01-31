@@ -1,10 +1,10 @@
 <template>
     <div>
         <div :class="[raidDifficulty, 'esno-tooltip']">
-            {{raid.summary[difficulty].kill}}/{{raid.bosses.length}}
+            {{ raid.summary[difficulty].kill }}/{{ raid.bosses.length }}
             <span class="esno-tooltip-text">
-                <div v-for="boss in raid.bosses">
-                    <span :class="getClasses(boss)">{{boss[difficulty+'Kills']}}x {{boss.name}}</span>
+                <div v-for="boss in raid.bosses" :key="boss.name">
+                    <span :class="getClasses(boss)">{{ boss[difficulty+'Kills'] }}x {{ boss.name }}</span>
                 </div>
             </span>
         </div>
@@ -13,23 +13,30 @@
 
 <script>
 export default {
-    props:{
-      raid: Object,
-      difficulty: String
-    },
-    methods: {
-        getClasses (boss) {
-            let classes ='';
-            classes+=boss[this.difficulty+'Kills']?this.difficulty+' ':'';
-            classes+=boss[this.difficulty+'DeadThisWeek']?'bossKilledThisWeek ':'';
-            return classes;//{'bossKilled':boss[difficulty+'Kills']}"
+    props: {
+        raid: {
+            type: Object,
+            default () { return {}; },
+            require: true
+        },
+        difficulty: {
+            type: String,
+            default: '',
+            require: true
         }
     },
     computed: {
         raidDifficulty () {
-            return this.raid.summary[this.difficulty].status
+            return this.raid.summary[this.difficulty].status;
+        }
+    },
+    methods: {
+        getClasses (boss) {
+            let classes = '';
+            classes += boss[this.difficulty + 'Kills'] ? this.difficulty + ' ' : '';
+            classes += boss[this.difficulty + 'DeadThisWeek'] ? 'bossKilledThisWeek ' : '';
+            return classes;// {'bossKilled':boss[difficulty+'Kills']}"
         }
     }
-}
+};
 </script>
-
