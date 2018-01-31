@@ -1,7 +1,7 @@
 'use strict';
 
 const configDev = require('../webpack.dev');
-const configProd = require('../webpack.prod');
+const configProd = require('../webpack.config');
 
 module.exports = function webpack(grunt) {
 
