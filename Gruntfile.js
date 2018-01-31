@@ -8,7 +8,7 @@ module.exports = function (grunt) {
     });
 
     // App tasks
-    grunt.registerTask('build', [ 'jshint', 'less', 'webpack' ]);
+    grunt.registerTask('build', [ 'less', 'webpack:prod' ]);
     grunt.registerTask('test', [ 'jshint' ]);
     grunt.registerTask('lint', [ 'jshint' ]);
 };

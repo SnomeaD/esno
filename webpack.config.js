@@ -4,7 +4,7 @@ const common = require('./webpack.common.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(common, {
-    entry: [ './public/vue/index.js'],
+    entry: [ './public/index.js'],
     devtool: "#source-map",
     plugins: [
         // short-circuits all Vue.js warning code
@@ -19,7 +19,7 @@ module.exports = merge(common, {
             }
         }),
         new HtmlWebpackPlugin({
-            filename: 'main.html',
+            filename: 'index.html',
             template: 'public/index.html',
             inject: true
         })

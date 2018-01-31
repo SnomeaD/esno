@@ -9,6 +9,7 @@ DE files #
 .build
 node_modules
 public/components
+dist
 
 # Logs and config #
 ###################
