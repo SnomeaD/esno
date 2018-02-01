@@ -37,6 +37,7 @@ export default {
                 {server: 'sargeras', name: 'Snomeadille'},
                 {server: 'sargeras', name: 'Snommead'},
                 {server: 'sargeras', name: 'Snomeadh'},
+                {server: 'sargeras', name: 'Snomeadine'},
                 {server: 'garona', name: 'Snomead'}
             ]
         };
