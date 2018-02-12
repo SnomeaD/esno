@@ -22,6 +22,7 @@
             Artifact trait: {{ toon.artifactTrait }}<br>
             Challenge:<i v-if="toon['challengingLook']" class="fa fa-check"/><br>
             Audit:<i v-if="toon.audit.problems.length === 0" class="fa fa-check"/><br>
+            mmScore: {{ toon.mmScore }}<br>
         </p>
         <div v-for="problem in toon.audit.problems" :key="problem.slot">
             <img

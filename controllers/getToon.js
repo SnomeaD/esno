@@ -2,6 +2,7 @@
 
 const config = require('../config/config.js');
 const blizzard = require('blizzard.js').initialize({ apikey: config.bnet.apikey });
+const axios = require('axios');
 
 module.exports = function(req, res, next) {
     if (!Array.prototype.find) {
@@ -123,7 +124,7 @@ module.exports = function(req, res, next) {
         total -= items.mainHand.relics.length;
         return total;
     }
-    blizzard.wow.character(['achievements', 'items','talents'], { realm: req.params.server, name: req.params.name, origin: config.bnet.region })
+    blizzard.wow.character(['achievements', 'items','talents', 'progression'], { realm: req.params.server, name: req.params.name, origin: config.bnet.region })
         .then(response => {
             let toonInfo = response.data;
             let toon = {
@@ -139,8 +140,18 @@ module.exports = function(req, res, next) {
                 'artifactTrait' : getTraitsCount(toonInfo.items),
                 'spec': getSpec(toonInfo.talents),
                 'iconPath': 'https://render-eu.worldofwarcraft.com/icons/56/',
+                'progression': toonInfo.progression
             };
-            res.jsonp(toon);
+            axios.get('https://raider.io/api/v1/characters/profile?region=' + config.bnet.region + '&realm=' + req.params.server + '&name=' + req.params.name +'&fields=mythic_plus_scores')
+                .then(function (response) {
+                    toon.mmScore = response.data.mythic_plus_scores && response.data.mythic_plus_scores.all;
+                    res.jsonp(toon);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    toon.mmScore = 0;
+                    res.status(error.response.status).jsonp({status: error.response.status , message: error.response.statusText});
+                });
         }).catch(error => {
         console.log(error);
         res.status(error.response.status).jsonp({status: error.response.status , message: error.response.statusText});

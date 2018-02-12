@@ -357,3 +357,13 @@ a:hover {
 .toon-row div {
   padding: 8px 4px;
 }
+.name-title{
+  font-weight: 600;
+  font-size: 16px;
+}
+.legend{
+  color:#333;
+}
+.mmscore{
+  text-align: right;
+}

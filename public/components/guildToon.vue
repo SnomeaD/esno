@@ -1,49 +1,57 @@
 <template>
     <div class="container-fluid">
         <div class="row" v-if="toons">
-            <table class="summary-raid">
-                <tbody>
-                    <tr class="icons">
-                        <td class="name">
+            <table class="summary-guild">
+                <thead>
+                    <tr>
+                        <th class="name">
                             <div/>
-                        </td>
-                        <td class="spacer">
+                        </th>
+                        <th class="spec">
                             <div/>
-                        </td>
-                        <td class="spec">
+                        </th>
+                        <th class="spacer">
                             <div/>
-                        </td>
-                        <td class="spacer">
-                            <div/>
-                        </td>
-                        <td class="ilvle">
+                        </th>
+                        <th class="ilvle">
                             <div>equi</div>
-                        </td>
-                        <td class="spacer">
+                        </th>
+                        <th class="spacer">
                             <div/>
-                        </td>
-                        <td class="ilvl">
+                        </th>
+                        <th class="ilvl">
                             <div>max</div>
-                        </td>
-                        <td class="spacer">
+                        </th>
+                        <th class="spacer">
                             <div/>
-                        </td>
-                        <td class="audit">
+                        </th>
+                        <th class="audit">
                             <div>traits</div>
-                        </td>
-                        <td class="spacer">
+                        </th>
+                        <th class="spacer">
                             <div/>
-                        </td>
-                        <td class="audit">
+                        </th>
+                        <th class="audit">
                             <div>audit</div>
-                        </td>
-                        <td class="spacer">
+                        </th>
+                        <th class="spacer">
                             <div/>
-                        </td>
-                        <td class="challenge">
+                        </th>
+                        <th class="challenge">
                             <div>challenge</div>
-                        </td>
+                        </th>
+                        <th class="spacer">
+                            <div/>
+                        </th>
+                        <th class="mmscore">
+                            <div>mm+ score</div>
+                        </th>
+                        <th class="spacer">
+                            <div/>
+                        </th>
                     </tr>
+                </thead>
+                <tbody>
                     <guild-toon-row
                         v-for="(toon, index) in orderedToons"
                         :toon="toon"

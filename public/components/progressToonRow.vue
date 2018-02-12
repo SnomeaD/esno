@@ -8,12 +8,11 @@
                 width="64px"
             >
             <div class="toon-info">
-                <div>
-                    <h5><a :href="armoryLink">{{ toon.name }}</a></h5>
-                </div>
-                <div>{{ toon.realm }}</div>
-                <div>{{ toon.averageItemLevelEquipped }}/{{ toon.averageItemLevel }}</div>
-                <div>Artifact: {{ toon.artifactTrait }}</div>
+                <div class="name-title"><a :href="armoryLink">{{ toon.name }}</a></div>
+                <div class="legend">{{ toon.realm }}</div>
+                <div class="legend">{{ toon.averageItemLevelEquipped }}/{{ toon.averageItemLevel }}</div>
+                <div class="legend">Artifact: {{ toon.artifactTrait }}</div>
+                <div class="legend">MM+: {{ toon.mmScore }}</div>
             </div>
         </td>
         <template v-for="(raid, index) in toon.progress">

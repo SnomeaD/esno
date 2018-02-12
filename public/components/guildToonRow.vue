@@ -1,9 +1,6 @@
 <template>
     <tr :class="classStyleLite">
         <td :class="[classStyle,'summary-toon']"><a :href="armoryLink">{{ toon.name }}</a></td>
-        <td class="spacer">
-            <div/>
-        </td>
         <td>
             <img
                 :src="iconLink(toon.spec.icon)"
@@ -46,6 +43,13 @@
             <div/>
         </td>
         <td><i class="fa fa-check" v-if="toon['challengingLook']"/></td>
+        <td class="spacer">
+            <div/>
+        </td>
+        <td class="mmscore">{{ toon.mmScore }}</td>
+        <td class="spacer">
+            <div/>
+        </td>
     </tr>
 </template>
 <style>

@@ -117,48 +117,26 @@ export default {
                 return 'status-in-progress';
             }
         },
-        getTraitsCount (items) {
-            let total = 0;
-            if (items.hasOwnProperty('mainHand') && items.mainHand.hasOwnProperty('artifactTraits')) {
-                items.mainHand.artifactTraits.forEach(function (trait) {
-                    total += trait.rank;
-                });
-            }
-            if (items.hasOwnProperty('offHand') && items.offHand.hasOwnProperty('artifactTraits')) {
-                items.offHand.artifactTraits.forEach(function (trait) {
-                    total += trait.rank;
-                });
-            }
-            total -= items.mainHand.relics.length;
-            return total;
-        },
         fetchData () {
             this.error = null;
             this.loading = true;
             this.toonsList.forEach(function (toon) {
-                battlenet.getProgress(toon.server, toon.name)
+                battlenet.getToon(toon.server, toon.name)
                     .then(data => {
-                        let toon = {
-                            'name': data.name,
-                            'realm': data.realm,
-                            'staticThumbnail': 'https://render-api-eu.worldofwarcraft.com/static-render/eu/' + data.thumbnail,
-                            'thumbnail': 'http://render-eu.worldofwarcraft.com/character/' + data.thumbnail,
-                            'class': data.class,
-                            'averageItemLevel': data.items.averageItemLevel,
-                            'averageItemLevelEquipped': data.items.averageItemLevelEquipped,
-                            'artifactTrait': this.getTraitsCount(data.items)
-
-                        };
-                        toon.progress = [];
-                        let raids = [8026, 8440, 8025, 8524, 8638];
-                        for (let i = 0; i < raids.length; i++) {
-                            const theRaid = this.findById(raids[i]);
-                            const raid = data.progression.raids.find(theRaid);
-                            const theBoss = this.findById(raids[i]);
-                            raid.summary = this.getSummary(data.progression.raids.find(theBoss));
-                            toon.progress.push(raid);
+                        if (data.name) {
+                            data.progress = [];
+                            let raids = [8026, 8440, 8025, 8524, 8638];
+                            for (let i = 0; i < raids.length; i++) {
+                                const theRaid = this.findById(raids[i]);
+                                const raid = data.progression.raids.find(theRaid);
+                                const theBoss = this.findById(raids[i]);
+                                raid.summary = this.getSummary(data.progression.raids.find(theBoss));
+                                data.progress.push(raid);
+                            }
+                            this.toons.push(data);
+                        } else {
+                            console.log(data);
                         }
-                        this.toons.push(toon);
                         this.loading = false;
                     }).catch(error => {
                         console.log(error);
