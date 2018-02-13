@@ -4,6 +4,7 @@
             <i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"/>
         </div>
         <div v-if="error" class="error">{{ error.message }}</div>
+        <div v-if="loaded != toonsList.length" class="error">Loading: {{ loaded }}/{{ toonsList.length }}</div>
         <div v-if="toons">
             <progress-toon :toons="toons"/>
         </div>
@@ -23,6 +24,7 @@ export default {
             loading: false,
             error: null,
             toons: [],
+            loaded: 0,
             toonsList: [
                 {server: 'sargeras', name: 'Snomead'},
                 {server: 'sargeras', name: 'Snominette'},
@@ -133,6 +135,7 @@ export default {
                                 raid.summary = this.getSummary(data.progression.raids.find(theBoss));
                                 data.progress.push(raid);
                             }
+                            this.loaded++;
                             this.toons.push(data);
                         } else {
                             console.log(data);

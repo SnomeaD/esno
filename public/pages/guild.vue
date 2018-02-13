@@ -4,7 +4,7 @@
         <div class="loading" v-if="loading">
             <i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"/>
         </div>
-        <div v-if="error" class="error">{{ error.message }}</div>
+        <div v-if="error" class="error">{{ error }}</div>
         <div v-if="toons">
             <guild-toon :toons="toons"/>
         </div>
@@ -46,11 +46,22 @@ export default {
                                     this.toons.push(toonInfo);
                                     this.loading = false;
                                 }).catch(error => {
-                                    this.error = error;
+                                    this.loading = false;
+                                    console.log('toonInfo error:');
+                                    if (error.response) {
+                                        console.log(error.response.data);
+                                        console.log(error.response.status);
+                                        console.log(error.response.headers);
+                                        this.error = error.response.data;
+                                        this.error = 'Unable to retrieve ' + member.character.name + ' (' + error.response.data.status + ')';
+                                    } else {
+                                        this.error = 'Unable to retrieve ' + member.character.name;
+                                    }
                                 });
                         }
                     });
                 }).catch(error => {
+                    this.loading = false;
                     console.log(error);
                 });
         }

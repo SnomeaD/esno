@@ -143,17 +143,31 @@ module.exports = function(req, res, next) {
                 'progression': toonInfo.progression
             };
             axios.get('https://raider.io/api/v1/characters/profile?region=' + config.bnet.region + '&realm=' + req.params.server + '&name=' + req.params.name +'&fields=mythic_plus_scores')
-                .then(function (response) {
+                .then(response => {
                     toon.mmScore = response.data.mythic_plus_scores && response.data.mythic_plus_scores.all;
                     res.jsonp(toon);
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch(error => {
                     toon.mmScore = 0;
-                    res.status(error.response.status).jsonp({status: error.response.status , message: error.response.statusText});
+                    res.jsonp(toon);
                 });
         }).catch(error => {
-        console.log(error);
-        res.status(error.response.status).jsonp({status: error.response.status , message: error.response.statusText});
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+                res.status(error.response.status).jsonp({status: error.response.status , message: error.response.headers});
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                console.log(error.request);
+                res.status(500).jsonp({status: 500 , message: error.response.request});
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                res.status(500).jsonp({status: 500 , message: error.response.message});
+            }
     });
 };

@@ -3,42 +3,44 @@
         <div class="container-fluid">
             <div class="row" v-if="toons">
                 <table class="summary-raid">
-                    <tbody>
+                    <thead>
                         <tr class="icons">
-                            <td class="summary">
+                            <th class="summary">
                                 <div/>
-                            </td>
-                            <td class="spacer">
+                            </th>
+                            <th class="spacer">
                                 <div/>
-                            </td>
-                            <td class="en">
+                            </th>
+                            <th class="en">
                                 <div class="icon">Emerald Nightmare</div>
-                            </td>
-                            <td class="spacer">
+                            </th>
+                            <th class="spacer">
                                 <div/>
-                            </td>
-                            <td class="tov">
+                            </th>
+                            <th class="tov">
                                 <div class="icon">Trial of Valor</div>
-                            </td>
-                            <td class="spacer">
+                            </th>
+                            <th class="spacer">
                                 <div/>
-                            </td>
-                            <td class="nh">
+                            </th>
+                            <th class="nh">
                                 <div class="icon">Nigthold</div>
-                            </td>
-                            <td class="spacer">
+                            </th>
+                            <th class="spacer">
                                 <div/>
-                            </td>
-                            <td class="tos">
+                            </th>
+                            <th class="tos">
                                 <div class="icon">Tomb of Sargeras</div>
-                            </td>
-                            <td class="spacer">
+                            </th>
+                            <th class="spacer">
                                 <div/>
-                            </td>
-                            <td class="ant">
+                            </th>
+                            <th class="ant">
                                 <div class="icon">Antorus</div>
-                            </td>
+                            </th>
                         </tr>
+                    </thead>
+                    <tbody>
                         <progress-toon-row
                             v-for="(toon, index) in orderedToons"
                             :toon="toon"
