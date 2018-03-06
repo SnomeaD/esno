@@ -69,7 +69,7 @@ export default {
     },
     computed: {
         orderedToons: function () {
-            return _.orderBy(this.toons, 'artifactTrait', 'desc');
+            return _.orderBy(this.toons, 'averageItemLevel', 'desc');
         }
     }
 };

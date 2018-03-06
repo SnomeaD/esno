@@ -3,6 +3,8 @@
 const config = require('../config/config.js');
 const blizzard = require('blizzard.js').initialize({ apikey: config.bnet.apikey });
 const axios = require('axios');
+const NodeCache = require( "node-cache" );
+const myCache = new NodeCache({ stdTTL: 60, checkperiod: 120 });
 
 module.exports = function(req, res, next) {
     if (!Array.prototype.find) {
@@ -124,50 +126,75 @@ module.exports = function(req, res, next) {
         total -= items.mainHand.relics.length;
         return total;
     }
-    blizzard.wow.character(['achievements', 'items','talents', 'progression'], { realm: req.params.server, name: req.params.name, origin: config.bnet.region })
-        .then(response => {
-            let toonInfo = response.data;
-            let toon = {
-                'name': toonInfo.name,
-                'realm': toonInfo.realm,
-                'staticThumbnail': 'https://render-api-eu.worldofwarcraft.com/static-render/eu/' + toonInfo.thumbnail,
-                'thumbnail': 'http://render-eu.worldofwarcraft.com/character/' + toonInfo.thumbnail,
-                'class': toonInfo.class,
-                'averageItemLevel' : toonInfo.items.averageItemLevel,
-                'averageItemLevelEquipped' : toonInfo.items.averageItemLevelEquipped,
-                'challengingLook' : hasChallengingLoot(toonInfo.achievements.achievementsCompleted),
-                'audit' : getAudit(toonInfo.items),
-                'artifactTrait' : getTraitsCount(toonInfo.items),
-                'spec': getSpec(toonInfo.talents),
-                'iconPath': 'https://render-eu.worldofwarcraft.com/icons/56/',
-                'progression': toonInfo.progression
-            };
-            axios.get('https://raider.io/api/v1/characters/profile?region=' + config.bnet.region + '&realm=' + req.params.server + '&name=' + req.params.name +'&fields=mythic_plus_scores')
-                .then(response => {
-                    toon.mmScore = response.data.mythic_plus_scores && response.data.mythic_plus_scores.all;
+    function getToon(realm,name,origin){
+        return  blizzard.wow.character(['achievements', 'items','talents', 'progression'], { realm, name, origin })
+            .then(response => {
+                let toonInfo = response.data;
+                let toon = {
+                    'name': toonInfo.name,
+                    'realm': toonInfo.realm,
+                    'staticThumbnail': 'https://render-api-eu.worldofwarcraft.com/static-render/eu/' + toonInfo.thumbnail,
+                    'thumbnail': 'http://render-eu.worldofwarcraft.com/character/' + toonInfo.thumbnail,
+                    'class': toonInfo.class,
+                    'averageItemLevel': toonInfo.items.averageItemLevel,
+                    'averageItemLevelEquipped': toonInfo.items.averageItemLevelEquipped,
+                    'challengingLook': hasChallengingLoot(toonInfo.achievements.achievementsCompleted),
+                    'audit': getAudit(toonInfo.items),
+                    'artifactTrait': getTraitsCount(toonInfo.items),
+                    'spec': getSpec(toonInfo.talents),
+                    'iconPath': 'https://render-eu.worldofwarcraft.com/icons/56/',
+                    'progression': toonInfo.progression
+                };
+                return axios.get('https://raider.io/api/v1/characters/profile?region=' + origin + '&realm=' + realm + '&name=' + name + '&fields=mythic_plus_scores')
+                    .then(response => {
+                        toon.mmScore = response.data.mythic_plus_scores && response.data.mythic_plus_scores.all;
+                        return toon;
+                    })
+                    .catch(_ => {
+                        toon.mmScore = 0;
+                        return toon;
+                    });
+            })
+    }
+    let origin = config.bnet.region;
+    let realm = req.params.server;
+    let name = req.params.name;
+    myCache.get(origin + '-' + realm + '-' + name, function( err, cachedToon ) {
+        if (!err) {
+            if (cachedToon === undefined) {
+                console.log(cachedToon);
+                getToon(realm, name, origin).then(toon => {
+                    myCache.set( origin + '-' + realm + '-' + name, toon);
+                    console.log('live: '+ origin + '-' + realm + '-' + name);
                     res.jsonp(toon);
-                })
-                .catch(error => {
-                    toon.mmScore = 0;
-                    res.jsonp(toon);
+                }).catch(error => {
+                    if (error.response) {
+                        // The request was made and the server responded with a status code
+                        // that falls out of the range of 2xx
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                        res.status(error.response.status).jsonp({
+                            status: error.response.status,
+                            message: error.response.headers
+                        });
+                    } else if (error.request) {
+                        // The request was made but no response was received
+                        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                        // http.ClientRequest in node.js
+                        console.log(error.request);
+                        res.status(500).jsonp({status: 500, message: error.response.request});
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        res.status(500).jsonp({status: 500, message: error.response.message});
+                    }
                 });
-        }).catch(error => {
-            if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-                res.status(error.response.status).jsonp({status: error.response.status , message: error.response.headers});
-            } else if (error.request) {
-                // The request was made but no response was received
-                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                // http.ClientRequest in node.js
-                console.log(error.request);
-                res.status(500).jsonp({status: 500 , message: error.response.request});
             } else {
-                // Something happened in setting up the request that triggered an Error
-                res.status(500).jsonp({status: 500 , message: error.response.message});
+                console.log('Cache:' + origin + '-' + realm + '-' + name);
+                res.jsonp(cachedToon);
             }
+        }else{
+            console.log(err);
+        }
     });
 };
