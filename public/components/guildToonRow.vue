@@ -11,6 +11,10 @@
         <td class="spacer">
             <div/>
         </td>
+        <td :class="level">{{ toon.level }}</td>
+        <td class="spacer">
+            <div/>
+        </td>
         <td>{{ toon.averageItemLevelEquipped }}</td>
         <td class="spacer">
             <div/>
@@ -19,7 +23,7 @@
         <td class="spacer">
             <div/>
         </td>
-        <td :class="artifactStyle">{{ toon.artifactTrait }}</td>
+        <td>{{ toon.azerite }}</td>
         <td class="spacer">
             <div/>
         </td>
@@ -39,10 +43,6 @@
                 </span>
             </div>
         </td>
-        <td class="spacer">
-            <div/>
-        </td>
-        <td><i class="fa fa-check" v-if="toon['challengingLook']"/></td>
         <td class="spacer">
             <div/>
         </td>

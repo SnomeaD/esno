@@ -13,6 +13,12 @@
                         <th class="spacer">
                             <div/>
                         </th>
+                        <th class="audit">
+                            <div>level</div>
+                        </th>
+                        <th class="spacer">
+                            <div/>
+                        </th>
                         <th class="ilvle">
                             <div>equi</div>
                         </th>
@@ -25,8 +31,8 @@
                         <th class="spacer">
                             <div/>
                         </th>
-                        <th class="audit">
-                            <div>traits</div>
+                        <th class="azerite">
+                            <div>azerite</div>
                         </th>
                         <th class="spacer">
                             <div/>
@@ -37,14 +43,8 @@
                         <th class="spacer">
                             <div/>
                         </th>
-                        <th class="challenge">
-                            <div>challenge</div>
-                        </th>
-                        <th class="spacer">
-                            <div/>
-                        </th>
                         <th class="mmscore">
-                            <div>mm+ score</div>
+                            <div>mm+</div>
                         </th>
                         <th class="spacer">
                             <div/>
@@ -78,7 +78,7 @@ export default {
     },
     computed: {
         orderedToons: function () {
-            return _.orderBy(this.toons, 'averageItemLevelEquipped', 'desc');
+            return _.orderBy(this.toons, 'level', 'desc');
         }
     }
 };

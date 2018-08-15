@@ -40,13 +40,10 @@ module.exports = function(req, res, next) {
             return element===value;
         };
     }
-    function hasChallengingLoot(achievements){
-        return achievements.find(findValue(11611));
-    }
     function getAudit(items){
-        const LEGENDARY_ILVL = 1000;
         const SOCKETED = 1808;
-        let legendary = 0;
+        let heartOfAzeroth = 0;
+        let azeriteEmpoweredItem = 0;
 
         const gemLow = [130215, 130216, 130217, 130218];
         const gemHigh = [130219, 130220, 130221, 130222, 130246, 130247, 130248];
@@ -59,44 +56,54 @@ module.exports = function(req, res, next) {
         let audit = {problems:[]};
         for(let key in items){
             if(items[key].hasOwnProperty('name')){
-                //Check legendary items
-                if(items[key].hasOwnProperty('quality') && items[key].quality === 5){
-                    legendary+=1;
-                    if(items[key].itemLevel < LEGENDARY_ILVL){
-                        audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'Legendary not upgraded', 'type': 'danger'});
-                    }
+                //Check heartOfAzeroth items
+                if(items[key].hasOwnProperty('quality') && items[key].quality === 6){
+                    heartOfAzeroth = true;
                 }
                 //Check socket
                 if(items[key].hasOwnProperty('bonusLists') && items[key].bonusLists.find(findValue(SOCKETED))){
                     if(items[key].hasOwnProperty('tooltipParams') && items[key].tooltipParams.hasOwnProperty('gem0')){
                         if(gemLow.indexOf(items[key].tooltipParams.gem0)>= 0){
-                            audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'Low gem', 'type': 'warning'});
+                            audit.problems.push({'icon': items[key].icon,'name': items[key].name, 'slot':key, 'message': 'Low gem', 'type': 'warning'});
                         }else if(gemHigh.indexOf(items[key].tooltipParams.gem0) === -1 && gemEpic.indexOf(items[key].tooltipParams.gem0) === -1){
-                            audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'No or unknown gem', 'type': 'danger'});
+                            audit.problems.push({'icon': items[key].icon,'name': items[key].name, 'slot':key, 'message': 'No or unknown gem', 'type': 'danger'});
                         }
                     }else{
-                        audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'No gem', 'type': 'danger'});
+                        audit.problems.push({'icon': items[key].icon,'name': items[key].name, 'slot':key, 'message': 'No gem', 'type': 'danger'});
                     }
                 }
 
                 //Check enchant
-                const slotWithEnchant = ['neck','back','finger1','finger2'];
+                const slotWithEnchant = ['finger1', 'finger2', 'mainHand', 'offHand'];
                 if(slotWithEnchant.indexOf(key) >= 0){
                     if(items[key].hasOwnProperty('tooltipParams') && items[key].tooltipParams.hasOwnProperty('enchant')){
                         if(enchantLow.indexOf(items[key].tooltipParams.enchant) >= 0){
-                            audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'Low enchant', 'type': 'warning'});
+                            audit.problems.push({'icon': items[key].icon,'name': items[key].name, 'slot':key, 'message': 'Low enchant', 'type': 'warning'});
                         }else if(enchantHigh.indexOf(items[key].tooltipParams.enchant) === -1){
-                            audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'No or unknown enchant', 'type': 'danger'});
+                            audit.problems.push({'icon': items[key].icon,'name': items[key].name, 'slot':key, 'message': 'No or unknown enchant', 'type': 'danger'});
                         }
                     }else{
-                        audit.problems.push({'icon': items[key].icon,'name': items[key].name, slot:key, 'message': 'No enchant', 'type': 'danger'});
+                        audit.problems.push({'icon': items[key].icon,'name': items[key].name, 'slot':key, 'message': 'No enchant', 'type': 'danger'});
                     }
+                }
+                //Check azeriteEmpoweredItem
+                if(items[key].hasOwnProperty('azeriteEmpoweredItem') && items[key].azeriteEmpoweredItem.hasOwnProperty('azeritePowers') && items[key].azeriteEmpoweredItem.azeritePowers.length > 0){
+                    azeriteEmpoweredItem++;
                 }
             }
         }
-        if(legendary < 2){
-            audit.problems.push({'icon': 'inv_misc_necklace15',slot:'legendary', 'message': "Not enough: "+legendary, 'type': 'danger'});
+        if(!heartOfAzeroth){
+            audit.problems.push({'icon': 'inv_misc_necklace15','slot':'neck', 'message': 'Heart of Azeroth not equiped', 'type': 'danger'});
         }
+        console.log(azeriteEmpoweredItem);
+        if(azeriteEmpoweredItem < 3){
+                audit.problems.push({
+                    'icon': 'inv_heartofazeroth',
+                    'slot':'azeriteEmpoweredItem',
+                    'message': 'Not enough azerite empowered item (' + azeriteEmpoweredItem + ')',
+                    'type': 'danger'
+                });
+            }
         return audit;
     }
     function getSpec(talents){
@@ -111,20 +118,11 @@ module.exports = function(req, res, next) {
         });
         return result;
     }
-    function getTraitsCount(items){
-        let total = 0;
-        if(items.hasOwnProperty('mainHand') && items.mainHand.hasOwnProperty('artifactTraits')) {
-            items.mainHand.artifactTraits.forEach(function (trait) {
-                total += trait.rank;
-            });
+    function getAzeriteLevel(items){
+        if(items.hasOwnProperty('neck') && items.neck.id === 158075) {
+            return items.neck.azeriteItem.azeriteLevel;
         }
-        if(items.hasOwnProperty('offHand') && items.offHand.hasOwnProperty('artifactTraits')){
-            items.offHand.artifactTraits.forEach(function(trait){
-                total += trait.rank;
-            });
-        }
-        total -= items.mainHand.relics.length;
-        return total;
+        return 0;
     }
     function getToon(realm,name,origin){
         return  blizzard.wow.character(['achievements', 'items','talents', 'progression'], { realm, name, origin })
@@ -133,14 +131,14 @@ module.exports = function(req, res, next) {
                 let toon = {
                     'name': toonInfo.name,
                     'realm': toonInfo.realm,
+                    'level': toonInfo.level,
                     'staticThumbnail': 'https://render-api-eu.worldofwarcraft.com/static-render/eu/' + toonInfo.thumbnail,
                     'thumbnail': 'http://render-eu.worldofwarcraft.com/character/' + toonInfo.thumbnail,
                     'class': toonInfo.class,
                     'averageItemLevel': toonInfo.items.averageItemLevel,
                     'averageItemLevelEquipped': toonInfo.items.averageItemLevelEquipped,
-                    'challengingLook': hasChallengingLoot(toonInfo.achievements.achievementsCompleted),
                     'audit': getAudit(toonInfo.items),
-                    'artifactTrait': getTraitsCount(toonInfo.items),
+                    'azerite': getAzeriteLevel(toonInfo.items),
                     'spec': getSpec(toonInfo.talents),
                     'iconPath': 'https://render-eu.worldofwarcraft.com/icons/56/',
                     'progression': toonInfo.progression
@@ -162,7 +160,7 @@ module.exports = function(req, res, next) {
     myCache.get(origin + '-' + realm + '-' + name, function( err, cachedToon ) {
         if (!err) {
             if (cachedToon === undefined) {
-                console.log(cachedToon);
+                console.log(cachedToon + ' / ' + name);
                 getToon(realm, name, origin).then(toon => {
                     myCache.set( origin + '-' + realm + '-' + name, toon);
                     console.log('live: '+ origin + '-' + realm + '-' + name);
@@ -186,7 +184,7 @@ module.exports = function(req, res, next) {
                         res.status(500).jsonp({status: 500, message: error.response.request});
                     } else {
                         // Something happened in setting up the request that triggered an Error
-                        res.status(500).jsonp({status: 500, message: error.response.message});
+                        res.status(500).jsonp({status: 500, message: error});
                     }
                 });
             } else {

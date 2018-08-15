@@ -1,6 +1,6 @@
 {
   "name": "esno",
-  "version": "1.2.0",
+  "version": "1.8.0",
   "description": "A simple listing of my weekly down",
   "private": true,
   "main": "app.js",
