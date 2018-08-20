@@ -78,7 +78,7 @@ export default {
     },
     computed: {
         orderedToons: function () {
-            return _.orderBy(this.toons, 'level', 'desc');
+            return _.orderBy(this.toons, 'averageItemLevel', 'desc');
         }
     }
 };

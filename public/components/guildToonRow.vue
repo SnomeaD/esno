@@ -60,11 +60,6 @@
 <script>
 import mixin from '../mixin/wowTools';
 export default {
-    mixins: [mixin],
-    computed: {
-        artifactStyle: function () {
-            return (this.toon.artifactTrait > 74) ? 'completed' : '';
-        }
-    }
+    mixins: [mixin]
 };
 </script>
