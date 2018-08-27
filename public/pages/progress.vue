@@ -127,7 +127,7 @@ export default {
                     .then(data => {
                         if (data.name) {
                             data.progress = [];
-                            let raids = [8026, 8440, 8025, 8524, 8638];
+                            let raids = [9389];
                             for (let i = 0; i < raids.length; i++) {
                                 const theRaid = this.findById(raids[i]);
                                 const raid = data.progression.raids.find(theRaid);

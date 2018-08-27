@@ -11,32 +11,8 @@
                             <th class="spacer">
                                 <div/>
                             </th>
-                            <th class="en">
-                                <div class="icon">Emerald Nightmare</div>
-                            </th>
-                            <th class="spacer">
-                                <div/>
-                            </th>
-                            <th class="tov">
-                                <div class="icon">Trial of Valor</div>
-                            </th>
-                            <th class="spacer">
-                                <div/>
-                            </th>
-                            <th class="nh">
-                                <div class="icon">Nigthold</div>
-                            </th>
-                            <th class="spacer">
-                                <div/>
-                            </th>
-                            <th class="tos">
-                                <div class="icon">Tomb of Sargeras</div>
-                            </th>
-                            <th class="spacer">
-                                <div/>
-                            </th>
-                            <th class="ant">
-                                <div class="icon">Antorus</div>
+                            <th class="ul">
+                                <div class="icon">Uldir</div>
                             </th>
                         </tr>
                     </thead>
