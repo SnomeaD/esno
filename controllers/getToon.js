@@ -45,14 +45,12 @@ module.exports = function(req, res, next) {
         let heartOfAzeroth = 0;
         let azeriteEmpoweredItem = 0;
 
-        const gemLow = [130215, 130216, 130217, 130218];
-        const gemHigh = [130219, 130220, 130221, 130222, 130246, 130247, 130248];
-        const gemEpic = [151583,151584,151585,151580];
-        const enchantLow = [5423, 5424, 5425, 5426, //ringEnchantLow
-            5431, 5432, 5433, 5895]; //backEnchantLow
-        const enchantHigh = [5891, 5437, 5438, 5889, 5439, 5890, //neckEnchantHigh
-            5427, 5428, 5429, 5430, //ringEnchantHigh
-            5434, 5435, 5436]; //backEnchantHigh
+        const gemLow = [153714, 153715, 153710, 153713, 153712];
+        const gemHigh = [154126, 154127, 154129,154128];
+        const gemEpic = [153708,153709,153707];
+        const enchantLow = [5938, 5939, 5940, 5941] //ringEnchantLow
+        const enchantHigh = [5942, 5943, 5944, 5945, //ringEnchantHigh
+            5946, 5950, 5949, 5948, 5965, 5964, 5963, 5966, 5962]; //weaponEnchantHigh
         let audit = {problems:[]};
         for(let key in items){
             if(items[key].hasOwnProperty('name')){
