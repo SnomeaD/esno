@@ -41,12 +41,12 @@ module.exports = function(req, res, next) {
         };
     }
     function getAudit(items){
-        const SOCKETED = 1808;
+        const SOCKETED = 4802;
         let heartOfAzeroth = 0;
         let azeriteEmpoweredItem = 0;
 
-        const gemLow = [153714, 153715, 153710, 153713, 153712];
-        const gemHigh = [154126, 154127, 154129,154128];
+        const gemLow = [153714, 153715, 153710, 153713, 153712, 153711];
+        const gemHigh = [154126, 154127, 154129, 154128];
         const gemEpic = [153708,153709,153707];
         const enchantLow = [5938, 5939, 5940, 5941] //ringEnchantLow
         const enchantHigh = [5942, 5943, 5944, 5945, //ringEnchantHigh
@@ -93,7 +93,6 @@ module.exports = function(req, res, next) {
         if(!heartOfAzeroth){
             audit.problems.push({'icon': 'inv_misc_necklace15','slot':'neck', 'message': 'Heart of Azeroth not equiped', 'type': 'danger'});
         }
-        console.log(azeriteEmpoweredItem);
         if(azeriteEmpoweredItem < 3){
                 audit.problems.push({
                     'icon': 'inv_heartofazeroth',
