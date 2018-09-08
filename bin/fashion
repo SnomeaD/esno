@@ -152,7 +152,7 @@ const getToonFashion = function(resolve, reject){
                                         'guild': fashion.data.guild.name,
                                         'transmogItems': listItems(fashion.data.items),
                                         'thumbnail': 'https://render-api-'+ constRegion + '.worldofwarcraft.com/static-render/'+ constRegion + '/' + fashion.data.thumbnail,
-                                        'render': 'http://render-'+ constRegion + '.worldofwarcraft.com/character/' + fashion.data.thumbnail.substring(0, (fashion.data.thumbnail.length - 11)) + '-profilemain.jpg',
+                                        'render': 'http://render-'+ constRegion + '.worldofwarcraft.com/character/' + fashion.data.thumbnail.substring(0, (fashion.data.thumbnail.length - 11)) + '-main.jpg',
                                         'link': 'http://'+ constRegion + '.battle.net/wow/en/character/' + fashion.data.realm + '/' + fashion.data.name + '/advanced',
                                     };
                                 });
