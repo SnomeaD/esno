@@ -3,6 +3,8 @@
 module.exports = {
     "bnet":{
         "apikey":process.env.BNET_APIKEY,
+        "key":process.env.BNET_KEY,
+        "secret":process.env.BNET_SECRET,
         "region":"eu"
     },
     "tumblr":{
