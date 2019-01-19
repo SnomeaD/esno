@@ -11,7 +11,7 @@
     "dev": "node dev-server.js"
   },
   "dependencies": {
-    "blizzard.js": "^2.0.3",
+    "blizzard.js": "^3.0.0",
     "moment": "~2.21.0",
     "request-promise": "^4.1.1",
     "serve-favicon": "~2.3.0",
@@ -20,7 +20,7 @@
     "jquery": "^3.2.1"
   },
   "devDependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
     "babel-loader": "^7.1.2",

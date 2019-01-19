@@ -5,7 +5,7 @@ const config = require('../config/config.js');
 const blizzard = require('blizzard.js').initialize({
   key: config.bnet.key,
   secret: config.bnet.secret,
-  origin: "us"
+  origin: "eu"
 });
 blizzard.getApplicationToken({
   key: config.bnet.key,
@@ -14,14 +14,7 @@ blizzard.getApplicationToken({
 }).then(response => {
     console.log(response.data);
     const theToken = response.data.access_token;
-    blizzard.validateApplicationToken({
-	  token: response.data.access_token,
-	  origin: "us"
-	}).then(response => {
-	    console.log(response.data);
-	    blizzard.wow.character(['profile'], { origin: 'us', realm: 'amanthul', name: 'charni', token: theToken}).then(response => {
-		    console.log(response.data);
-		  }).catch(e=> console.log(e.response.statusText));
-  }).catch(e => console.log(e));
+    blizzard.wow.character(['profile'], { origin: 'eu', realm: 'sargeras', name: 'snomead', token: theToken}).then(response => {
+        console.log(response.data);
+      }).catch(e=> console.log(e.response.statusText));
 }).catch(e => console.log(e));
-

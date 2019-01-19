@@ -2,13 +2,18 @@
 'use strict';
 const rp = require('request-promise');
 const config = require('../config/config.js');
-const blizzard = require('blizzard.js').initialize({ apikey: config.bnet.apikey });
+const blizzard = require('blizzard.js').initialize({
+  key: config.bnet.key,
+  secret: config.bnet.secret,
+  origin: "eu"
+});
 const tumblr = require('tumblr.js');
 
 /* GET toon. */
 
-const getToonFashion = function(resolve, reject){
+const getToonFashion = function(theToken){
     // const regionListData = ['us','kr','tw', 'eu'];
+    const constToken = theToken;
     const regionListData = ['us', 'eu'];
     const realmListData = {
         'eu':['aegwynn','aerie-peak','agamaggan','aggra-portugues','aggramar','ahnqiraj','alakir','alexstrasza','alleria','alonsus','amanthul','ambossar','anachronos','antonidas','anubarak','arakarahm','arathi','arathor','archimonde','area-52','argent-dawn','arthas','arygos','ashenvale','aszune','auchindoun','azjolnerub','azshara','azuregos','azuremyst','baelgun','balnazzar','blackhand','blackmoore','blackrock','blackscar','blades-edge','bladefist','bloodfeather','bloodhoof','bloodscalp','blutkessel','booty-bay','borean-tundra','boulderfist','bronze-dragonflight','bronzebeard','burning-blade','burning-legion','burning-steppes','cthun','chamber-of-aspects','chants-eternels','chogall','chromaggus','colinas-pardas','confrerie-du-thorium','conseil-des-ombres','crushridge','culte-de-la-rive-noire','daggerspine','dalaran','dalvengyr','darkmoon-faire','darksorrow','darkspear','das-konsortium','das-syndikat','deathguard','deathweaver','deathwing','deepholm','defias-brotherhood','dentarg','der-mithrilorden','der-rat-von-dalaran','der-abyssische-rat','destromath','dethecus','die-aldor','die-arguswacht','die-nachtwache','die-silberne-hand','die-todeskrallen','die-ewige-wacht','doomhammer','draenor','dragonblight','dragonmaw','drakthul','drekthar','dun-modr','dun-morogh','dunemaul','durotan','earthen-ring','echsenkessel','eitrigg','eldrethalas','elune','emerald-dream','emeriss','eonar','eredar','eversong','executus','exodar','festung-der-sturme','fordragon','forscherliga','frostmane','frostmourne','frostwhisper','frostwolf','galakrond','garona','garrosh','genjuros','ghostlands','gilneas','goldrinn','gordunni','gorgonnash','greymane','grim-batol','grom','guldan','hakkar','haomarush','hellfire','hellscream','howling-fjord','hyjal','illidan','jaedenar','kaelthas','karazhan','kargath','kazzak','kelthuzad','khadgar','khaz-modan','khazgoroth','kiljaeden','kilrogg','kirin-tor','korgall','kragjin','krasus','kul-tiras','kult-der-verdammten','la-croisade-ecarlate','laughing-skull','les-clairvoyants','les-sentinelles','lich-king','lightbringer','lightnings-blade','lordaeron','los-errantes','lothar','madmortem','magtheridon','malganis','malfurion','malorne','malygos','mannoroth','marecage-de-zangar','mazrigos','medivh','minahonda','moonglade','mugthol','nagrand','nathrezim','naxxramas','nazjatar','nefarian','nemesis','neptulon','nerzhul','nerathor','nethersturm','nordrassil','norgannon','nozdormu','onyxia','outland','perenolde','pozzo-delleternita','proudmoore','quelthalas','ragnaros','rajaxx','rashgarroth','ravencrest','ravenholdt','razuvious','rexxar','runetotem','sanguino','sargeras','saurfang','scarshield-legion','senjin','shadowsong','shattered-halls','shattered-hand','shattrath','shendralar','silvermoon','sinstralis','skullcrusher','soulflayer','spinebreaker','sporeggar','steamwheedle-cartel','stormrage','stormreaver','stormscale','sunstrider','suramar','sylvanas','taerar','talnivarr','tarren-mill','teldrassil','temple-noir','terenas','terokkar','terrordar','the-maelstrom','the-shatar','the-venture-co','theradras','thermaplugg','thrall','throkferoth','thunderhorn','tichondrius','tirion','todeswache','trollbane','turalyon','twilights-hammer','twisting-nether','tyrande','uldaman','ulduar','uldum','ungoro','varimathras','vashj','veklor','veklor','veknilash','voljin','wildhammer','wrathbringer','xavius','ysera','ysondre','zenedar','zirkel-des-cenarius','zuljin','zuluhed'],
@@ -18,6 +23,7 @@ const getToonFashion = function(resolve, reject){
     };
     const constRegion = regionListData[Math.floor(Math.random() * (regionListData.length - 1)) + 1];
     const constRealm = realmListData[constRegion][Math.floor(Math.random() * (realmListData[constRegion].length - 1)) + 1];
+
     console.log(constRegion + '-' + constRealm);
     const classesData = [
         {"name":"Warrior", "cssClass":"warrior", "armor":"Plate"},
@@ -122,16 +128,17 @@ const getToonFashion = function(resolve, reject){
         }
     };
     function getToon(name,realm) {
-        return blizzard.wow.character(['statistics', 'guild','items'], { realm: realm, name: name, origin: constRegion })
+        console.log('GetToon: ' . constToken);
+        return blizzard.wow.character(['statistics', 'guild','items'], { realm: realm, name: name, origin: constRegion, token: constToken})
             .then(toon => {
                 if(toon.data.hasOwnProperty('guild') && toon.data.guild.hasOwnProperty('name') && toon.data.guild.hasOwnProperty('realm')){
                     console.log('Get guild: ' +toon.data.guild.realm + ' - ' +toon.data.guild.name);
-                    return blizzard.wow.guild(['members'],{ realm: toon.data.guild.realm, name: toon.data.guild.name, origin: constRegion })
+                    return blizzard.wow.guild(['members'],{ realm: toon.data.guild.realm, name: toon.data.guild.name, origin: constRegion, token: constToken })
                         .then(guild => {
                             let retries = 10;
                             let toon = false;
                             while (retries-- > 0 && !(toon = getToonFromGuild(guild.data.members, retries))) {};
-                            return blizzard.wow.character(['statistics', 'guild','items'], { realm: toon.realm, name: toon.name, origin: constRegion })
+                            return blizzard.wow.character(['statistics', 'guild','items'], { realm: toon.realm, name: toon.name, origin: constRegion, token: constToken })
                                 .then(fashion => {
                                     if(fashion.response && fashion.response.data && fashion.response.data.status && fashion.response.data.status != 200){
                                         throw 'Error: ' + fashion.response.data.reason;
@@ -177,7 +184,8 @@ const getToonFashion = function(resolve, reject){
             }
         });
     };
-    return blizzard.wow.auction({ realm: constRealm, origin: constRegion})
+
+    return blizzard.wow.auction({ realm: constRealm, origin: constRegion, token: constToken})
         .then(response => {
             const options = {
                 uri: response.data.files[0].url,
@@ -189,7 +197,7 @@ const getToonFashion = function(resolve, reject){
                 })
                 .then(toonData => {
                     return Promise.all(toonData.transmogItems.map(function(item){
-                        return blizzard.wow.item({ id: item.itemId, origin: 'eu', locale:'en_GB' }).then(itemData => {
+                        return blizzard.wow.item({ id: item.itemId, origin: 'eu', locale:'en_GB', token: constToken }).then(itemData => {
                             item.name = itemData.data.name;
                             item.quality = qualityData[itemData.data.quality];
                             item.icon = itemData.data.icon;
@@ -211,28 +219,34 @@ const getToonFashion = function(resolve, reject){
             throw 'unable to find a valid toon';
         });
 };
+blizzard.getApplicationToken({
+        key: config.bnet.key,
+        secret: config.bnet.secret,
+        origin: "us"
+}).then(response => {
+    const theToken = response.data.access_token;
+    getToonFashion(theToken).then(result => {
+        let items = '';
+        result.transmogItems.forEach(function (item) {
+            items += '<span class="slot">' + item.slot + ': </span><span class="'+item.quality.cssName+' transmog_'+item.transmog+'"><a href="http://www.wowhead.com/item=' + item.itemId + '">' + item.name + '</a></span><br />';
+        });
 
-getToonFashion().then(result => {
-    let items = '';
-    result.transmogItems.forEach(function (item) {
-        items += '<span class="slot">' + item.slot + ': </span><span class="'+item.quality.cssName+' transmog_'+item.transmog+'"><a href="http://www.wowhead.com/item=' + item.itemId + '">' + item.name + '</a></span><br />';
+        const blogId = 'transmogwow.tumblr.com';
+        const options = {
+            type: 'photo',
+            source: result.render,
+            tags: result.race + ',' + result.class.name + ',' + result.class.armor + ',' + result.side + ',WoW,Transmogrification',
+            caption: '<a class="'+result.class.cssClass+'" href="'+result.link+'">'+result.name + ' - ' + result.realm + ' ('+ result.region + ')</a><br />' + items,
+            link: result.link,
+        };
+
+        const client = tumblr.createClient(config.tumblr);
+        client.returnPromises();
+        client.createPhotoPost(blogId, options).then(result => {
+            console.log('createPhotoPost promise success');
+        });
+    }).catch(error => {
+        console.log(error);
+        console.log('unable to find a valid toon');
     });
-
-    const blogId = 'transmogwow.tumblr.com';
-    const options = {
-        type: 'photo',
-        source: result.render,
-        tags: result.race + ',' + result.class.name + ',' + result.class.armor + ',' + result.side + ',WoW,Transmogrification',
-        caption: '<a class="'+result.class.cssClass+'" href="'+result.link+'">'+result.name + ' - ' + result.realm + ' ('+ result.region + ')</a><br />' + items,
-        link: result.link,
-    };
-
-    const client = tumblr.createClient(config.tumblr);
-    client.returnPromises();
-    client.createPhotoPost(blogId, options).then(result => {
-        console.log('createPhotoPost promise success');
-    });
-}).catch(error => {
-    console.log(error);
-    console.log('unable to find a valid toon');
 });
