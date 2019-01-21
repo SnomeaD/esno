@@ -21,8 +21,8 @@ const getToonFashion = function(theToken){
         'kr':['alexstrasza','azshara','burning-legion','cenarius','dalaran','deathwing','durotan','garona','guldan','hellscream','hyjal','malfurion','norgannon','rexxar','stormrage','wildhammer','windrunner','zuljin'],
         'tw':['arthas','arygos','bleeding-hollow','chillwind-point','crystalpine-stinger','demon-fall-canyon','dragonmaw','frostmane','hellscream','icecrown','lights-hope','menethil','nightsong','order-of-the-cloud-serpent','queldorei','shadowmoon','silverwing-hold','skywall','spirestone','stormscale','sundown-marsh','whisperwind','world-tree','wrathbringer','zealot-blade']
     };
-    const constRegion = regionListData[Math.floor(Math.random() * (regionListData.length - 1)) + 1];
-    const constRealm = realmListData[constRegion][Math.floor(Math.random() * (realmListData[constRegion].length - 1)) + 1];
+    const constRegion = regionListData[Math.floor(Math.random() * regionListData.length)];
+    const constRealm = realmListData[constRegion][Math.floor(Math.random() * realmListData[constRegion].length)];
 
     console.log(constRegion + '-' + constRealm);
     const classesData = [
