@@ -120,7 +120,7 @@ const getToonFashion = function(theToken){
     }
     function getToonFromGuild(members, retry){
         const toon = members[Math.floor(Math.random() * (members.length - 1))+ 1].character;
-        if(toon.level != 110){
+        if(toon.level != 120){
             console.log('2-#'+retry+' '+toon.name + '-'+ toon.realm +' - not max level');
             return false
         }else{
