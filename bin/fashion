@@ -69,7 +69,11 @@ const getToonFashion = function(theToken){
         {"id": 27,"mask": 67108864,"side": "horde","name": "Nightborne"},
         {"id": 28,"mask": 134217728,"side": "horde","name": "Highmountain Tauren"},
         {"id": 29,"mask": 268435456,"side": "alliance","name": "Void Elf"},
-        {"id": 30,"mask": 536870912,"side": "alliance","name": "Lightforged Draenei"}
+        {"id": 30,"mask": 536870912,"side": "alliance","name": "Lightforged Draenei"},
+        { "id": 31, "mask": 1073741824, "side": "horde", "name": "Zandalari Troll" },
+        { "id": 32, "mask": -2147483648, "side": "alliance", "name": "Kul Tiran" },
+        { "id": 34, "mask": 2, "side": "alliance", "name": "Dark Iron Dwarf" },
+        { "id": 36, "mask": 8, "side": "horde", "name": "Mag'har Orc" } 
     ];
 
     function getRaceData(id){
