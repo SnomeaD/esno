@@ -2,107 +2,104 @@
 'use strict';
 const rp = require('request-promise');
 const config = require('../config/config.js');
+const regionListData = ['eu', 'us'];
+const constRegion = regionListData[Math.floor(Math.random() * (regionListData.length - 1) + 1)];
+
 const blizzard = require('blizzard.js').initialize({
-  key: config.bnet.key,
-  secret: config.bnet.secret,
-  origin: "eu"
+    key: config.bnet.key,
+    secret: config.bnet.secret,
+    origin: constRegion,
 });
+const connectedRealmId = {
+    'eu': [509, 510, 512, 516, 531, 535, 567, 568, 570, 578, 579, 580, 581, 604, 612, 633, 639, 1080, 1081, 1082, 1084, 1085, 1086, 1091, 1092, 1096, 1097, 1098, 1099, 1104, 1105, 1106, 1118, 1121, 1122, 1123, 1127, 1300, 1301, 1302, 1303, 1305, 1307, 1309, 1311, 1313, 1315, 1316, 1317, 1325, 1327, 1329, 1331, 1335, 1336, 1378, 1379, 1381, 1384, 1385, 1388, 1389, 1390, 1393, 1396, 1400, 1401, 1402, 1403, 1405, 1406, 1407, 1408, 1416, 1417, 1587, 1588, 1596, 1597, 1598, 1602, 1603, 1604, 1605, 1607, 1609, 1612, 1614, 1615, 1618, 1621, 1623, 1624, 1625, 1922, 1923, 1924, 1925, 1927, 1928, 1929, 2073, 2074, 3391, 3656, 3657, 3660, 3666, 3674, 3679, 3680, 3681, 3682, 3686, 3687, 3690, 3691, 3692, 3696, 3702, 3703, 3713, 3714],
+    'us': [4, 5, 7, 9, 10, 11, 12, 47, 51, 52, 53, 54, 55, 57, 58, 60, 61, 62, 63, 64, 67, 68, 69, 70, 71, 73, 74, 75, 76, 77, 78, 84, 85, 86, 87, 90, 91, 96, 98, 99, 100, 101, 104, 105, 106, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 125, 127, 128, 131, 151, 153, 154, 155, 156, 157, 158, 159, 160, 162, 163, 164, 1069, 1070, 1071, 1072, 1129, 1136, 1138, 1146, 1147, 1151, 1165, 1168, 1169, 1171, 1173, 1174, 1175, 1182, 1184, 1185, 1190, 1425, 1426, 1427, 1428, 3207, 3208, 3209, 3234, 3661, 3675, 3676, 3677, 3678, 3683, 3684, 3685, 3693, 3694, 3721, 3722, 3723, 3724, 3725, 3726, 3728, 3729],
+}
+const constRealm = connectedRealmId[constRegion][Math.floor(Math.random() * (connectedRealmId[constRegion].length - 1) + 1)];
+
 const tumblr = require('tumblr.js');
 
 /* GET toon. */
 
-const getToonFashion = function(theToken){
-    // const regionListData = ['us','kr','tw', 'eu'];
+const getToonFashion = function (theToken) {
     const constToken = theToken;
-    const regionListData = ['us', 'eu'];
-    const realmListData = {
-        'eu':['aegwynn','aerie-peak','agamaggan','aggra-portugues','aggramar','ahnqiraj','alakir','alexstrasza','alleria','alonsus','amanthul','ambossar','anachronos','antonidas','anubarak','arakarahm','arathi','arathor','archimonde','area-52','argent-dawn','arthas','arygos','ashenvale','aszune','auchindoun','azjolnerub','azshara','azuregos','azuremyst','baelgun','balnazzar','blackhand','blackmoore','blackrock','blackscar','blades-edge','bladefist','bloodfeather','bloodhoof','bloodscalp','blutkessel','booty-bay','borean-tundra','boulderfist','bronze-dragonflight','bronzebeard','burning-blade','burning-legion','burning-steppes','cthun','chamber-of-aspects','chants-eternels','chogall','chromaggus','colinas-pardas','confrerie-du-thorium','conseil-des-ombres','crushridge','culte-de-la-rive-noire','daggerspine','dalaran','dalvengyr','darkmoon-faire','darksorrow','darkspear','das-konsortium','das-syndikat','deathguard','deathweaver','deathwing','deepholm','defias-brotherhood','dentarg','der-mithrilorden','der-rat-von-dalaran','der-abyssische-rat','destromath','dethecus','die-aldor','die-arguswacht','die-nachtwache','die-silberne-hand','die-todeskrallen','die-ewige-wacht','doomhammer','draenor','dragonblight','dragonmaw','drakthul','drekthar','dun-modr','dun-morogh','dunemaul','durotan','earthen-ring','echsenkessel','eitrigg','eldrethalas','elune','emerald-dream','emeriss','eonar','eredar','eversong','executus','exodar','festung-der-sturme','fordragon','forscherliga','frostmane','frostmourne','frostwhisper','frostwolf','galakrond','garona','garrosh','genjuros','ghostlands','gilneas','goldrinn','gordunni','gorgonnash','greymane','grim-batol','grom','guldan','hakkar','haomarush','hellfire','hellscream','howling-fjord','hyjal','illidan','jaedenar','kaelthas','karazhan','kargath','kazzak','kelthuzad','khadgar','khaz-modan','khazgoroth','kiljaeden','kilrogg','kirin-tor','korgall','kragjin','krasus','kul-tiras','kult-der-verdammten','la-croisade-ecarlate','laughing-skull','les-clairvoyants','les-sentinelles','lich-king','lightbringer','lightnings-blade','lordaeron','los-errantes','lothar','madmortem','magtheridon','malganis','malfurion','malorne','malygos','mannoroth','marecage-de-zangar','mazrigos','medivh','minahonda','moonglade','mugthol','nagrand','nathrezim','naxxramas','nazjatar','nefarian','nemesis','neptulon','nerzhul','nerathor','nethersturm','nordrassil','norgannon','nozdormu','onyxia','outland','perenolde','pozzo-delleternita','proudmoore','quelthalas','ragnaros','rajaxx','rashgarroth','ravencrest','ravenholdt','razuvious','rexxar','runetotem','sanguino','sargeras','saurfang','scarshield-legion','senjin','shadowsong','shattered-halls','shattered-hand','shattrath','shendralar','silvermoon','sinstralis','skullcrusher','soulflayer','spinebreaker','sporeggar','steamwheedle-cartel','stormrage','stormreaver','stormscale','sunstrider','suramar','sylvanas','taerar','talnivarr','tarren-mill','teldrassil','temple-noir','terenas','terokkar','terrordar','the-maelstrom','the-shatar','the-venture-co','theradras','thermaplugg','thrall','throkferoth','thunderhorn','tichondrius','tirion','todeswache','trollbane','turalyon','twilights-hammer','twisting-nether','tyrande','uldaman','ulduar','uldum','ungoro','varimathras','vashj','veklor','veklor','veknilash','voljin','wildhammer','wrathbringer','xavius','ysera','ysondre','zenedar','zirkel-des-cenarius','zuljin','zuluhed'],
-        'us':['aegwynn','aerie-peak','agamaggan','aggramar','akama','alexstrasza','alleria','altar-of-storms','alterac-mountains','amanthul','andorhal','anetheron','antonidas','anubarak','anvilmar','arathor','archimonde','argent-dawn','arthas','arygos','auchindoun','azgalor','azjolnerub','azralon','azshara','azuremyst','baelgun','balnazzar','barthilas','black-dragonflight','blackhand','blackrock','blackwater-raiders','blackwing-lair','blades-edge','bladefist','bleeding-hollow','blood-furnace','bloodhoof','bloodscalp','bonechewer','borean-tundra','boulderfist','bronzebeard','burning-blade','burning-legion','caelestrasz','cairne','cenarion-circle','cenarius','chogall','chromaggus','coilfang','crushridge','daggerspine','dalaran','dalvengyr','dark-iron','darkspear','darrowmere','dathremar','dawnbringer','deathwing','demon-soul','dentarg','destromath','dethecus','detheroc','doomhammer','draenor','dragonblight','dragonmaw','draktharon','drakthul','draka','drakkari','dreadmaul','drenden','dunemaul','durotan','duskwood','earthen-ring','echo-isles','eitrigg','eldrethalas','elune','emerald-dream','eonar','eredar','executus','exodar','farstriders','feathermoon','fenris','firetree','fizzcrank','frostmane','frostmourne','frostwolf','galakrond','gallywix','garithos','garona','garrosh','ghostlands','gilneas','gnomeregan','goldrinn','gorefiend','gorgonnash','greymane','grizzly-hills','guldan','gundrak','gurubashi','hakkar','haomarush','hellscream','hydraxis','hyjal','icecrown','illidan','jaedenar','jubeithos','kaelthas','kalecgos','kargath','kelthuzad','khadgar','khaz-modan','khazgoroth','kiljaeden','kilrogg','kirin-tor','korgath','korialstrasz','kul-tiras','laughing-skull','lethon','lightbringer','lightnings-blade','lightninghoof','llane','lothar','madoran','maelstrom','magtheridon','maiev','malganis','malfurion','malorne','malygos','mannoroth','medivh','misha','moknathal','moon-guard','moonrunner','mugthol','muradin','nagrand','nathrezim','nazgrel','nazjatar','nemesis','nerzhul','nesingwary','nordrassil','norgannon','onyxia','perenolde','proudmoore','quelthalas','queldorei','ragnaros','ravencrest','ravenholdt','rexxar','rivendare','runetotem','sargeras','saurfang','scarlet-crusade','scilla','senjin','sentinels','shadow-council','shadowmoon','shadowsong','shandris','shattered-halls','shattered-hand','shuhalo','silver-hand','silvermoon','sisters-of-elune','skullcrusher','skywall','smolderthorn','spinebreaker','spirestone','staghelm','steamwheedle-cartel','stonemaul','stormrage','stormreaver','stormscale','suramar','tanaris','terenas','terokkar','thaurissan','the-forgotten-coast','the-scryers','the-underbog','the-venture-co','thorium-brotherhood','thrall','thunderhorn','thunderlord','tichondrius','tol-barad','tortheldrin','trollbane','turalyon','twisting-nether','uldaman','uldum','undermine','ursin','uther','vashj','veknilash','velen','warsong','whisperwind','wildhammer','windrunner','winterhoof','wyrmrest-accord','ysera','ysondre','zangarmarsh','zuljin','zuluhed'],
-        'kr':['alexstrasza','azshara','burning-legion','cenarius','dalaran','deathwing','durotan','garona','guldan','hellscream','hyjal','malfurion','norgannon','rexxar','stormrage','wildhammer','windrunner','zuljin'],
-        'tw':['arthas','arygos','bleeding-hollow','chillwind-point','crystalpine-stinger','demon-fall-canyon','dragonmaw','frostmane','hellscream','icecrown','lights-hope','menethil','nightsong','order-of-the-cloud-serpent','queldorei','shadowmoon','silverwing-hold','skywall','spirestone','stormscale','sundown-marsh','whisperwind','world-tree','wrathbringer','zealot-blade']
-    };
-    const constRegion = regionListData[Math.floor(Math.random() * regionListData.length)];
-    const constRealm = realmListData[constRegion][Math.floor(Math.random() * realmListData[constRegion].length)];
-
-    console.log(constRegion + '-' + constRealm);
     const classesData = [
-        {"name":"Warrior", "cssClass":"warrior", "armor":"Plate"},
-        {"name":"Paladin", "cssClass":"paladin", "armor":"Plate"},
-        {"name":"Hunter", "cssClass":"hunter", "armor":"Mail"},
-        {"name":"Rogue", "cssClass":"rogue", "armor":"Leather"},
-        {"name":"Priest", "cssClass":"priest", "armor":"Cloth"},
-        {"name":"Death Knight", "cssClass":"death-knight", "armor":"Plate"},
-        {"name":"Shaman", "cssClass":"shaman", "armor":"Mail"},
-        {"name":"Mage", "cssClass":"mage", "armor":"Cloth"},
-        {"name":"Warlock", "cssClass":"warlock", "armor":"Cloth"},
-        {"name":"Monk", "cssClass":"monk", "armor":"Leather"},
-        {"name":"Druid", "cssClass":"druid", "armor":"Leather"},
-        {"name":"Demon Hunter", "cssClass":"demon-hunter", "armor":"Leather"}
+        { "name": "Warrior", "cssClass": "warrior", "armor": "Plate" },
+        { "name": "Paladin", "cssClass": "paladin", "armor": "Plate" },
+        { "name": "Hunter", "cssClass": "hunter", "armor": "Mail" },
+        { "name": "Rogue", "cssClass": "rogue", "armor": "Leather" },
+        { "name": "Priest", "cssClass": "priest", "armor": "Cloth" },
+        { "name": "Death Knight", "cssClass": "death-knight", "armor": "Plate" },
+        { "name": "Shaman", "cssClass": "shaman", "armor": "Mail" },
+        { "name": "Mage", "cssClass": "mage", "armor": "Cloth" },
+        { "name": "Warlock", "cssClass": "warlock", "armor": "Cloth" },
+        { "name": "Monk", "cssClass": "monk", "armor": "Leather" },
+        { "name": "Druid", "cssClass": "druid", "armor": "Leather" },
+        { "name": "Demon Hunter", "cssClass": "demon-hunter", "armor": "Leather" }
     ];
     const qualityData = [
-        {'name':'Poor','cssName':'poor'},
-        {'name':'Common','cssName':'common'},
-        {'name':'Uncommon','cssName':'uncommon'},
-        {'name':'Rare','cssName':'rare'},
-        {'name':'Epic','cssName':'epic'},
-        {'name':'Legendary','cssName':'legendary'},
-        {'name':'Artifact','cssName':'artifact'},
-        {'name':'Heirloom','cssName':'heirloom'},
-        {'name':'Wow token','cssName':'wow_token'}
+        { 'name': 'Poor', 'cssName': 'poor' },
+        { 'name': 'Common', 'cssName': 'common' },
+        { 'name': 'Uncommon', 'cssName': 'uncommon' },
+        { 'name': 'Rare', 'cssName': 'rare' },
+        { 'name': 'Epic', 'cssName': 'epic' },
+        { 'name': 'Legendary', 'cssName': 'legendary' },
+        { 'name': 'Artifact', 'cssName': 'artifact' },
+        { 'name': 'Heirloom', 'cssName': 'heirloom' },
+        { 'name': 'Wow token', 'cssName': 'wow_token' }
     ];
     const racesData = [
-        {"id": 1,"mask": 1,"side": "Alliance","name": "Human"},
-        {"id": 2,"mask": 2,"side": "Horde","name": "Orc"},
-        {"id": 3,"mask": 4,"side": "Alliance","name": "Dwarf"},
-        {"id": 4,"mask": 8,"side": "Alliance","name": "Night Elf"},
-        {"id": 5,"mask": 16,"side": "Horde","name": "Undead"},
-        {"id": 6,"mask": 32,"side": "Horde","name": "Tauren"},
-        {"id": 7,"mask": 64,"side": "Alliance","name": "Gnome"},
-        {"id": 8,"mask": 128,"side": "Horde","name": "Troll"},
-        {"id": 9,"mask": 256,"side": "Horde","name": "Goblin"},
-        {"id": 10,"mask": 512,"side": "Horde","name": "Blood Elf"},
-        {"id": 11,"mask": 1024,"side": "Alliance","name": "Draenei"},
-        {"id": 22,"mask": 2097152,"side": "Alliance","name": "Worgen"},
-        {"id": 24,"mask": 8388608,"side": "neutral","name": "Pandaren"},
-        {"id": 25,"mask": 16777216,"side": "Alliance","name": "Pandaren"},
-        {"id": 26,"mask": 33554432,"side": "Horde","name": "Pandaren"},
-        {"id": 27,"mask": 67108864,"side": "horde","name": "Nightborne"},
-        {"id": 28,"mask": 134217728,"side": "horde","name": "Highmountain Tauren"},
-        {"id": 29,"mask": 268435456,"side": "alliance","name": "Void Elf"},
-        {"id": 30,"mask": 536870912,"side": "alliance","name": "Lightforged Draenei"},
+        { "id": 1, "mask": 1, "side": "Alliance", "name": "Human" },
+        { "id": 2, "mask": 2, "side": "Horde", "name": "Orc" },
+        { "id": 3, "mask": 4, "side": "Alliance", "name": "Dwarf" },
+        { "id": 4, "mask": 8, "side": "Alliance", "name": "Night Elf" },
+        { "id": 5, "mask": 16, "side": "Horde", "name": "Undead" },
+        { "id": 6, "mask": 32, "side": "Horde", "name": "Tauren" },
+        { "id": 7, "mask": 64, "side": "Alliance", "name": "Gnome" },
+        { "id": 8, "mask": 128, "side": "Horde", "name": "Troll" },
+        { "id": 9, "mask": 256, "side": "Horde", "name": "Goblin" },
+        { "id": 10, "mask": 512, "side": "Horde", "name": "Blood Elf" },
+        { "id": 11, "mask": 1024, "side": "Alliance", "name": "Draenei" },
+        { "id": 22, "mask": 2097152, "side": "Alliance", "name": "Worgen" },
+        { "id": 24, "mask": 8388608, "side": "neutral", "name": "Pandaren" },
+        { "id": 25, "mask": 16777216, "side": "Alliance", "name": "Pandaren" },
+        { "id": 26, "mask": 33554432, "side": "Horde", "name": "Pandaren" },
+        { "id": 27, "mask": 67108864, "side": "horde", "name": "Nightborne" },
+        { "id": 28, "mask": 134217728, "side": "horde", "name": "Highmountain Tauren" },
+        { "id": 29, "mask": 268435456, "side": "alliance", "name": "Void Elf" },
+        { "id": 30, "mask": 536870912, "side": "alliance", "name": "Lightforged Draenei" },
         { "id": 31, "mask": 1073741824, "side": "horde", "name": "Zandalari Troll" },
         { "id": 32, "mask": -2147483648, "side": "alliance", "name": "Kul Tiran" },
         { "id": 34, "mask": 2, "side": "alliance", "name": "Dark Iron Dwarf" },
-        { "id": 36, "mask": 8, "side": "horde", "name": "Mag'har Orc" } 
+        { "id": 36, "mask": 8, "side": "horde", "name": "Mag'har Orc" }
     ];
 
-    function getRaceData(id){
-        for (let race in racesData){
-            if(racesData[race].id == id){
+    function getRaceData(id) {
+        for (let race in racesData) {
+            if (racesData[race].id == id) {
                 return racesData[race];
             }
         }
         return null;
     }
-    function getTransmogCount(items){
+    function getTransmogCount(items) {
         let count = 0;
-        for (let itemName in items){
-            if(items[itemName].hasOwnProperty('appearance') && items[itemName].appearance.hasOwnProperty('itemId')){
-                count ++;
+        for (let itemName in items) {
+            if (items[itemName].hasOwnProperty('appearance') && items[itemName].appearance.hasOwnProperty('itemId')) {
+                count++;
             }
         }
         return count;
     }
-    function listItems(items){
+    function listItems(items) {
         let listItems = [];
-        for (let itemSlot in items){
-            if(items[itemSlot].hasOwnProperty('appearance') && items[itemSlot].appearance.hasOwnProperty('itemId')){
+        for (let itemSlot in items) {
+            if (items[itemSlot].hasOwnProperty('appearance') && items[itemSlot].appearance.hasOwnProperty('itemId')) {
                 listItems.push({
                     slot: itemSlot,
                     itemId: items[itemSlot].appearance.itemId,
                     transmog: true,
                 });
-            }else if(items[itemSlot].hasOwnProperty('id')){
+            } else if (items[itemSlot].hasOwnProperty('id')) {
                 listItems.push({
                     slot: itemSlot,
                     itemId: items[itemSlot].id,
@@ -112,127 +109,130 @@ const getToonFashion = function(theToken){
         }
         return listItems;
     }
-    function validateTransmog(toon){
+    function validateTransmog(toon) {
         const transmogItem = getTransmogCount(toon.items);
-        if(transmogItem < 3){
+        if (transmogItem < 3) {
             return {
-                status:'nok',
+                status: 'nok',
                 reason: toon.name + ' - not enough transmogrified items (' + transmogItem + ')'
             };
         }
-        return {status: 'ok'};
+        return { status: 'ok' };
     }
-    function getToonFromGuild(members, retry){
-        const toon = members[Math.floor(Math.random() * (members.length - 1))+ 1].character;
-        if(toon.level != 120){
-            console.log('2-#'+retry+' '+toon.name + '-'+ toon.realm +' - not max level');
+    function getToonFromGuild(members, retry) {
+        const toon = members[Math.floor(Math.random() * (members.length - 1)) + 1].character;
+        if (toon.level != 120) {
+            console.log('2-#' + retry + ' ' + toon.name + '-' + toon.realm + ' - not max level');
             return false
-        }else{
+        } else {
             return toon;
         }
     };
-    function getToon(name,realm) {
-        console.log('GetToon: ' . constToken);
-        return blizzard.wow.character(['statistics', 'guild','items'], { realm: realm, name: name, origin: constRegion, token: constToken})
+    function getToon(name, realm) {
+        console.log('GetToon: ' + realm + '-' + name);
+        return blizzard.wow.character(['statistics', 'guild', 'items'], { realm: realm, name: name, origin: constRegion, token: constToken })
             .then(toon => {
-                if(toon.data.hasOwnProperty('guild') && toon.data.guild.hasOwnProperty('name') && toon.data.guild.hasOwnProperty('realm')){
-                    console.log('Get guild: ' +toon.data.guild.realm + ' - ' +toon.data.guild.name);
-                    return blizzard.wow.guild(['members'],{ realm: toon.data.guild.realm, name: toon.data.guild.name, origin: constRegion, token: constToken })
+                if (toon.data.hasOwnProperty('guild') && toon.data.guild.hasOwnProperty('name') && toon.data.guild.hasOwnProperty('realm')) {
+                    console.log('Get guild: ' + toon.data.guild.realm + ' - ' + toon.data.guild.name);
+                    return blizzard.wow.guild(['members'], { realm: toon.data.guild.realm, name: toon.data.guild.name, origin: constRegion, token: constToken })
                         .then(guild => {
                             let retries = 10;
                             let toon = false;
-                            while (retries-- > 0 && !(toon = getToonFromGuild(guild.data.members, retries))) {};
-                            return blizzard.wow.character(['statistics', 'guild','items'], { realm: toon.realm, name: toon.name, origin: constRegion, token: constToken })
+                            while (retries-- > 0 && !(toon = getToonFromGuild(guild.data.members, retries))) { };
+                            return blizzard.wow.character(['statistics', 'guild', 'items'], { realm: toon.realm, name: toon.name, origin: constRegion, token: constToken })
                                 .then(fashion => {
-                                    if(fashion.response && fashion.response.data && fashion.response.data.status && fashion.response.data.status != 200){
+                                    if (fashion.response && fashion.response.data && fashion.response.data.status && fashion.response.data.status != 200) {
                                         throw 'Error: ' + fashion.response.data.reason;
                                     }
                                     const isToonValid = validateTransmog(fashion.data);
-                                    if(isToonValid.status === 'nok'){
+                                    if (isToonValid.status === 'nok') {
                                         throw isToonValid.reason;
                                     }
                                     console.log('Valid toon: ' + fashion.data.name);
                                     return {
                                         'status': 'ok',
                                         'name': fashion.data.name,
-                                        'class': classesData[fashion.data.class-1],
+                                        'class': classesData[fashion.data.class - 1],
                                         'realm': fashion.data.realm,
                                         'region': constRegion,
                                         'race': getRaceData(fashion.data.race).name,
                                         'side': getRaceData(fashion.data.race).side,
                                         'guild': fashion.data.guild.name,
                                         'transmogItems': listItems(fashion.data.items),
-                                        'thumbnail': 'https://render-api-'+ constRegion + '.worldofwarcraft.com/static-render/'+ constRegion + '/' + fashion.data.thumbnail,
-                                        'render': 'http://render-'+ constRegion + '.worldofwarcraft.com/character/' + fashion.data.thumbnail.substring(0, (fashion.data.thumbnail.length - 11)) + '-main.jpg',
-                                        'link': 'http://'+ constRegion + '.battle.net/wow/en/character/' + fashion.data.realm + '/' + fashion.data.name + '/advanced',
+                                        'thumbnail': 'https://render-api-' + constRegion + '.worldofwarcraft.com/static-render/' + constRegion + '/' + fashion.data.thumbnail,
+                                        'render': 'http://render-' + constRegion + '.worldofwarcraft.com/character/' + fashion.data.thumbnail.substring(0, (fashion.data.thumbnail.length - 11)) + '-main.jpg',
+                                        'link': 'http://' + constRegion + '.battle.net/wow/en/character/' + fashion.data.realm + '/' + fashion.data.name + '/advanced',
                                     };
                                 });
                         });
-                }else{
+                } else {
                     throw 'No guild';
                 }
             })
     };
-    function getValidToon(jsonData, retry){
-        const rowNumber = Math.floor(Math.random() * (jsonData.auctions.length - 1))+ 1; // Random between 1 and row.length
-        const owner = jsonData.auctions[rowNumber].owner,
-            ownerRealm = jsonData.auctions[rowNumber].ownerRealm;
-        console.log('1-#' + retry + ' toon:' + ownerRealm + '-' + owner);
+    function getValidToon(leadingGroups, retry) {
+        const rowNumber = Math.floor(Math.random() * leadingGroups.length - 1) + 1;
+        const memberNumber = leadingGroups[rowNumber] && leadingGroups[rowNumber].members && Math.floor(Math.random() * (leadingGroups[rowNumber].members.length - 1)) + 1;
+        const name = leadingGroups[rowNumber].members[memberNumber].profile.name;
+        const realm = leadingGroups[rowNumber].members[memberNumber].profile.realm.slug
+        console.log('1-#' + retry + ' toon: ' + constRegion + '-' + realm + '-' + name);
 
-        return getToon(owner, ownerRealm).then(response => {return response}).catch(error => {
-            console.log('Invalid toon:'+error);
-            if(retry > 0){
-                return getValidToon(jsonData,retry - 1);
-            }else{
+        return getToon(name, realm).then(response => { return response }).catch(error => {
+            console.log('Invalid toon:' + error);
+            if (retry > 0) {
+                return getValidToon(leadingGroups, retry - 1);
+            } else {
                 throw 'Max retry hit, no valid toons';
             }
         });
     };
 
-    return blizzard.wow.auction({ realm: constRealm, origin: constRegion, token: constToken})
+    return blizzard.wow.mythicKeystoneLeaderboard({ realm: constRealm, region: constRegion, token: constToken })
         .then(response => {
-            const options = {
-                uri: response.data.files[0].url,
-                json: true
-            };
-            return rp(options)
-                .then(jsonData => {
-                    return getValidToon(jsonData,5);
-                })
-                .then(toonData => {
-                    return Promise.all(toonData.transmogItems.map(function(item){
-                        return blizzard.wow.item({ id: item.itemId, origin: 'eu', locale:'en_GB', token: constToken }).then(itemData => {
-                            item.name = itemData.data.name;
-                            item.quality = qualityData[itemData.data.quality];
-                            item.icon = itemData.data.icon;
-                            return item;
+            const leaderBoards = response.data.current_leaderboards;
+            const leaderBoard = leaderBoards[Math.floor(Math.random() * (leaderBoards.length - 1)) + 1];
+            const period = leaderBoard.key.href.match(/period\/([0-9]*)/gm)[0].substring(7);
+            const dungeon = leaderBoard.id;
+            console.log(dungeon, period);
+            return blizzard.wow.mythicKeystoneLeaderboard({ realm: constRealm, region: constRegion, dungeon: dungeon, period: period, token: constToken })
+                .then(response => {
+                    return getValidToon(response.data.leading_groups, 5)
+                        .then(toonData => {
+                            return Promise.all(toonData.transmogItems.map(function (item) {
+                                return blizzard.wow.item({ id: item.itemId, origin: 'eu', locale: 'en_GB', token: constToken }).then(itemData => {
+                                    item.name = itemData.data.name;
+                                    item.quality = qualityData[itemData.data.quality];
+                                    item.icon = itemData.data.icon;
+                                    return item;
+                                });
+                            })).then(transmogItems => {
+                                toonData.transmogItems = transmogItems;
+                                return toonData;
+                            });
                         });
-                    })).then(transmogItems => {
-                        toonData.transmogItems = transmogItems;
-                        return toonData;
-                    });
+                })
+                .then(result => { return result; })
+                .catch(error => {
+                    if (error.response && error.response.data) {
+                        console.log('error:', error.response.data);
+                        console.log(error.response.data.status + ': ' + error.response.data.reason);
+                    } else {
+                        console.log(error);
+                    }
+                    throw 'unable to find a valid toon';
                 });
-        })
-        .then(result => { return result; })
-        .catch(error => {
-            if(error.response && error.response.data){
-                console.log(error.response.data.status + ': ' + error.response.data.reason);
-            }else{
-                console.log(error);
-            }
-            throw 'unable to find a valid toon';
         });
 };
 blizzard.getApplicationToken({
-        key: config.bnet.key,
-        secret: config.bnet.secret,
-        origin: "us"
+    key: config.bnet.key,
+    secret: config.bnet.secret,
+    origin: "us"
 }).then(response => {
     const theToken = response.data.access_token;
     getToonFashion(theToken).then(result => {
         let items = '';
-        result.transmogItems.forEach(function (item) {
-            items += '<span class="slot">' + item.slot + ': </span><span class="'+item.quality.cssName+' transmog_'+item.transmog+'"><a href="http://www.wowhead.com/item=' + item.itemId + '">' + item.name + '</a></span><br />';
+        result.transmogItems && result.transmogItems.forEach(function (item) {
+            items += '<span class="slot">' + item.slot + ': </span><span class="' + item.quality.cssName + ' transmog_' + item.transmog + '"><a href="http://www.wowhead.com/item=' + item.itemId + '">' + item.name + '</a></span><br />';
         });
 
         const blogId = 'transmogwow.tumblr.com';
@@ -240,10 +240,9 @@ blizzard.getApplicationToken({
             type: 'photo',
             source: result.render,
             tags: result.race + ',' + result.class.name + ',' + result.class.armor + ',' + result.side + ',WoW,Transmogrification',
-            caption: '<a class="'+result.class.cssClass+'" href="'+result.link+'">'+result.name + ' - ' + result.realm + ' ('+ result.region + ')</a><br />' + items,
+            caption: '<a class="' + result.class.cssClass + '" href="' + result.link + '">' + result.name + ' - ' + result.realm + ' (' + result.region + ')</a><br />' + items,
             link: result.link,
         };
-
         const client = tumblr.createClient(config.tumblr);
         client.returnPromises();
         client.createPhotoPost(blogId, options).then(result => {
