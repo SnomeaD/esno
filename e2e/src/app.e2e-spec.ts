@@ -1,4 +1,11 @@
-import { browser, by, element, ElementArrayFinder, ElementFinder, logging } from 'protractor';
+import {
+  browser,
+  by,
+  element,
+  ElementArrayFinder,
+  ElementFinder,
+  logging,
+} from 'protractor';
 
 class Hero {
   id: number;
@@ -29,13 +36,13 @@ class Hero {
     const name = await detail.element(by.css('h2')).getText();
     return {
       id: +id.substr(id.indexOf(' ') + 1),
-      name: name.substr(0, name.lastIndexOf(' '))
+      name: name.substr(0, name.lastIndexOf(' ')),
     };
   }
 }
 
 describe('Universal', () => {
-  const expectedH1 = 'Tour of Heroes';
+  const expectedH1 = 'Toons viewer';
   const expectedTitle = `${expectedH1}`;
   const targetHero = { id: 15, name: 'Magneta' };
   const targetHeroDashboardIndex = 3;
@@ -45,7 +52,9 @@ describe('Universal', () => {
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
-    const severeLogs = logs.filter(entry => entry.level === logging.Level.SEVERE);
+    const severeLogs = logs.filter(
+      (entry) => entry.level === logging.Level.SEVERE
+    );
     expect(severeLogs).toEqual([]);
   });
 
@@ -57,12 +66,14 @@ describe('Universal', () => {
     });
 
     it(`has h1 '${expectedH1}'`, () => {
-        expectHeading(1, expectedH1);
+      expectHeading(1, expectedH1);
     });
 
     const expectedViewNames = ['Dashboard', 'Heroes'];
     it(`has views ${expectedViewNames}`, () => {
-      const viewNames = getPageElts().navElts.map((el: ElementFinder) => el.getText());
+      const viewNames = getPageElts().navElts.map((el: ElementFinder) =>
+        el.getText()
+      );
       expect(viewNames).toEqual(expectedViewNames);
     });
 
@@ -80,27 +91,43 @@ describe('Universal', () => {
       expect(page.topHeroes.count()).toEqual(4);
     });
 
-    it(`selects and routes to ${targetHero.name} details`, dashboardSelectTargetHero);
+    it(
+      `selects and routes to ${targetHero.name} details`,
+      dashboardSelectTargetHero
+    );
 
-    it(`updates hero name (${newHeroName}) in details view`, updateHeroNameInDetailView);
+    it(
+      `updates hero name (${newHeroName}) in details view`,
+      updateHeroNameInDetailView
+    );
 
     it(`cancels and shows ${targetHero.name} in Dashboard`, () => {
       element(by.buttonText('go back')).click();
       browser.waitForAngular(); // seems necessary to gets tests to pass for toh-pt6
 
-      const targetHeroElt = getPageElts().topHeroes.get(targetHeroDashboardIndex);
+      const targetHeroElt = getPageElts().topHeroes.get(
+        targetHeroDashboardIndex
+      );
       expect(targetHeroElt.getText()).toEqual(targetHero.name);
     });
 
-    it(`selects and routes to ${targetHero.name} details`, dashboardSelectTargetHero);
+    it(
+      `selects and routes to ${targetHero.name} details`,
+      dashboardSelectTargetHero
+    );
 
-    it(`updates hero name (${newHeroName}) in details view`, updateHeroNameInDetailView);
+    it(
+      `updates hero name (${newHeroName}) in details view`,
+      updateHeroNameInDetailView
+    );
 
     it(`saves and shows ${newHeroName} in Dashboard`, () => {
       element(by.buttonText('save')).click();
       browser.waitForAngular(); // seems necessary to gets tests to pass for toh-pt6
 
-      const targetHeroElt = getPageElts().topHeroes.get(targetHeroDashboardIndex);
+      const targetHeroElt = getPageElts().topHeroes.get(
+        targetHeroDashboardIndex
+      );
       expect(targetHeroElt.getText()).toEqual(newHeroName);
     });
   });
@@ -125,7 +152,10 @@ describe('Universal', () => {
       expect(hero.name).toEqual(targetHero.name.toUpperCase());
     });
 
-    it(`updates hero name (${newHeroName}) in details view`, updateHeroNameInDetailView);
+    it(
+      `updates hero name (${newHeroName}) in details view`,
+      updateHeroNameInDetailView
+    );
 
     it(`shows ${newHeroName} in Heroes list`, () => {
       element(by.buttonText('save')).click();
@@ -144,7 +174,7 @@ describe('Universal', () => {
       expect(page.allHeroes.count()).toEqual(9, 'number of heroes');
       const heroesAfter = await toHeroArray(page.allHeroes);
       // console.log(await Hero.fromLi(page.allHeroes[0]));
-      const expectedHeroes =  heroesBefore.filter(h => h.name !== newHeroName);
+      const expectedHeroes = heroesBefore.filter((h) => h.name !== newHeroName);
       expect(heroesAfter).toEqual(expectedHeroes);
       // expect(page.selectedHeroSubview.isPresent()).toBeFalsy();
     });
@@ -161,14 +191,20 @@ describe('Universal', () => {
       const heroesAfter = await toHeroArray(page.allHeroes);
       expect(heroesAfter.length).toEqual(numHeroes + 1, 'number of heroes');
 
-      expect(heroesAfter.slice(0, numHeroes)).toEqual(heroesBefore, 'Old heroes are still there');
+      expect(heroesAfter.slice(0, numHeroes)).toEqual(
+        heroesBefore,
+        'Old heroes are still there'
+      );
 
       const maxId = heroesBefore[heroesBefore.length - 1].id;
-      expect(heroesAfter[numHeroes]).toEqual({id: maxId + 1, name: updatedHeroName});
+      expect(heroesAfter[numHeroes]).toEqual({
+        id: maxId + 1,
+        name: updatedHeroName,
+      });
     });
 
     it('displays correctly styled buttons', async () => {
-      element.all(by.buttonText('x')).then(buttons => {
+      element.all(by.buttonText('x')).then((buttons) => {
         for (const button of buttons) {
           // Inherited styles from styles.css
           expect(button.getCssValue('font-family')).toBe('Arial');
@@ -247,18 +283,22 @@ describe('Universal', () => {
   }
 
   function expectHeading(hLevel: number, expectedText: string): void {
-      const hTag = `h${hLevel}`;
-      const hText = element(by.css(hTag)).getText();
-      expect(hText).toEqual(expectedText, hTag);
+    const hTag = `h${hLevel}`;
+    const hText = element(by.css(hTag)).getText();
+    expect(hText).toEqual(expectedText, hTag);
   }
 
   function getHeroAEltById(id: number): ElementFinder {
-    const spanForId = element(by.cssContainingText('li span.badge', id.toString()));
+    const spanForId = element(
+      by.cssContainingText('li span.badge', id.toString())
+    );
     return spanForId.element(by.xpath('..'));
   }
 
   function getHeroLiEltById(id: number): ElementFinder {
-    const spanForId = element(by.cssContainingText('li span.badge', id.toString()));
+    const spanForId = element(
+      by.cssContainingText('li span.badge', id.toString())
+    );
     return spanForId.element(by.xpath('../..'));
   }
 
@@ -275,12 +315,14 @@ describe('Universal', () => {
       appHeroesHref: navElts.get(1),
       appHeroes: element(by.css('app-root app-heroes')),
       allHeroes: element.all(by.css('app-root app-heroes li')),
-      selectedHeroSubview: element(by.css('app-root app-heroes > div:last-child')),
+      selectedHeroSubview: element(
+        by.css('app-root app-heroes > div:last-child')
+      ),
 
       heroDetail: element(by.css('app-root app-hero-detail > div')),
 
       searchBox: element(by.css('#search-box')),
-      searchResults: element.all(by.css('.search-result li'))
+      searchResults: element.all(by.css('.search-result li')),
     };
   }
 

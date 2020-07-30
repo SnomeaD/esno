@@ -6,61 +6,39 @@ const blizzard = require('blizzard.js').initialize({
   origin: constRegion,
 });
 import axios from 'axios';
-import { response } from 'express';
+import { Toon, MAX_LEVEL } from 'src/app/toon.js';
+const PLAYABLE_CLASS = 'playable_class';
+const PLAYABLE_RACE = 'playable_race';
+const PROTECTED_CHARACTER = 'protected_character';
 
-export const getToonController = (req, res, next) => {
+const extractData = (rawData: any): Toon => {
+  console.log(rawData);
+  return null;
+};
+export const getToonController = (req: any, res: any) => {
   console.log('getToonController');
 
-  function getTokenAccess(token: string) {
-    console.log('getTokenAccess');
-    return axios
-      .get(`https://${constRegion}.battle.net/oauth/token`, {
-        params: {
-          code: token,
-          grant_type: 'authorization_code',
-          scope: 'wow.profile',
-          redirect_uri: 'http://localhost:4200/auth/bnet/callback',
-        },
-        auth: { username: config.bnet.id, password: config.bnet.secret },
-      })
-      .then((tokenResponse) => {
-        console.log(tokenResponse);
-        return token;
+  const token = req.session?.passport?.user?.token;
+  const realmSlug = req.params?.realmSlug;
+  const toonName = req.params?.toonName;
+
+  if (token && realmSlug && toonName) {
+    const url = `https://${constRegion}.api.blizzard.com/profile/wow/character/${realmSlug}/${toonName}/achievements/statistics?namespace=profile-${constRegion}&locale=en_GB&access_token=${token}`;
+    const axiosConfig = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .get(url, axiosConfig)
+      .then((axiosResponse) => {
+        res.jsonp(extractData(axiosResponse?.data));
       })
       .catch((error) => {
-        console.log(error);
-        return token;
+        res.status(500).jsonp({ status: 500, message: error });
       });
-  }
-
-  const configOrigin = config.bnet.region;
-  const configRealm = req.params.server;
-  const configName = req.params.name;
-  const token = 'EUiwfIMS0BXAlbo4fqqjoaTG4NvY6hjIPk';
-  const axiosConfig = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-  axios
-    .get(
-      `https://${constRegion}.api.blizzard.com/profile/user/wow?namespace=profile-eu&locale=en_GB&access_token=${token}`,
-      axiosConfig
-    )
-    .then((axiosResponse) => {
-      console.log(axiosResponse?.data?.wow_accounts);
-      return axiosResponse?.data?.wow_accounts;
-    })
-    .catch((error) => {
-      console.log(error);
-      return 'perdu';
+  } else {
+    res.status(500).jsonp({
+      status: 500,
+      message: `missing value: token: ${token}, realmSlug: ${realmSlug}, toonName: ${toonName}`,
     });
-  // getTokenAccess('EUiwfIMS0BXAlbo4fqqjoaTG4NvY6hjIPk').then((accessToken) => {
-  //   console.log('accessToken', accessToken);
-  //   if (accessToken !== 'perdu') {
-  //     blizzard.account.userInfo(accessToken).then((userInfoResponse) => {
-  //       console.log(userInfoResponse);
-  //     });
-  //   }
-  //   return false;
-  // });
-  console.log('fini');
+  }
 };
