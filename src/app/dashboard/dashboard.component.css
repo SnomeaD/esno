@@ -22,6 +22,12 @@ h3 {
 h4 {
   position: relative;
 }
+h4.horde{
+  background-color:#8c1616;   /* Falu Red */
+}
+h4.alliance{
+  background-color: #162c57;  /* Blue Zodiac */
+}
 .grid {
   margin: 0;
 }

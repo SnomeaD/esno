@@ -51,7 +51,7 @@ const extractData = (rawData: any): Toon[] => {
 };
 export const getToonsController = (req: any, res: any) => {
   console.log('getToonsController');
-
+ // https://eu.api.blizzard.com/profile/wow/character/sargeras/snomead/character-media?namespace=profile-eu&locale=en_GB&access_token=US48TTKRc5IPHS7IpqWXnIsxiQsD0yOXAF
   const token = req.session?.passport?.user?.token;
   if (token) {
     const axiosConfig = {

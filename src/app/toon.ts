@@ -1,3 +1,5 @@
+import { ToonDetails } from './toonDetails';
+
 export const MAX_LEVEL = 120;
 
 export interface Realm {
@@ -31,4 +33,5 @@ export interface Toon {
   faction: Faction;
   protectedUrl: string;
   level: number;
+  details?: ToonDetails;
 }

@@ -1,12 +1,17 @@
-<h3>Toons</h3>
+<h3>My toons!</h3>
+
+<a
+    class="col-1-4"
+    routerLink="/toon/sargeras/snomead"
+  >SnomeaD</a>
 <div class="grid grid-pad">
   <a
     *ngFor="let toon of toons"
     class="col-1-4"
-    routerLink="/toon-detail/{{ toon.id }}"
+    routerLink="/toon/{{ toon.realm.slug }}/{{ toon.name }}"
   >
-    <div class="module hero">
-      <h4>{{ toon.name }}</h4>
+    <div class="module toon">
+      <h4 class="{{toon.faction.type | lowercase}}">{{toon.realm.name}} - {{toon.name}}</h4>
     </div>
   </a>
 </div>

@@ -9,7 +9,8 @@ import { MessageService } from './message.service';
 
 @Injectable({ providedIn: 'root' })
 export class ToonsService {
-  private toonsUrl = '/api/toons'; // URL to web api
+  // private toonsUrl = '/api/toons'; // URL to web api
+  private toonsUrl = 'http://localhost:4200/api/toons'; // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -23,7 +24,7 @@ export class ToonsService {
   /** GET toons from the server */
   getToons(): Observable<Toon[]> {
     return this.http.get<Toon[]>(this.toonsUrl).pipe(
-      tap((_) => this.log('fetched toons')),
+      tap((_) => this.log('fetched toons!')),
       catchError(this.handleError<Toon[]>('getToons', []))
     );
   }

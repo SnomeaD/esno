@@ -7,7 +7,7 @@ import { ToonDetailComponent } from './toon-detail/toon-detail.component';
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'toon/:id', component: ToonDetailComponent },
+  { path: 'toon/:realmSlug/:toonName', component: ToonDetailComponent },
 ];
 
 @NgModule({

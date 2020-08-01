@@ -6,12 +6,12 @@ const blizzard = require('blizzard.js').initialize({
   origin: constRegion,
 });
 import axios from 'axios';
-import { Toon, MAX_LEVEL } from 'src/app/toon.js';
+import { ToonDetails } from 'src/app/toonDetails.js';
 const PLAYABLE_CLASS = 'playable_class';
 const PLAYABLE_RACE = 'playable_race';
 const PROTECTED_CHARACTER = 'protected_character';
 
-const extractData = (rawData: any): Toon => {
+const extractData = (rawData: any): ToonDetails => {
   console.log(rawData);
   return null;
 };
