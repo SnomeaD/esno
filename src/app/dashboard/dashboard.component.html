@@ -1,17 +1,16 @@
 <h3>My toons!</h3>
 
-<a
-    class="col-1-4"
-    routerLink="/toon/sargeras/snomead"
-  >SnomeaD</a>
-<div class="grid grid-pad">
+<div class="container">
   <a
     *ngFor="let toon of toons"
-    class="col-1-4"
+    class="toon {{toon.faction.type | lowercase}}"
     routerLink="/toon/{{ toon.realm.slug }}/{{ toon.name }}"
   >
-    <div class="module toon">
-      <h4 class="{{toon.faction.type | lowercase}}">{{toon.realm.name}} - {{toon.name}}</h4>
-    </div>
+    <ng-template [ngIf]="toon?.details?.media?.bust">
+      <img class="bust" src="{{toon.details.media.bust}}" />
+    </ng-template>
+    <div class="name {{toon.class.name | lowercase}}-text">{{toon.name}}</div>
+    <div class="realm">{{toon.realm.name}}</div>
+    <div class="realm">{{toon.details?.profile?.averageItemLevel}}</div>
   </a>
 </div>

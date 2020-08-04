@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Toon } from './toon';
 import { MessageService } from './message.service';
+import { ToonDetails } from './toonDetails';
 
 @Injectable({ providedIn: 'root' })
 export class ToonsService {
@@ -28,7 +29,7 @@ export class ToonsService {
       catchError(this.handleError<Toon[]>('getToons', []))
     );
   }
-
+  
   /** GET toon by id. Return `undefined` when id not found */
   getToonNo404<Data>(id: number): Observable<Toon> {
     const url = `${this.toonsUrl}/?id=${id}`;
@@ -42,12 +43,12 @@ export class ToonsService {
     );
   }
 
-  /** GET toon by id. Will 404 if id not found */
-  getToon(realmId: number, toonId: number): Observable<Toon> {
-    const url = `${this.toonsUrl}/${realmId}/${toonId}`;
-    return this.http.get<Toon>(url).pipe(
-      tap((_) => this.log(`fetched toon id=${realmId}/${toonId}`)),
-      catchError(this.handleError<Toon>(`getToon id=${realmId}/${toonId}`))
+  /** GET toon by realmSlug, toonName. Will 404 if id not found */
+  getToonDetail(realmSlug: string, toonName: string): Observable<ToonDetails> {
+    const url = `${this.toonsUrl}/${realmSlug}/${toonName}`;
+    return this.http.get<ToonDetails>(url).pipe(
+      tap((_) => this.log(`fetched toon details id=${realmSlug}-${toonName}`)),
+      catchError(this.handleError<ToonDetails>(`getToonDetails id=${realmSlug}-${toonName}`))
     );
   }
 

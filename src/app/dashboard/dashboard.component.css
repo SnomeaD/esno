@@ -19,51 +19,44 @@ h3 {
   text-align: center;
   margin-bottom: 0;
 }
-h4 {
-  position: relative;
+.container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
 }
-h4.horde{
-  background-color:#8c1616;   /* Falu Red */
-}
-h4.alliance{
-  background-color: #162c57;  /* Blue Zodiac */
-}
-.grid {
-  margin: 0;
-}
-.col-1-4 {
-  width: 25%;
-}
-.module {
+.toon {
   padding: 20px;
   text-align: center;
   color: #eee;
-  max-height: 120px;
-  min-width: 120px;
+  height: 13em;
+  min-width: 14em;
   background-color: #3f525c;
-  border-radius: 2px;
+  border-radius: 1em;
+  margin: 1em;
 }
-.module:hover {
+.toon > div.name{
+  font-size: 1.6em;
+  font-weight: 600;
+}
+.toon > div.realm{
+  font-size: 1em;
+  font-weight: 100;
+  color: #ccc;
+}
+.toon > img{
+  border-radius: 1em;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+.toon.horde{
+  background-color:#8c1616;   /* Falu Red */
+}
+.toon.alliance{
+  background-color: #162c57;  /* Blue Zodiac */
+}
+
+.toon:hover {
   background-color: #EEE;
   cursor: pointer;
   color: #607d8b;
-}
-.grid-pad {
-  padding: 10px 0;
-}
-.grid-pad > [class*='col-']:last-of-type {
-  padding-right: 20px;
-}
-@media (max-width: 600px) {
-  .module {
-    font-size: 10px;
-    max-height: 75px; }
-}
-@media (max-width: 1024px) {
-  .grid {
-    margin: 0;
-  }
-  .module {
-    min-width: 60px;
-  }
 }

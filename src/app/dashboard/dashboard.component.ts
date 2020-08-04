@@ -17,6 +17,15 @@ export class DashboardComponent implements OnInit {
   }
 
   getToons(): void {
-    this.toonsService.getToons().subscribe((toons) => (this.toons = toons));
+    // this.toonsService.getToons().subscribe((toons) => (this.toons = toons));
+    this.toonsService.getToons().subscribe((toons) => {
+      this.toons = toons;
+      toons.forEach((toon, index) => { 
+        this.toonsService.getToonDetail(toon.realm.slug, toon.name.toLowerCase()).subscribe(toonDetail => {
+          this.toons[index].details = toonDetail
+          console.log('toonDetail',toonDetail);
+        })
+      });
+    });
   }
 }
