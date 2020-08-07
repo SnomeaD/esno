@@ -22,15 +22,14 @@ h3 {
 .container{
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: stretch;
   flex-wrap: wrap;
 }
 .toon {
-  padding: 20px;
+  padding: 1em;
   text-align: center;
   color: #eee;
-  height: 13em;
-  min-width: 14em;
+  max-width: 17em;
   background-color: #3f525c;
   border-radius: 1em;
   margin: 1em;
@@ -47,6 +46,19 @@ h3 {
 .toon > img{
   border-radius: 1em;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+.kills {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content:center;
+}
+.kills > img {
+  margin: 0.5em;
+}
+.kills > img.alive{
+  filter: grayscale(1);
 }
 .toon.horde{
   background-color:#8c1616;   /* Falu Red */

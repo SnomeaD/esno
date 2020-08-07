@@ -1,8 +1,9 @@
 export interface KillDetail { 
     id: number;
     name: string;
-    last_updated_timestamp: number;
+    lastUpdatedTimestamp: number;
     quantity: number;
+    isDeadThisWeek: boolean;
 }
 
 export interface ToonDetails {
@@ -12,13 +13,7 @@ export interface ToonDetails {
         render: string;
     },
     statistics: {
-        kills : {
-            rukhmar: KillDetail;
-            oondasta: KillDetail;
-            nalak: KillDetail;
-            shaOfAnger: KillDetail;
-            galleon: KillDetail;
-          }
+        kills : KillDetail[];
     },
     profile: { 
         averageItemLevel: number;

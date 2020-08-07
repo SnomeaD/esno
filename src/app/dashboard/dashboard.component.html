@@ -11,6 +11,13 @@
     </ng-template>
     <div class="name {{toon.class.name | lowercase}}-text">{{toon.name}}</div>
     <div class="realm">{{toon.realm.name}}</div>
-    <div class="realm">{{toon.details?.profile?.averageItemLevel}}</div>
+    <div>{{toon.details?.profile?.averageItemLevel}}</div>
+    <div class="kills">
+      <ng-template [ngIf]="toon?.details?.statistics">
+        <img *ngFor="let kill of toon.details.statistics.kills" 
+        src="/assets/img/{{kill.id}}.jpg"
+        [className]="kill.isDeadThisWeek ? 'killed' : 'alive'">
+      </ng-template>
+    </div>
   </a>
 </div>
