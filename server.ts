@@ -67,7 +67,7 @@ export function app(): express.Express {
       {
         clientID: config.bnet.id,
         clientSecret: config.bnet.secret,
-        callbackURL: 'http://localhost:4200/auth/bnet/callback',
+        callbackURL: 'https://toon-viewer.herokuapp.com/auth/bnet/callback',
         region: constRegion,
         scope: 'wow.profile',
         response_type: 'code',
