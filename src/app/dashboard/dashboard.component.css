@@ -26,26 +26,38 @@ h3 {
   flex-wrap: wrap;
 }
 .toon {
-  padding: 1em;
   text-align: center;
   color: #eee;
   max-width: 17em;
-  background-color: #3f525c;
   border-radius: 1em;
   margin: 1em;
 }
-.toon > div.name{
+.name{
   font-size: 1.6em;
   font-weight: 600;
 }
-.toon > div.realm{
+.ilvl{
+  font-style: italic;
+  color: #aaa;
+}
+.realm{
   font-size: 1em;
   font-weight: 100;
-  color: #ccc;
 }
-.toon > img{
+.header {
+  border-radius: 1em 1em 0 0;
+  padding: 1em;
+}
+.header > img{
   border-radius: 1em;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.content { 
+  background-color: #333;
+  border-radius: 0 0 1em 1em;
+  padding: 1em;
+  color: #ccc;
 }
 .kills {
   display: flex;
@@ -60,15 +72,9 @@ h3 {
 .kills > img.alive{
   filter: grayscale(1);
 }
-.toon.horde{
+.header.horde{
   background-color:#8c1616;   /* Falu Red */
 }
-.toon.alliance{
+.header.alliance{
   background-color: #162c57;  /* Blue Zodiac */
-}
-
-.toon:hover {
-  background-color: #EEE;
-  cursor: pointer;
-  color: #607d8b;
 }

@@ -5,7 +5,7 @@ import * as express from 'express';
 import * as passport from 'passport';
 
 import * as session from 'express-session';
-
+import { environment } from './src/environments/environment';
 const BnetStrategy = require('passport-bnet').Strategy;
 import { config } from './config/config.js';
 
@@ -67,7 +67,7 @@ export function app(): express.Express {
       {
         clientID: config.bnet.id,
         clientSecret: config.bnet.secret,
-        callbackURL: 'https://toon-viewer.herokuapp.com/auth/bnet/callback',
+        callbackURL: environment.callbackUrl,
         region: constRegion,
         scope: 'wow.profile',
         response_type: 'code',

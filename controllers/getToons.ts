@@ -15,7 +15,7 @@ const extractData = (rawData: any): Toon[] => {
   const toons: Toon[] = [];
   rawData.forEach((element: any) => {
     element.characters.forEach((char: any) => {
-      if (char.level === MAX_LEVEL) {
+      if (char.level >= MAX_LEVEL - 9) {
         toons.push({
           name: char.name,
           id: char.id,

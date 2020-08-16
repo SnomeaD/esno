@@ -6,12 +6,9 @@ const blizzard = require('blizzard.js').initialize({
   origin: constRegion,
 });
 import axios from 'axios';
-import { ToonDetails, KillDetail } from 'src/app/toonDetails.js';
+import { KillDetail } from 'src/app/toonDetails.js';
 import { getDay, isAfter, setDay, setHours, setMinutes, setSeconds, setMilliseconds, subDays } from 'date-fns';
 
-const PLAYABLE_CLASS = 'playable_class';
-const PLAYABLE_RACE = 'playable_race';
-const PROTECTED_CHARACTER = 'protected_character';
 const DUNGEONS_RAID = 14807;
 const WARLORDS_OF_DRAENOR = 15233;
 const MISTS_OF_PANDARIA = 15164;
@@ -105,20 +102,6 @@ export const getToonDetailsController = (req: any, res: any) => {
     return false; 
   }
 
-//   function isDeadThisWeek(timestamp){
-//     // If we are Wednesday or past, don't take last wednesday but this Wednesday
-//     if(3 <= moment().day()){
-//         if(moment(timestamp).isAfter(moment().day(3).hour(9).minute(0).second(0))){
-//             return true
-//         }
-//         return false;
-//     }else{
-//         if(moment(timestamp).isAfter(moment().day(-4).hour(9).minute(0).second(0))){
-//             return true;
-//         }
-//     }
-//     return false;
-// }
   if (token && realmSlug && toonName) {
     Promise.all([retrieveMedia(realmSlug, toonName), retrieveStatistic(realmSlug, toonName), retrieveProfile(realmSlug, toonName)]).then((values) => { 
       res.jsonp({media: values[0], statistics: values[1], profile: values[2]});

@@ -10,7 +10,6 @@ import { ToonDetails } from './toonDetails';
 
 @Injectable({ providedIn: 'root' })
 export class ToonsService {
-  // private toonsUrl = '/api/toons'; // URL to web api
   private toonsUrl = '/api/toons'; // URL to web api
 
   httpOptions = {
@@ -30,19 +29,6 @@ export class ToonsService {
     );
   }
   
-  /** GET toon by id. Return `undefined` when id not found */
-  getToonNo404<Data>(id: number): Observable<Toon> {
-    const url = `${this.toonsUrl}/?id=${id}`;
-    return this.http.get<Toon[]>(url).pipe(
-      map((toons) => toons[0]), // returns a {0|1} element array
-      tap((h) => {
-        const outcome = h ? `fetched` : `did not find`;
-        this.log(`${outcome} toon id=${id}`);
-      }),
-      catchError(this.handleError<Toon>(`getToon id=${id}`))
-    );
-  }
-
   /** GET toon by realmSlug, toonName. Will 404 if id not found */
   getToonDetail(realmSlug: string, toonName: string): Observable<ToonDetails> {
     const url = `${this.toonsUrl}/${realmSlug}/${toonName}`;
@@ -65,35 +51,6 @@ export class ToonsService {
           : this.log(`no toons matching "${term}"`)
       ),
       catchError(this.handleError<Toon[]>('searchToons', []))
-    );
-  }
-
-  //////// Save methods //////////
-
-  /** POST: add a new toon to the server */
-  addToon(toon: Toon): Observable<Toon> {
-    return this.http.post<Toon>(this.toonsUrl, toon, this.httpOptions).pipe(
-      tap((newToon: Toon) => this.log(`added toon w/ id=${newToon.id}`)),
-      catchError(this.handleError<Toon>('addToon'))
-    );
-  }
-
-  /** DELETE: delete the toon from the server */
-  deleteToon(toon: Toon | number): Observable<Toon> {
-    const id = typeof toon === 'number' ? toon : toon.id;
-    const url = `${this.toonsUrl}/${id}`;
-
-    return this.http.delete<Toon>(url, this.httpOptions).pipe(
-      tap((_) => this.log(`deleted toon id=${id}`)),
-      catchError(this.handleError<Toon>('deleteToon'))
-    );
-  }
-
-  /** PUT: update the toon on the server */
-  updateToon(toon: Toon): Observable<any> {
-    return this.http.put(this.toonsUrl, toon, this.httpOptions).pipe(
-      tap((_) => this.log(`updated toon id=${toon.id}`)),
-      catchError(this.handleError<any>('updateToon'))
     );
   }
 

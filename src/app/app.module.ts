@@ -12,6 +12,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { PLATFORM_ID, APP_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ToonDetailComponent } from './toon-detail/toon-detail.component';
+import { ClassNamePipe } from './class-name.pipe';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { ToonDetailComponent } from './toon-detail/toon-detail.component';
     DashboardComponent,
     MessagesComponent,
     ToonDetailComponent,
+    ClassNamePipe,
   ],
   bootstrap: [AppComponent],
 })
