@@ -28,13 +28,17 @@ export class ToonsService {
       catchError(this.handleError<Toon[]>('getToons', []))
     );
   }
-  
+
   /** GET toon by realmSlug, toonName. Will 404 if id not found */
   getToonDetail(realmSlug: string, toonName: string): Observable<ToonDetails> {
     const url = `${this.toonsUrl}/${realmSlug}/${toonName}`;
     return this.http.get<ToonDetails>(url).pipe(
-      tap((_) => this.log(`fetched toon details id=${realmSlug}-${toonName}`)),
-      catchError(this.handleError<ToonDetails>(`getToonDetails id=${realmSlug}-${toonName}`))
+      tap((_) => this.log(`fetched toon details id: ${realmSlug}-${toonName}`)),
+      catchError(
+        this.handleError<ToonDetails>(
+          `getToonDetails id=${realmSlug}-${toonName}`
+        )
+      )
     );
   }
 
