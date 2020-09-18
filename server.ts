@@ -41,7 +41,7 @@ export function app(): express.Express {
     next();
   });
   server.use(
-    session({ secret: 'blizzard', saveUninitialized: true, resave: true })
+    session({ secret: 'blizzard', saveUninitialized: true, resave: false })
   );
   server.use(passport.initialize());
   server.use(passport.session());
@@ -92,6 +92,12 @@ export function app(): express.Express {
     }
   );
   // Serve static files from /browser
+  server.get(
+    '*.js',
+    express.static(distFolder, {
+      maxAge: '1y',
+    })
+  );
   server.get(
     '*.*',
     restrict,
