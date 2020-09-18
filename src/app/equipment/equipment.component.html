@@ -1,0 +1,29 @@
+<h3>Equipments</h3>
+
+<div class="container">
+  <div *ngFor="let toon of toonsService.getToons()" class="toon">
+    <div class="header {{ toon.faction.type | lowercase }}">
+      <ng-template [ngIf]="toon?.details?.media?.avatar">
+        <img class="bust" src="{{ toon.details.media.avatar }}" />
+      </ng-template>
+      <div class="name">
+        <a
+          routerLink="/toon/{{ toon.realm.slug }}/{{ toon.name }}"
+          class="{{ toon.class.name | lowercase | className }}-text"
+        >
+          {{ toon.name }}
+        </a>
+      </div>
+      <div class="ilvl {{ toon.class.name | lowercase | className }}-text">
+        {{ toon.details?.profile?.averageItemLevel }}
+      </div>
+    </div>
+    <div class="items">
+      <ng-template [ngIf]="toon.items">
+        <div *ngFor="let item of toon.items" class="slot-icon {{ item.slot.type | lowercase }}-icon">
+          <div>{{ item.level }}</div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

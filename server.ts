@@ -16,6 +16,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 import { getToonsController } from './controllers/getToons';
 import { getToonDetailsController } from './controllers/getToonDetails';
+import { getToonItemsController } from 'controllers/getToonItems';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -82,6 +83,7 @@ export function app(): express.Express {
   server.set('views', distFolder);
   server.get('/api/toons', restrict, getToonsController);
   server.get('/api/toons/:realmSlug/:toonName', restrict, getToonDetailsController);
+  server.get('/api/toons/:realmSlug/:toonName/items', restrict, getToonItemsController);
   server.get('/auth/bnet', passport.authenticate('bnet'));
 
   server.get(

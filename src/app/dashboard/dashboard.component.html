@@ -11,7 +11,7 @@
   </div>
 </ng-template>
 <div class="container">
-  <div *ngFor="let toon of toons" class="toon">
+  <div *ngFor="let toon of toonsService.getToons()" class="toon">
     <div class="header {{ toon.faction.type | lowercase }}">
       <ng-template [ngIf]="toon?.details?.media?.bust">
         <img class="bust" src="{{ toon.details.media.bust }}" />
@@ -37,6 +37,11 @@
             [className]="kill.isDeadThisWeek ? 'killed' : 'alive'"
             alt="{{ kill.lastUpdatedTimestamp | date: 'yyyy-MM-dd h:mm:ss' }}"
           />
+        </ng-template>
+        <ng-template [ngIf]="toon?.items">
+          <div
+            *ngFor="let item of toon.items"
+          >{{item.name}}</div>
         </ng-template>
       </div>
     </div>

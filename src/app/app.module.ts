@@ -13,6 +13,7 @@ import { PLATFORM_ID, APP_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ToonDetailComponent } from './toon-detail/toon-detail.component';
 import { ClassNamePipe } from './class-name.pipe';
+import { EquipmentComponent } from './equipment/equipment.component';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { ClassNamePipe } from './class-name.pipe';
     AppComponent,
     DashboardComponent,
     MessagesComponent,
+    EquipmentComponent,
     ToonDetailComponent,
     ClassNamePipe,
   ],

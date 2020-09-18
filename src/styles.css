@@ -4,7 +4,8 @@ h1 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
 }
-h2, h3 {
+h2,
+h3 {
   color: #444;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: lighter;
@@ -12,7 +13,9 @@ h2, h3 {
 body {
   margin: 2em;
 }
-body, input[text], button {
+body,
+input[text],
+button {
   color: #333;
   font-family: Cambria, Georgia;
 }
@@ -61,41 +64,41 @@ html {
 /*
  * WoW class color
  */
- .death-knight {
-  background-color: #C41F3B;
+.death-knight {
+  background-color: #c41f3b;
 }
 .demon-hunter {
-  background-color: #A330C9;
+  background-color: #a330c9;
 }
 .druid {
-  background-color: #FF7D0A;
+  background-color: #ff7d0a;
 }
 .hunter {
-  background-color: #ABD473;
+  background-color: #abd473;
 }
 .mage {
-  background-color: #69CCF0;
+  background-color: #69ccf0;
 }
 .monk {
-  background-color: #00FF96;
+  background-color: #00ff96;
 }
 .paladin {
-  background-color: #F58CBA;
+  background-color: #f58cba;
 }
 .priest {
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 .rogue {
-  background-color: #FFF569;
+  background-color: #fff569;
 }
 .shaman {
-  background-color: #0070DE;
+  background-color: #0070de;
 }
 .warlock {
-  background-color: #9482C9;
+  background-color: #9482c9;
 }
 .warrior {
-  background-color: #C79C6E;
+  background-color: #c79c6e;
 }
 .death-knight-lite {
   background-color: #ea798c;
@@ -137,52 +140,52 @@ html {
  * WoW class color
  */
 .death-knight-text {
-  color: #C41F3B;
-  border-color: #C41F3B;
+  color: #c41f3b;
+  border-color: #c41f3b;
 }
 .demon-hunter-text {
-  color: #A330C9;
-  border-color: #A330C9;
+  color: #a330c9;
+  border-color: #a330c9;
 }
 .druid-text {
-  color: #FF7D0A;
-  border-color: #FF7D0A;
+  color: #ff7d0a;
+  border-color: #ff7d0a;
 }
 .hunter-text {
-  color: #ABD473;
-  border-color: #ABD473;
+  color: #abd473;
+  border-color: #abd473;
 }
 .mage-text {
-  color: #69CCF0;
-  border-color: #69CCF0;
+  color: #69ccf0;
+  border-color: #69ccf0;
 }
 .monk-text {
-  color: #00FF96;
-  border-color: #00FF96;
+  color: #00ff96;
+  border-color: #00ff96;
 }
 .paladin-text {
-  color: #F58CBA;
-  border-color: #F58CBA;
+  color: #f58cba;
+  border-color: #f58cba;
 }
 .priest-text {
-  color: #EEEEEE;
-  border-color: #EEEEEE;
+  color: #eeeeee;
+  border-color: #eeeeee;
 }
 .rogue-text {
-  color: #FFF569;
-  border-color: #FFF569;
+  color: #fff569;
+  border-color: #fff569;
 }
 .shaman-text {
-  color: #0070DE;
-  border-color: #0070DE;
+  color: #0070de;
+  border-color: #0070de;
 }
 .warlock-text {
-  color: #9482C9;
-  border-color: #9482C9;
+  color: #9482c9;
+  border-color: #9482c9;
 }
 .warrior-text {
-  color: #C79C6E;
-  border-color: #C79C6E;
+  color: #c79c6e;
+  border-color: #c79c6e;
 }
 /*
  * WoW quality color
@@ -194,7 +197,7 @@ html {
   color: #1eff00;
 }
 .rare {
-  color: #70B8FF;
+  color: #70b8ff;
 }
 .epic {
   color: #a335ee;
@@ -203,6 +206,71 @@ html {
   color: #ff8000;
 }
 
+/*
+ * WoW slot icon
+ */
+.slot-icon {
+  background-image: url('/assets/img/icon-slots.png');
+  background-color: #000;
+  background-size: cover;
+  height: 54px;
+  width: 54px;
+  color: #fff;
+}
+.head-icon {
+  background-position: 0 0;
+}
+.neck-icon {
+  background-position: 0 -100%;
+}
+.shoulder-icon {
+  background-position: 0 -200%;
+}
+.chest-icon {
+  background-position: 0 -300%;
+}
+.tabard-icon {
+  background-position: 0 -400%;
+}
+.shirt-icon {
+  background-position: 0 -500%;
+}
+.wrist-icon {
+  background-position: 0 -600%;
+}
+.hands-icon {
+  background-position: 0 -700%;
+}
+.waist-icon {
+  background-position: 0 -800%;
+}
+.legs-icon {
+  background-position: 0 -900%;
+}
+.feet-icon {
+  background-position: 0 -1000%;
+}
+.finger_1-icon {
+  background-position: 0 -1100%;
+}
+.finger_2-icon {
+  background-position: 0 -1100%;
+}
+.trinket_1-icon {
+  background-position: 0 -1600%;
+}
+.trinket_2-icon {
+  background-position: 0 -1600%;
+}
+.back-icon {
+  background-position: 0 -1200%;
+}
+.main_hand-icon {
+  background-position: 0 -1300%;
+}
+.off_hand-icon {
+  background-position: 0 -1400%;
+}
 
 .lds-ellipsis {
   display: inline-block;

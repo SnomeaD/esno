@@ -1,4 +1,5 @@
 import { ToonDetails } from './toonDetails';
+import { Item } from './item';
 
 export const MAX_LEVEL = 120;
 
@@ -34,4 +35,5 @@ export interface Toon {
   protectedUrl: string;
   level: number;
   details?: ToonDetails;
+  items?: Item[];
 }

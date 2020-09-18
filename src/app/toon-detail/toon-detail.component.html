@@ -1,1 +1,22 @@
-<p>toon-detail works!</p>
+<ng-template [ngIf]="!toon">
+  <div class="loading">
+    <div class="lds-ellipsis">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</ng-template>
+<ng-template [ngIf]="toon">
+  <div class="container">
+      <img class="bust" src="{{ toon.details.media.bust }}" />
+    <div class="content">
+      <div class="name">
+        <div>
+          {{ toon.name }}
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
