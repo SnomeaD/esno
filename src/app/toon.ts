@@ -1,7 +1,7 @@
 import { ToonDetails } from './toonDetails';
 import { Item } from './item';
 
-export const MAX_LEVEL = 120;
+export const MAX_LEVEL = 50;
 
 export interface Realm {
   name: string;
