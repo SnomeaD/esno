@@ -30,9 +30,10 @@ export const getToonDetailsController = (req: any, res: any) => {
       )
       .then((mediaResponse) => {
         return {
-          avatar: mediaResponse.data.avatar_url,
-          bust: mediaResponse.data.bust_url,
-          render: mediaResponse.data.render_url,
+          avatar: mediaResponse.data.assets?.find(asset => asset.key === 'avatar').value,
+          bust: mediaResponse.data.assets?.find(asset => asset.key === 'inset').value,
+          render: mediaResponse.data.assets?.find(asset => asset.key === 'main').value,
+          renderRaw: mediaResponse.data.assets?.find(asset => asset.key === 'main-raw').value,
         };
       });
   };

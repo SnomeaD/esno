@@ -11,6 +11,7 @@ export interface ToonDetails {
     avatar: string;
     bust: string;
     render: string;
+    renderRaw: string;
   };
   statistics: {
     kills: KillDetail[];
