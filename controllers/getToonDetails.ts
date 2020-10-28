@@ -48,11 +48,12 @@ export const getToonDetailsController = (req: any, res: any) => {
         axiosConfig
       )
       .then((mediaResponse) => {
+        console.info('mediaResponse', mediaResponse?.data);
         return {
-          avatar: mediaResponse.data.assets?.find(asset => asset.key === 'avatar').value,
-          bust: mediaResponse.data.assets?.find(asset => asset.key === 'inset').value,
-          render: mediaResponse.data.assets?.find(asset => asset.key === 'main').value,
-          renderRaw: mediaResponse.data.assets?.find(asset => asset.key === 'main-raw').value,
+          avatar: mediaResponse?.data?.assets?.find(asset => asset.key === 'avatar')?.value || mediaResponse?.data?.avatar_url,
+          bust: mediaResponse?.data?.assets?.find(asset => asset.key === 'inset')?.value || mediaResponse?.data?.bust_url,
+          render: mediaResponse?.data?.assets?.find(asset => asset.key === 'main')?.value || mediaResponse?.data?.render_url,
+          renderRaw: mediaResponse?.data?.assets?.find(asset => asset.key === 'main-raw')?.value || mediaResponse?.data?.render_url,
         };
       });
   };
