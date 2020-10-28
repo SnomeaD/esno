@@ -48,7 +48,6 @@ export const getToonDetailsController = (req: any, res: any) => {
         axiosConfig
       )
       .then((mediaResponse) => {
-        console.info('mediaResponse', mediaResponse?.data);
         return {
           avatar: mediaResponse?.data?.assets?.find(asset => asset.key === 'avatar')?.value || mediaResponse?.data?.avatar_url,
           bust: mediaResponse?.data?.assets?.find(asset => asset.key === 'inset')?.value || mediaResponse?.data?.bust_url,

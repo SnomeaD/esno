@@ -46,7 +46,6 @@ const extractData = (rawData: any): Toon[] => {
       }
     });
   });
-  console.log(toons);
   return toons;
 };
 export const getToonsController = (req: any, res: any) => {
